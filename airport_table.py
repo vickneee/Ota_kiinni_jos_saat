@@ -1,4 +1,4 @@
-from db_functions import get_db_connection
+from db_functions import get_db_connection, db_query
 
 #fetch 21 airports from the database
 def get_airports():
@@ -11,10 +11,7 @@ def get_airports():
                 'LROP','LKPR','LYBE',
                 'BIKF','LBSF','UKBB')
     sql = f"select airport.ident, airport.name, country.name, airport.latitude_deg, airport.longitude_deg from airport inner join country on airport.iso_country = country.iso_country where ident in {icao_codes}"
-    conn=get_db_connection()
-    cursor = conn.cursor()
-    cursor.execute(sql)
-    result = cursor.fetchall()
+    result = db_query(sql)
     for row in result:
         airports[row[0]] = {"name": row[1], "country": row[2], "latitude": row[3], "longitude": row[4]}
 
@@ -29,6 +26,6 @@ def print_airports(airports):
 
 
 
-
+print_airports(get_airports())
 
 

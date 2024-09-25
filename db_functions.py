@@ -15,3 +15,12 @@ def get_db_connection():
     autocommit=True
     )
     return conn
+
+def db_query(sql):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    return result
+
+
