@@ -37,7 +37,7 @@ def how_many_players():
         elif num_players == 3:
             return num_players
         else:
-            print("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä:")
+            print("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ")
             how_many_players()
     except ValueError:
         num_players = int(input("Syötä numero 1:n ja 3:n väliltä: "))
