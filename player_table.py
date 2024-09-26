@@ -1,36 +1,34 @@
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
     try:
-        role_type = int(input("Enter 0 for criminal or 1 for searcher: "))
+        role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
         if role_type == 0:
-            print("You have chosen criminal.")
+            print("Olet valinnut rikollisen.")
             return role_type
         elif role_type == 1:
-            print("You have chosen searcher.")
+            print("Olet valinnut etsijän.")
             return role_type
         else:
-            print("Invalid input. Please enter 0 for criminal or 1 for searcher.")
-            role_type = int(input("Enter 0 for criminal or 1 for searcher: "))
+            print("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.")
+            role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
     except ValueError:
-        role_type = int(input("Enter 0 for criminal or 1 for searcher: "))
+        role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
     return role_type
 
 
 # How many players will be playing the game?
 def how_many_players():
-    print("How many players will be playing the game?\n"
-          "If the answer is 1.\n"
-          "The player will be playing opposite the computer and player have to choose the role.\n"
-          "If the answer is 2. \n"
-          "The first player will be playing criminal and the second player will be playing 2 "
-          "searchers.\n"
-          "If the answer is 3. \n"
-          "The first player will be playing criminal, the second player will be playing searcher\n"
-          "and the third player will be playing searcher.")
+    print("Kuinka monta pelaajaa pelaa peliä?\n"
+          "Jos vastaus on 1:\n"
+          "Pelaaja pelaa tietokonetta vastaan ja pelaajan täytyy valita rooli.\n"
+          "Jos vastaus on 2: \n"
+          "Ensimmäinen pelaaja pelaa rikollista ja toinen pelaaja pelaa kahta etsijää.\n"
+          "Jos vastaus on 3: \n"
+          "Ensimmäinen pelaaja pelaa rikollista, toinen pelaaja pelaa etsijää ja kolmas pelaaja pelaa etsijää.")
     try:
-        num_players = int(input("Enter a number between 1 and 3: "))
+        num_players = int(input("Syötä numero 1:n ja 3:n väliltä: "))
         if num_players == 1:
-            print("The player will be playing opposite the computer. Now choose your role: (0 or 1)")
+            print("Pelaaja pelaa tietokonetta vastaan.")
             player_choose_the_role()
             return num_players
 
@@ -39,10 +37,10 @@ def how_many_players():
         elif num_players == 3:
             return num_players
         else:
-            print("Invalid input. Please enter a number between 1 and 3.")
+            print("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ")
             how_many_players()
     except ValueError:
-        num_players = int(input("Enter a number between 1 and 3: "))
+        num_players = int(input("Syötä numero 1:n ja 3:n väliltä: "))
     return num_players
 
 
