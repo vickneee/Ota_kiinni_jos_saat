@@ -1,3 +1,5 @@
+from db_functions import db_query
+
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
     try:
@@ -45,3 +47,20 @@ def how_many_players():
 
 
 how_many_players()
+
+def get_players_info(name):
+    sql = f"""
+        select player.screen_name, player.location, airport.name, country.name 
+        from player 
+        left join airport on player.location = airport.ident 
+        left join country on airport.iso_country = country.iso_country 
+        where screen_name = '{name}'
+    """
+    result = db_query(sql)
+    player_info = {}
+    if result:
+        player_info["screen_name"] = result[0][0]
+        player_info["location"] = result[0][1]
+        player_info["airport_name"] = result[0][2]
+        player_info["country_name"] = result[0][3]
+    return player_info
