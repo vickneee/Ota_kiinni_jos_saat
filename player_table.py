@@ -46,7 +46,7 @@ def how_many_players():
     return num_players
 
 
-how_many_players()
+
 
 def get_players_info(name):
     sql = f"""
