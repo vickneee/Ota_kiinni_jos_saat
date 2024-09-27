@@ -25,3 +25,10 @@ def db_query(sql):
     cursor.execute(sql)
     result = cursor.fetchall()
     return result
+
+def db_insert(sql):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+    print(cursor.rowcount, "record(s) inserted.")
