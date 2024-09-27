@@ -1,5 +1,4 @@
-from airport_table import get_airports
-from db_functions import db_query
+from airport_table import print_airports, get_airports
 
 # Karkurin valitsee oman aloituspaikan kaikista mahdollisista lentokentistä ja sijainneista
 
@@ -7,6 +6,7 @@ from db_functions import db_query
 def criminal_choose_starting_point():
     # Karkuri valitsee aloituspaikan
     print("Karkuri valitsee aloituspaikan")
+    print_airports(get_airports())
     airports = get_airports()
     choose = int(input("Valitse aloituspaikka (1-21): "))
     selected_icao = list(airports.keys())[choose - 1]
