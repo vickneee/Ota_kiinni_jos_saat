@@ -64,3 +64,19 @@ def get_players_info(name):
         player_info["airport_name"] = result[0][2]
         player_info["country_name"] = result[0][3]
     return player_info
+
+#Funktio kysyy pelaajan nimeä, tarkistaa onko se tyhjä, liian pitkä
+#tai käytössä. Palauttaa hyväksytyn nimimerkin.
+
+def new_player(screen_name):
+    max_char = 20
+    while True:
+        name = input("Syötä nimimerkki: ")
+        if not name:
+            print("Tyhjä nimimerkki. Yritä uudelleen!")
+        elif len(name) > max_char:
+            print(f"Nimimerkin on oltava enintään {max_char} merkkiä pitkä.")
+        elif name in names:
+            print("Nimimerkki on varattu. Valitse uusi.")
+        else:
+            return name
