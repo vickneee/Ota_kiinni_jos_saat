@@ -1,4 +1,4 @@
-from db_functions import db_query
+from db_functions import db_query, db_insert
 
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
@@ -80,3 +80,10 @@ def new_player(screen_name):
             print("Nimimerkki on varattu. Valitse uusi.")
         else:
             return name
+
+def insert_player(name, type, location):
+    sql = f"""insert into player (screen_name, type, location) 
+    values ('{name}', '{type}', '{location}')"""
+    add = db_insert(sql)
+    return add
+
