@@ -1,5 +1,6 @@
 from db_functions import db_query, db_insert
 
+
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
     try:
@@ -46,8 +47,6 @@ def how_many_players():
     return num_players
 
 
-
-
 def get_players_info(name):
     sql = f"""
         select player.screen_name, player.location, airport.name, country.name 
@@ -65,6 +64,7 @@ def get_players_info(name):
         player_info["country_name"] = result[0][3]
     return player_info
 
+
 #Funktio kysyy pelaajan nimeä, tarkistaa onko se tyhjä, liian pitkä
 #tai käytössä. Palauttaa hyväksytyn nimimerkin.
 
@@ -81,15 +81,35 @@ def new_player(screen_name):
         else:
             return name
 
+
 def insert_player(name, type, location):
     sql = f"""insert into player (screen_name, type, location) 
     values ('{name}', '{type}', '{location}')"""
     add = db_insert(sql)
     return add
 
-def add_player_game(player_id,game_id):
+
+def add_player_game(player_id, game_id):
     sql = f"""insert into player_game (game_id,player_id) 
     values ('{game_id}', '{player_id}')"""
     add = db_insert(sql)
 
 
+def get_criminal_info(name):
+    sql = f"""
+        SELECT player.screen_name, player.location, airport.name, country.name, airport.latitude_deg, airport.longitude_deg
+        FROM player
+        LEFT JOIN airport ON player.location = airport.ident
+        LEFT JOIN country ON airport.iso_country = country.iso_country
+        WHERE screen_name = '{name}'
+    """
+    result = db_query(sql)
+    criminal_info = {}
+    if result:
+        criminal_info["screen_name"] = result[0][0]
+        criminal_info["location"] = result[0][1]
+        criminal_info["airport_name"] = result[0][2]
+        criminal_info["country_name"] = result[0][3]
+        criminal_info["latitude"] = result[0][4]
+        criminal_info["longitude"] = result[0][5]
+    return criminal_info
