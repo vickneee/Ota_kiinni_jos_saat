@@ -12,7 +12,7 @@ def criminal_choose_starting_point():
     selected_icao = list(airports.keys())[choose - 1]
     selected_airport = airports[selected_icao]
     print(f"Karkuri on valinnut aloituspaikakseen lentokentän numero {choose}.")
-    print(f"""Lentokenttä: {selected_airport['name']}, Sijainti: ({selected_airport['latitude']}, {selected_airport['longitude']})""")
+    print(f"""Lentokenttä: {selected_airport['name']}, Maa: {selected_airport['country']}, Sijainti: ({selected_airport['latitude']}, {selected_airport['longitude']})""")
     return choose
 
 
