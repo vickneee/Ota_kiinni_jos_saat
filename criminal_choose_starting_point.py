@@ -1,8 +1,8 @@
 from airport_table import print_airports, get_airports
 
+
 # Karkurin valitsee oman aloituspaikan kaikista mahdollisista lentokentistä ja sijainneista
-
-
+# Choose starting point for the criminal from all possible airports and locations
 def criminal_choose_starting_point():
     # Karkuri valitsee aloituspaikan
     print("Karkuri valitsee aloituspaikan")
@@ -14,6 +14,3 @@ def criminal_choose_starting_point():
     print(f"Karkuri on valinnut aloituspaikakseen lentokentän numero {choose}.")
     print(f"""Lentokenttä: {selected_airport['name']}, Maa: {selected_airport['country']}, Sijainti: ({selected_airport['latitude']}, {selected_airport['longitude']})""")
     return choose
-
-
-criminal_choose_starting_point()
