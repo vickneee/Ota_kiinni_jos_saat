@@ -30,8 +30,10 @@ def db_insert(sql):
     conn = get_db_connection()
     cursor = conn.cursor()
     cursor.execute(sql)
+    lastrowid = cursor.lastrowid
     conn.commit()
-    print(cursor.rowcount, "record(s) inserted.")
+    return lastrowid
+
 
 
 def db_delete(sql):

@@ -1,3 +1,5 @@
+from db_functions import db_insert
+
 # Welcome to the game of Catch me if you can!
 def welcome():
     print("Tervetuloa Ota kiinni jos saat -peliin!\n"
@@ -10,3 +12,11 @@ def welcome():
 
 
 welcome()
+
+def create_game():
+    sql = "INSERT INTO game () VALUES ()"
+    game_id = db_insert(sql)
+    return game_id
+
+
+
