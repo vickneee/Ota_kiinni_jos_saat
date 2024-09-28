@@ -32,3 +32,11 @@ def db_insert(sql):
     cursor.execute(sql)
     conn.commit()
     print(cursor.rowcount, "record(s) inserted.")
+
+
+def db_delete(sql):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+    print(cursor.rowcount, "Lippu poistettu!")
