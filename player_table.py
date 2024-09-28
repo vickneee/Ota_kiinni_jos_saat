@@ -87,3 +87,9 @@ def insert_player(name, type, location):
     add = db_insert(sql)
     return add
 
+def add_player_game(player_id,game_id):
+    sql = f"""insert into player_game (game_id,player_id) 
+    values ('{game_id}', '{player_id}')"""
+    add = db_insert(sql)
+
+
