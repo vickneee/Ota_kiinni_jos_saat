@@ -42,3 +42,10 @@ def db_delete(sql):
     cursor.execute(sql)
     conn.commit()
     print(cursor.rowcount, "Lippu poistettu!")
+
+def db_update(sql):
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    conn.commit()
+    print(cursor.rowcount)

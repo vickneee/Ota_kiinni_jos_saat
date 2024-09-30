@@ -1,4 +1,5 @@
 from db_functions import db_insert
+from player_table import how_many_players,
 
 # Welcome to the game of Catch me if you can!
 def welcome():
@@ -20,6 +21,7 @@ def create_game():
 
 def start_game():
     game_id = create_game()
+
 
 
 
