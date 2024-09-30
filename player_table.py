@@ -3,17 +3,18 @@ from db_functions import db_query, db_insert
 
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
-    while True:
-        role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
+    role_type = int(input("Valitse roolisi. Syötä 0 rikolliselle tai 1 etsijällä: "))
+    while role_type != 0 or role_type != 1:
+        print("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.")
         if role_type == 0:
-            print("Olet valinnut rikollisen.")
-            return role_type
+            print("Valitsit roolin rikolliselle.")
+            break
         elif role_type == 1:
-            print("Olet valinnut etsijän.")
-            return role_type
-        elif role_type != 0 or role_type != 1:
-            print("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.")
-            role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
+            print("Valitsit roolin etsijälle.")
+            break
+        role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
+
+    return role_type
 
 
 # How many players will be playing the game?
