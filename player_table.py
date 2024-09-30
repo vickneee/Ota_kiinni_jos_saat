@@ -3,7 +3,7 @@ from db_functions import db_query, db_insert
 
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
-    try:
+    while True:
         role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
         if role_type == 0:
             print("Olet valinnut rikollisen.")
@@ -11,12 +11,9 @@ def player_choose_the_role():
         elif role_type == 1:
             print("Olet valinnut etsijän.")
             return role_type
-        else:
+        elif role_type != 0 or role_type != 1:
             print("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.")
             role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
-    except ValueError:
-        role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
-    return role_type
 
 
 # How many players will be playing the game?
@@ -64,6 +61,7 @@ def get_players_info(name):
         player_info["country_name"] = result[0][3]
     return player_info
 
+
 def screen_names():
     sql = "select screen_name from player"
     result = db_query(sql)
@@ -90,7 +88,6 @@ def new_player():
             print(f"Nimimerkin on oltava enintään {max_char} merkkiä pitkä.")
         elif name in names:
             print("Nimimerkki on varattu. Valitse uusi.")
-
 
 
 def insert_player(name, type, location):
@@ -124,5 +121,3 @@ def get_criminal_info(name):
         criminal_info["latitude"] = result[0][4]
         criminal_info["longitude"] = result[0][5]
     return criminal_info
-
-
