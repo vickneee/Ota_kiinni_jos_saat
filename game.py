@@ -1,5 +1,6 @@
 from db_functions import db_insert
-from player_table import how_many_players,
+from game_logic import how_many_players
+from player_management import add_player_game
 
 # Welcome to the game of Catch me if you can!
 def welcome():
@@ -19,8 +20,15 @@ def create_game():
     game_id = db_insert(sql)
     return game_id
 
-def start_game():
-    game_id = create_game()
+game_id = create_game()
+
+def start_game(game_id):
+    players = how_many_players()
+    for i in range (3):
+        player_id = players[i]
+        add_player_game(player_id, game_id)
+
+start_game(game_id)
 
 
 

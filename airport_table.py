@@ -1,5 +1,5 @@
 from db_functions import db_query
-from player_table import get_players_info
+from assisting_functions import haversine
 from geopy.distance import geodesic as GD
 
 #fetch 21 airports from the database
@@ -36,6 +36,7 @@ def airports_location():
 
 # get the six recommended airports for the player, sorted by distance
 def get_recommended_airports(name):
+    from player_management import get_players_info
     all_airports = get_airports()
     player = get_players_info(name)
     all_airports_location = airports_location()
@@ -54,6 +55,53 @@ def get_recommended_airports(name):
         recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'], "distance": value}
 
     return recommended
+
+def two_farthest_airport(name):
+    from player_management import get_players_info
+    airports = get_airports()
+    farthest_airports = [None, None]
+    max_distance = 0
+    second_max_distance = 0
+    starting_point = get_players_info(name)
+
+    for icao, location in airports.items():
+        distance = haversine(starting_point['latitude'], starting_point['longitude'], location['latitude'], location['longitude'])
+        if distance > max_distance:
+            second_max_distance = max_distance
+            max_distance = distance
+            farthest_airports[1] = farthest_airports[0]
+            farthest_airports[0] = (icao, location['name'], location['country'], f"{distance:.2f} km")
+        elif distance > second_max_distance:
+            second_max_distance = distance
+            farthest_airports[1] = (icao, location['name'], location['country'], f"{distance:.2f} km")
+
+    return farthest_airports
+"""
+def get_recommended_airports(name):
+    all_airports = get_airports()
+    player = get_players_info(name)
+    all_airports_location = airports_location()
+    player_location = all_airports_location[player['location']]
+    airport_distances = {}
+
+    for key, value in all_airports_location.items():
+        if key != player['location']:
+            airport_distances[key] = GD(player_location, value).kilometers
+
+    all_sorted_locations = sorted(airport_distances.items(), key=lambda x: x[1])
+    recommended = {}
+    for key, value in all_sorted_locations[:4]:
+        recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'], "distance": value}
+    for key, value in all_sorted_locations[-2:]:
+        recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'], "distance": value}
+
+    return recommended
+
+"""
+
+
+
+
 
 
 
