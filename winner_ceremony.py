@@ -1,5 +1,10 @@
-import game_over
+from game_over import game_over
 from db_functions import db_query
+from playsound import playsound
+
+# Soitetaan musiikkia kun peli päättyy
+def play_celebration_sound():
+    playsound('assets/celebration.mp3')
 
 def winner_ceremony():
     if game_over():
@@ -13,4 +18,5 @@ def winner_ceremony():
         result = db_query(sql)
         winners = ", ".join([row[0] for row in result])
         location = result[0][1]
+        play_celebration_sound()
         return winners, location

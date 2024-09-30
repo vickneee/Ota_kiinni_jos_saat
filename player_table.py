@@ -3,19 +3,17 @@ from db_functions import db_query, db_insert
 
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
-    try:
-        role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
+    role_type = int(input("Valitse roolisi. Syötä 0 rikolliselle tai 1 etsijällä: "))
+    while role_type != 0 or role_type != 1:
+        print("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.")
         if role_type == 0:
-            print("Olet valinnut rikollisen.")
-            return role_type
+            print("Valitsit roolin rikolliselle.")
+            break
         elif role_type == 1:
-            print("Olet valinnut etsijän.")
-            return role_type
-        else:
-            print("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.")
-            role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
-    except ValueError:
+            print("Valitsit roolin etsijälle.")
+            break
         role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
+
     return role_type
 
 
@@ -64,6 +62,7 @@ def get_players_info(name):
         player_info["country_name"] = result[0][3]
     return player_info
 
+
 def screen_names():
     sql = "select screen_name from player"
     result = db_query(sql)
@@ -76,12 +75,16 @@ def screen_names():
 #Funktio kysyy pelaajan nimeä, tarkistaa onko se tyhjä, liian pitkä
 #tai käytössä. Palauttaa hyväksytyn nimimerkin.
 
-def new_player():
+def new_player(type):
     names = screen_names()
     max_char = 20
+
     while True:
-        name = input("Syötä nimimerkki: ")
-        if name not in names and name and len(name) <= max_char:
+        if type == 0:
+            name = input("Syötä rikollisen nimimerkki: ")
+        elif type == 1:
+            name = input("Syötä etsivän nimimerkki: ")
+        elif name not in names and name and len(name) <= max_char:
             print(f"Nimimerkki {name} lisätty.")
             return name
         elif not name:
@@ -90,7 +93,6 @@ def new_player():
             print(f"Nimimerkin on oltava enintään {max_char} merkkiä pitkä.")
         elif name in names:
             print("Nimimerkki on varattu. Valitse uusi.")
-
 
 
 def insert_player(name, type, location):
@@ -124,5 +126,3 @@ def get_criminal_info(name):
         criminal_info["latitude"] = result[0][4]
         criminal_info["longitude"] = result[0][5]
     return criminal_info
-
-
