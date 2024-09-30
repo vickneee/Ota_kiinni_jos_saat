@@ -74,12 +74,16 @@ def screen_names():
 #Funktio kysyy pelaajan nimeä, tarkistaa onko se tyhjä, liian pitkä
 #tai käytössä. Palauttaa hyväksytyn nimimerkin.
 
-def new_player():
+def new_player(type):
     names = screen_names()
     max_char = 20
+
     while True:
-        name = input("Syötä nimimerkki: ")
-        if name not in names and name and len(name) <= max_char:
+        if type == 0:
+            name = input("Syötä rikollisen nimimerkki: ")
+        elif type == 1:
+            name = input("Syötä etsivän nimimerkki: ")
+        elif name not in names and name and len(name) <= max_char:
             print(f"Nimimerkki {name} lisätty.")
             return name
         elif not name:
