@@ -64,22 +64,33 @@ def get_players_info(name):
         player_info["country_name"] = result[0][3]
     return player_info
 
+def screen_names():
+    sql = "select screen_name from player"
+    result = db_query(sql)
+    names = []
+    for row in result:
+        names.append(row[0])
+    return names
+
 
 #Funktio kysyy pelaajan nimeä, tarkistaa onko se tyhjä, liian pitkä
 #tai käytössä. Palauttaa hyväksytyn nimimerkin.
 
-def new_player(screen_name):
+def new_player():
+    names = screen_names()
     max_char = 20
     while True:
         name = input("Syötä nimimerkki: ")
-        if not name:
+        if name not in names and name and len(name) <= max_char:
+            print(f"Nimimerkki {name} lisätty.")
+            return name
+        elif not name:
             print("Tyhjä nimimerkki. Yritä uudelleen!")
         elif len(name) > max_char:
             print(f"Nimimerkin on oltava enintään {max_char} merkkiä pitkä.")
         elif name in names:
             print("Nimimerkki on varattu. Valitse uusi.")
-        else:
-            return name
+
 
 
 def insert_player(name, type, location):
@@ -113,3 +124,5 @@ def get_criminal_info(name):
         criminal_info["latitude"] = result[0][4]
         criminal_info["longitude"] = result[0][5]
     return criminal_info
+
+

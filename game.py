@@ -18,5 +18,9 @@ def create_game():
     game_id = db_insert(sql)
     return game_id
 
+def start_game():
+    game_id = create_game()
+
+
 
 
