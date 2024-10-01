@@ -7,3 +7,12 @@ def insert_round():
         SET round = round +1
         """
     db_update(sql)
+
+
+def update_round_player(player_id,game_id):
+    sql = f"""
+        UPDATE game 
+        set player_id={player_id}
+        where id={game_id}
+    """
+    db_update(sql)
