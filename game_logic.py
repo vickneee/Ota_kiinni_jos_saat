@@ -2,7 +2,7 @@ from db_functions import db_query, db_insert
 #from criminal_choose_starting_point import criminal_choose_starting_point
 #from two_farthest_airport import two_farthest_airport
 
-from player_management import new_player, insert_player, criminal_choose_starting_point
+from player_management import new_player, insert_player, criminal_choose_starting_point,insert_player_tickets
 from airport_table import two_farthest_airport
 
 
@@ -38,25 +38,25 @@ def how_many_players():
           "Ensimmäinen pelaaja pelaa rikollista ja toinen pelaaja pelaa kahta etsijää.\n"
           "Jos vastaus on 3: \n"
           "Ensimmäinen pelaaja pelaa rikollista, toinen pelaaja pelaa etsijää ja kolmas pelaaja pelaa etsijää.")
-    try:
-        num_players = int(input("Syötä numero 1:n ja 3:n väliltä: "))
-        if num_players == 1:
-            print("Pelaaja pelaa tietokonetta vastaan.")
-            ids = player_choose_the_role()
-            return ids
+    while True:
+        try:
+            num_players = int(input("Syötä numero 1:n ja 3:n väliltä: "))
+            if num_players == 1:
+                print("Pelaaja pelaa tietokonetta vastaan.")
+                player_ids = player_choose_the_role()
+                return player_ids
 
-        elif num_players == 2:
-            setup_players(player_ids, criminal_is_computer=False, detectives_are_computer=False)
+            elif num_players == 2 or num_players == 3:
+                setup_players(player_ids, criminal_is_computer=False, detectives_are_computer=False)
+                return player_ids
+            else:
+                print("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ")
 
-        elif num_players == 3:
-            setup_players(player_ids, criminal_is_computer=False, detectives_are_computer=False)
-        else:
+        except ValueError:
             print("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ")
-            how_many_players()
-    except ValueError:
-        num_players = int(input("Syötä numero 1:n ja 3:n väliltä: "))
-    print(player_ids)
-    return player_ids
+
+
+
 
 def setup_players(player_ids, criminal_is_computer,detectives_are_computer):
     criminal = new_player(0)
@@ -65,12 +65,13 @@ def setup_players(player_ids, criminal_is_computer,detectives_are_computer):
     farthest = two_farthest_airport(criminal)
     detective1 = new_player(1)
     detective1_id = insert_player(detective1, 1, farthest[0][0], detectives_are_computer)
+    insert_player_tickets(detective1_id, 1)
     player_ids.append(detective1_id)
     detective2 = new_player(1)
     detective2_id = insert_player(detective2, 1, farthest[1][0], detectives_are_computer)
+    insert_player_tickets(detective2_id, 1)
     player_ids.append(detective2_id)
 
-#def detective_move(screen_name):
 
 
 
