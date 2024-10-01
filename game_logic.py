@@ -67,8 +67,12 @@ def setup_players(player_ids, criminal_is_computer,detectives_are_computer):
     detective1_id = insert_player(detective1, 1, farthest[0][0], detectives_are_computer)
     player_ids.append(detective1_id)
     detective2 = new_player(1)
-    detective2_id = insert_player(detective2, 1, farthest[0][0], detectives_are_computer)
+    detective2_id = insert_player(detective2, 1, farthest[0][1], detectives_are_computer)
     player_ids.append(detective2_id)
+
+#def detective_move(screen_name):
+
+
 
 
 
