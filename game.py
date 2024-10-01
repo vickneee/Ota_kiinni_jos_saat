@@ -29,7 +29,7 @@ def start_game(game_id):
 
 start_game(game_id)
 
-# Pelin runko
+# Pelin runko.
 
 #def game():
     #pelaajat = ['matti', 'pekka', 'ritva']
