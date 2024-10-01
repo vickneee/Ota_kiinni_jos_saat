@@ -118,7 +118,7 @@ def criminal_choose_starting_point(name, is_computer=0):
         print(f"Lentokenttä: {location['name']}, Maa: {location['country']}, Sijainti: ({location['latitude']}, {location['longitude']})")
     #insert the player into the database
     add = insert_player(name, 0, selected_icao, is_computer)
-    #insert_tickets(name, 0)
+    insert_player_tickets(add, 0)
     return add
 
 
