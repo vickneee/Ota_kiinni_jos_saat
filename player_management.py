@@ -1,4 +1,5 @@
 from db_functions import db_query, db_insert
+from tickets_table import insert_tickets
 import random
 
 def insert_player(name, type, location, is_computer=0):
@@ -39,6 +40,15 @@ def screen_names():
         names.append(row[0])
     return names
 
+def game_screen_names():
+    sql =  f"""select screen_name from player left join game_player on player.id = game_player.player_id
+           left join game on game.player_id = player.id"""
+    result = db_query(sql)
+    names = []
+    for row in result:
+        names.append(row[0])
+    return names[-2:]
+
 # Haetaan kannasta rikollisen viimeisin lokaatio, sekä lentolippu
 # Kysely hakee taulun viimeiseimpänä lisätyt tiedot
 def get_criminal_movements():
@@ -73,6 +83,24 @@ def new_player(type):
         elif name in names:
             print("Nimimerkki on varattu. Valitse uusi.")
 
+def insert_player_tickets(player_id, player_type):
+    if player_type == 0:
+        for i in range(10):
+            insert_tickets(player_id, "potkurikone")
+        for i in range(6):
+            insert_tickets(player_id, "matkustajakone")
+        for i in range(4):
+            insert_tickets(player_id, "yksityiskone")
+    else:
+        for i in range(5):
+            insert_tickets(player_id, "potkurikone")
+        for i in range(3):
+            insert_tickets(player_id, "matkustajakone")
+        for i in range(2):
+            insert_tickets(player_id, "yksityiskone")
+
+
+
 
 def criminal_choose_starting_point(name, is_computer=0):
     # Karkuri valitsee aloituspaikan
@@ -90,5 +118,8 @@ def criminal_choose_starting_point(name, is_computer=0):
         print(f"Lentokenttä: {location['name']}, Maa: {location['country']}, Sijainti: ({location['latitude']}, {location['longitude']})")
     #insert the player into the database
     add = insert_player(name, 0, selected_icao, is_computer)
+    #insert_tickets(name, 0)
     return add
+
+
 
