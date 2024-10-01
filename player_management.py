@@ -1,4 +1,5 @@
 from db_functions import db_query, db_insert
+import random
 
 def insert_player(name, type, location, is_computer=0):
     sql = f"""INSERT INTO player (screen_name, type, location, is_computer)
@@ -73,20 +74,21 @@ def new_player(type):
             print("Nimimerkki on varattu. Valitse uusi.")
 
 
-def criminal_choose_starting_point(name):
+def criminal_choose_starting_point(name, is_computer=0):
     # Karkuri valitsee aloituspaikan
     from airport_table import print_airports, get_airports
-    print("Rikollinen valitsee aloituspaikan")
-    print_airports(get_airports())
     airports = get_airports()
-    choose = int(input("Valitse aloituspaikka (1-21): "))
-    selected_icao = list(airports.keys())[choose - 1]
-    location = airports[selected_icao]
-    print(f"Rikollinen on valinnut aloituspaikakseen lentokentän numero {choose}.")
-    print(f"Lentokenttä: {location['name']}, Maa: {location['country']}, Sijainti: ({location['latitude']}, {location['longitude']})")
+    if is_computer:
+        selected_icao = random.choice(list(airports.keys()))
+    else:
+        print("Rikollinen valitsee aloituspaikan")
+        print_airports(get_airports())
+        choose = int(input("Valitse aloituspaikka (1-21): "))
+        selected_icao = list(airports.keys())[choose - 1]
+        location = airports[selected_icao]
+        print(f"Rikollinen on valinnut aloituspaikakseen lentokentän numero {choose}.")
+        print(f"Lentokenttä: {location['name']}, Maa: {location['country']}, Sijainti: ({location['latitude']}, {location['longitude']})")
     #insert the player into the database
-    add = insert_player(name, 0, selected_icao, 0)
-
-
+    add = insert_player(name, 0, selected_icao, is_computer)
     return add
 
