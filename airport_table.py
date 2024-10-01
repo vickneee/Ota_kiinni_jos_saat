@@ -78,7 +78,7 @@ def print_recommended_airports(name):
     return sorted_airports
 
 
-print_recommended_airports('Äiti')
+
 
 
 def two_farthest_airport(name):
