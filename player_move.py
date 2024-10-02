@@ -1,3 +1,6 @@
+import os
+from assisting_functions import tyhj
+
 from airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
 from player_management import update_location, get_players_info
 from tickets_table import player_tickets, delete_ticket
@@ -59,6 +62,9 @@ def player_move(name):
     delete_ticket(ticket_type, player_id)
     # print(player_tickets(player_id))
 
+    tyhj()
+
 
 # Example call to the function
-player_move("Kimmo")
+# player_move("Kimmo")
+
