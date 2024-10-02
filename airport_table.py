@@ -39,11 +39,14 @@ def airports_location():
     return airports_location
 
 
-# Get the six recommended airports for the player, sorted by distance
+# Get the six(or less depending on remaining tickets) recommended airports for the player, sorted by distance
 def get_recommended_airports(name):
     from player_management import get_players_info
+    from tickets_table import player_tickets
     all_airports = get_airports()
     player = get_players_info(name)
+    player_id = player.get('id')
+    tickets = player_tickets(player_id)
     all_airports_location = airports_location()
     player_location = all_airports_location[player['location']]
     airport_distances = {}
@@ -53,13 +56,20 @@ def get_recommended_airports(name):
             airport_distances[key] = GD(player_location, value).kilometers
 
     all_sorted_locations = sorted(airport_distances.items(), key=lambda x: x[1])
+    #print(all_sorted_locations)
     recommended = {}
-    for key, value in all_sorted_locations[:4]:
-        recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
-                            "distance": value}
-    for key, value in all_sorted_locations[-2:]:
-        recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
-                            "distance": value}
+    if 'potkurikone' in tickets.keys() :
+        for key, value in all_sorted_locations[:2]:
+            recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
+                                "distance": value,"ticket_type": 'potkurikone'}
+    if 'matkustajakone' in tickets.keys():
+        for key, value in all_sorted_locations[2:4]:
+            recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
+                            "distance": value, "ticket_type": 'matkustajakone'}
+    if 'yksityiskone' in tickets.keys():
+        for key, value in all_sorted_locations[-2:]:
+            recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
+                            "distance": value, "ticket_type": 'yksityiskone'}
 
     return recommended
 
@@ -73,7 +83,7 @@ def print_recommended_airports(name):
 
     print("Suositellut lentokentät lähimmästä kauimpaan:")
     for i, (key, value) in enumerate(sorted_airports[:6], start=1):
-        print(f"{i}. {value['country']} : {value['name']} - {value['distance']:.2f} km")
+        print(f"{i}. {value['country']} : {value['name']} - lipputyyppi : {value['ticket_type']}")
 
     return sorted_airports
 
@@ -100,26 +110,5 @@ def two_farthest_airport(name):
 
     return farthest_airports
 
+get_recommended_airports('hyvis1')
 
-"""
-def get_recommended_airports(name):
-    all_airports = get_airports()
-    player = get_players_info(name)
-    all_airports_location = airports_location()
-    player_location = all_airports_location[player['location']]
-    airport_distances = {}
-
-    for key, value in all_airports_location.items():
-        if key != player['location']:
-            airport_distances[key] = GD(player_location, value).kilometers
-
-    all_sorted_locations = sorted(airport_distances.items(), key=lambda x: x[1])
-    recommended = {}
-    for key, value in all_sorted_locations[:4]:
-        recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'], "distance": value}
-    for key, value in all_sorted_locations[-2:]:
-        recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'], "distance": value}
-
-    return recommended
-
-"""
