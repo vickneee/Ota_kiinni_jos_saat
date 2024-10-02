@@ -1,7 +1,9 @@
 from player_management import get_players_info, update_location
 from airport_table import get_recommended_airports, airports_location
+from tickets_table import delete_ticket
 import random
 import geopy.distance as GD
+
 
 def ai_detective_move(criminal_name, detective_name):
         # Rikollisen ja etsivien tiedot
@@ -28,10 +30,24 @@ def ai_detective_move(criminal_name, detective_name):
 
         # Lentokentät suodatetaan etäisyyden mukaan
         # ja valitaan kolme lähintä lentokenttää rikolliseen nähden
-        closest_three = sorted(airport_distances.items(), key=lambda x: x[1])[:3]
-        # Valitaan satunnaisesti yksi kolmesta lähimmästä lentokentästä
+        if len(airport_distances) < 3:
+            closest_three = sorted(airport_distances.items())
+        else:
+            closest_three = sorted(airport_distances.items(), key=lambda x: x[1])[:3]
+
+        # Check if closest_three is not empty before choosing
+        if closest_three:
+            chosen_airport_code = random.choice(closest_three)[0]
+        else:
+            raise ValueError("No airports available to choose from")
+        #Valitaan satunnaisesti yksi kolmesta lähimmästä lentokentästä
         chosen_airport_code = random.choice(closest_three)[0]
         chosen_airport = recommended_airports[chosen_airport_code]
+        print(closest_three)
+        print(recommended_airports)
 
-        # Päivitetään etsivän sijainti valittuun lentokenttään
+        #Päivitetään etsivän sijainti valittuun lentokenttään
         update_location(chosen_airport_code, detective_name)
+        delete_ticket(ticket_type=chosen_airport['ticket_type'], player_name=detective_name)
+
+ai_detective_move('jorma','pp')
