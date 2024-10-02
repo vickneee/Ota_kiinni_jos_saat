@@ -1,4 +1,5 @@
 from airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
+from player_management import update_location
 
 
 def player_move(name):
@@ -30,6 +31,7 @@ def player_move(name):
                 # Print exact airport details
                 print(f"""Valitsit lentokentän: {selected_airport['country']} : {selected_airport['name']} - {selected_airport['distance']:.2f} km""")
                 break  # Exit loop if input is valid
+
             else:
                 print("Virheellinen valinta. Yritä uudelleen.")
         except ValueError:
