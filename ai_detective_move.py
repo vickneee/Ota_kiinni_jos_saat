@@ -9,7 +9,7 @@ def ai_detective_move(criminal_name, detective_name):
         # Rikollisen ja etsivien tiedot
         criminal_info = get_players_info(criminal_name)
         detective_info = get_players_info(detective_name)
-
+        detective_id = detective_info.get('id')
         # Rikollisen ja etsivien sijainnit
         criminal_location = criminal_info.get('location')
         detective_location = detective_info.get('location')
@@ -41,7 +41,11 @@ def ai_detective_move(criminal_name, detective_name):
         chosen_airport_code = random.choice(closest_three)[0]
         chosen_airport = recommended_airports[chosen_airport_code]
         update_location(chosen_airport_code, detective_name)
-        delete_ticket(chosen_airport['ticket_type'], detective_name)
+        delete_ticket(chosen_airport['ticket_type'], detective_id)
+        print(f"Rikollinen on lentänyt lentokentälle {chosen_airport['name']}, {chosen_airport['country']}")
+        print(chosen_airport['ticket_type'])
+
+ai_detective_move('pahaa','hyv6')
 
 
 
