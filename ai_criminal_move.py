@@ -1,6 +1,7 @@
 from geopy.distance import geodesic as GD
 
 from airport_table import get_airports, airports_location, get_recommended_airports
+from past_movement_table import add_player_past_movement
 from player_management import get_players_info, game_screen_names, update_location
 from tickets_table import delete_ticket
 
@@ -12,7 +13,8 @@ def ai_criminal_move(name):
 
     # Get fugitive's current location
     criminal_info = get_players_info(name)
-    #criminal_location = criminal_info['location']
+    criminal_id = criminal_info.get('id')
+    criminal_location = criminal_info.get('location')
     #criminal_coords = all_airports_location[criminal_location]
 
     # Get detectives' locations
@@ -54,9 +56,9 @@ def ai_criminal_move(name):
 
     # Get destination details
     destination_info = all_airports[best_destination_code]
-
+    add_player_past_movement(best_ticket_type, criminal_id,criminal_location)
     update_location(best_destination_code,name)
-    delete_ticket(best_ticket_type,criminal_info('player_id'))
+    #delete_ticket(best_ticket_type,criminal_info('player_id'))
 
 
     #sql = f"UPDATE player SET location = '{best_destination_code}' WHERE screen_name = {name}"
