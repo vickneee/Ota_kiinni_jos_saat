@@ -15,7 +15,7 @@ def add_player_game(player_id, game_id):
 
 def get_players_info(name):
     sql = f"""
-        select player.id, player.screen_name, player.location, airport.name, country.name,airport.latitude_deg, airport.longitude_deg 
+        select player.id, player.screen_name, player.is_computer,player.location, airport.name, country.name,airport.latitude_deg, airport.longitude_deg 
         from player 
         left join airport on player.location = airport.ident 
         left join country on airport.iso_country = country.iso_country 

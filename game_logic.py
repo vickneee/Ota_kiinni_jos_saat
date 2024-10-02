@@ -2,7 +2,7 @@ from db_functions import db_query, db_insert
 #from criminal_choose_starting_point import criminal_choose_starting_point
 #from two_farthest_airport import two_farthest_airport
 
-from player_management import new_player, insert_player, criminal_choose_starting_point,insert_player_tickets
+from player_management import new_player, insert_player, criminal_choose_starting_point,insert_player_tickets,get_players_info
 from airport_table import two_farthest_airport
 
 
@@ -73,8 +73,16 @@ def setup_players(player_ids, criminal_is_computer,detectives_are_computer):
     player_ids.append(detective2_id)
 
 
-
-
+def game_player_round(player, round):
+    player_info = get_players_info(player)
+    if player_info.get('is_computer') == 1:
+        if player_info.get('role') == 0:
+            ai_criminal_move(player)
+        else:
+            ai_detective_move(player)
+    else:
+        if player_info.get('role') == 0:
+            player_move(player)
 
 
 
