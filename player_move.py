@@ -1,6 +1,6 @@
 from airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
 from player_management import update_location, get_players_info
-from tickets_table import player_tickets
+from tickets_table import player_tickets, delete_ticket
 
 
 def player_move(name):
@@ -27,7 +27,7 @@ def player_move(name):
 
     # Extract keys for indexing from recommended_airports
     recommended_keys = list(recommended_airports.keys())  # Get keys directly from the dictionary
-    print(recommended_keys)
+    print(recommended_keys)  # Print the keys for debugging
 
     # Ask the player to select an airport
     while True:
@@ -39,7 +39,8 @@ def player_move(name):
                 selected_airport = recommended_airports[selected_key]  # Get the airport details using the key
 
                 # Print exact airport details
-                print(f"""Valitsit lentokentän: {selected_airport['country']} : {selected_airport['name']} ja käytit {selected_airport['ticket_type']} lentolipun.""")
+                print(
+                    f"Valitsit lentokentän: {selected_airport['country']} : {selected_airport['name']} ja käytit {selected_airport['ticket_type']} lentolipun.")
                 break  # Exit loop if input is valid
 
             else:
@@ -47,9 +48,17 @@ def player_move(name):
         except ValueError:
             print("Virheellinen syöte. Syötä numero.")
 
+    # Update the player location
+    location = selected_key  # Get the location of the selected airport
+    # print(location)
+    update_location(location, name)
 
-
-    return selected_airport  # Return the selected airport information
+    # Update the ticket count
+    ticket_type = selected_airport['ticket_type']
+    print(ticket_type)
+    # print(ticket_type)
+    delete_ticket(ticket_type, player_id)
+    # print(player_tickets(player_id))
 
 
 # Example call to the function
