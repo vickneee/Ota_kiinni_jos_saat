@@ -39,13 +39,15 @@ def player_move(name):
                 selected_airport = recommended_airports[selected_key]  # Get the airport details using the key
 
                 # Print exact airport details
-                print(f"""Valitsit lentokentän: {selected_airport['country']} : {selected_airport['name']} ja käytit """)
+                print(f"""Valitsit lentokentän: {selected_airport['country']} : {selected_airport['name']} ja käytit {selected_airport['ticket_type']} lentolipun.""")
                 break  # Exit loop if input is valid
 
             else:
                 print("Virheellinen valinta. Yritä uudelleen.")
         except ValueError:
             print("Virheellinen syöte. Syötä numero.")
+
+
 
     return selected_airport  # Return the selected airport information
 
