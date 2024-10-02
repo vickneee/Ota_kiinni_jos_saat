@@ -1,6 +1,4 @@
-import os
 from airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
-from assisting_functions import tyhj
 
 
 def player_move(name):
@@ -30,16 +28,12 @@ def player_move(name):
                 selected_airport = recommended_airports[selected_key]  # Get the airport details using the key
 
                 # Print exact airport details
-                print(
-                    f"""Valitsit lentokentän: 
-                {selected_airport['country']} : {selected_airport['name']} - {selected_airport['distance']:.2f} km""")
+                print(f"""Valitsit lentokentän: {selected_airport['country']} : {selected_airport['name']} - {selected_airport['distance']:.2f} km""")
                 break  # Exit loop if input is valid
             else:
                 print("Virheellinen valinta. Yritä uudelleen.")
         except ValueError:
             print("Virheellinen syöte. Syötä numero.")
-
-    tyhj()
 
     return selected_airport  # Return the selected airport information
 
