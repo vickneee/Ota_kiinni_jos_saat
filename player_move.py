@@ -27,7 +27,7 @@ def player_move(name):
 
     # Extract keys for indexing from recommended_airports
     recommended_keys = list(recommended_airports.keys())  # Get keys directly from the dictionary
-    print(recommended_keys)  # Print the keys for debugging
+    # print(recommended_keys)  # Print the keys for debugging
 
     # Ask the player to select an airport
     while True:
@@ -42,7 +42,6 @@ def player_move(name):
                 print(
                     f"Valitsit lentokentän: {selected_airport['country']} : {selected_airport['name']} ja käytit {selected_airport['ticket_type']} lentolipun.")
                 break  # Exit loop if input is valid
-
             else:
                 print("Virheellinen valinta. Yritä uudelleen.")
         except ValueError:
@@ -55,7 +54,7 @@ def player_move(name):
 
     # Update the ticket count
     ticket_type = selected_airport['ticket_type']
-    print(ticket_type)
+    # print(ticket_type)  #
     # print(ticket_type)
     delete_ticket(ticket_type, player_id)
     # print(player_tickets(player_id))
