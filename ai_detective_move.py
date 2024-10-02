@@ -33,5 +33,5 @@ def ai_detective_move(criminal_name, detective_name):
         chosen_airport_code = random.choice(closest_three)[0]
         chosen_airport = recommended_airports[chosen_airport_code]
 
-        # Päivitetään etsivän sijainti valittuun lentokenttään.
+        # Päivitetään etsivän sijainti valittuun lentokenttään
         update_location(chosen_airport_code, detective_name)
