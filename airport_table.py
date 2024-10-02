@@ -69,14 +69,13 @@ def print_recommended_airports(name):
     recommended = get_recommended_airports(name)
 
     # Sort the recommended airports by distance
-    sorted_airports = sorted(recommended.items(), key=lambda x: x[1]['distance'], reverse=True)
+    sorted_airports = sorted(recommended.items(), key=lambda x: x[1]['distance'])
 
-    print("Suositellut lentokentät kauimmaisesta lähimpään:")
+    print("Suositellut lentokentät lähimmästä kauimpaan:")
     for i, (key, value) in enumerate(sorted_airports[:6], start=1):
         print(f"{i}. {value['country']} : {value['name']} - {value['distance']:.2f} km")
 
     return sorted_airports
-
 
 
 def two_farthest_airport(name):
