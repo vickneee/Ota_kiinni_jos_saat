@@ -1,4 +1,4 @@
-from player_management import get_players_info
+from player_management import get_players_info, update_location
 from airport_table import get_recommended_airports, airports_location
 import random
 import geopy.distance as GD
@@ -33,6 +33,5 @@ def ai_detective_move(criminal_name, detective_name):
         chosen_airport_code = random.choice(closest_three)[0]
         chosen_airport = recommended_airports[chosen_airport_code]
 
-
-
-        return chosen_airport
+        # Päivitetään etsivän sijainti valittuun lentokenttään
+        update_location(chosen_airport_code, detective_name)
