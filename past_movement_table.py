@@ -3,11 +3,6 @@ from tickets_table import delete_ticket
 
 
 def add_player_past_movement(ticket_type, player_id, location):
-    # Get the last ticket information of the player
-    sql = "SELECT ticket_type, player_id FROM tickets ORDER BY rowid DESC LIMIT 1"
-    result = db_query(sql)
-    if not result:
-        return False
 
     # Add the ticket and player information to the database
     sql = f"""INSERT INTO past_movement (ticket_type, player_id, location) 
@@ -19,4 +14,4 @@ def add_player_past_movement(ticket_type, player_id, location):
     if not result:
         return False
 
-    return add
+    #return add
