@@ -57,8 +57,8 @@ def player_move(name):
     # print(ticket_type)  #
     # print(ticket_type)
     delete_ticket(ticket_type, player_id)
-    # print(player_tickets(player_id))
+
 
 
 # Example call to the function
-player_move("Kimmo")
+
