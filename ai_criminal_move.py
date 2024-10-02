@@ -75,4 +75,4 @@ def ai_criminal_move(name):
         'total_distance_from_detectives': best_total_distance
     }
 
-print(ai_criminal_move('kakkapylly'))
+print(ai_criminal_move('räsänen'))

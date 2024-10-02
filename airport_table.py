@@ -110,5 +110,5 @@ def two_farthest_airport(name):
 
     return farthest_airports
 
-get_recommended_airports('hyvis1')
+
 

@@ -19,4 +19,4 @@ def add_player_past_movement(ticket_type, player_id, location):
     if not result:
         return False
 
-    return add
+    #return add
