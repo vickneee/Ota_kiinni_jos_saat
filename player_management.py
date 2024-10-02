@@ -26,11 +26,12 @@ def get_players_info(name):
     if result:
         player_info["id"] = result[0][0]
         player_info["screen_name"] = result[0][1]
-        player_info["location"] = result[0][2]
-        player_info["airport_name"] = result[0][3]
-        player_info["country_name"] = result[0][4]
-        player_info["latitude"] = result[0][5]
-        player_info["longitude"] = result[0][6]
+        player_info["is_computer"] = result[0][2]
+        player_info["location"] = result[0][3]
+        player_info["airport_name"] = result[0][4]
+        player_info["country_name"] = result[0][5]
+        player_info["latitude"] = result[0][6]
+        player_info["longitude"] = result[0][7]
     return player_info
 
 
