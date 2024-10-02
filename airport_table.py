@@ -81,7 +81,7 @@ def print_recommended_airports(name):
     # Sort the recommended airports by distance
     sorted_airports = sorted(recommended.items(), key=lambda x: x[1]['distance'])
 
-    print("Mahdolliset lentokentät lähimmästä kauimpaan:")
+    print("Suositellut lentokentät lähimmästä kauimpaan:")
     for i, (key, value) in enumerate(sorted_airports[:6], start=1):
         print(f"{i}. {value['country']} : {value['name']} - lipputyyppi : {value['ticket_type']}")
 
@@ -109,3 +109,6 @@ def two_farthest_airport(name):
             farthest_airports[1] = (icao, location['name'], location['country'], f"{distance:.2f} km")
 
     return farthest_airports
+
+
+
