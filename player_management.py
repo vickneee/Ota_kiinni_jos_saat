@@ -131,5 +131,12 @@ def update_location(location, name):
     """
     db_update(sql)
 
-
-
+def show_detective_locations():
+    detective_names = game_screen_names()
+    detective1_name = detective_names[0]
+    detective2_name = detective_names[1]
+    detective1_info = get_players_info(detective1_name)
+    detective2_info = get_players_info(detective2_name)
+    detective1_location = all_airports_location.get(detective1_info['location'])
+    detective2_location = all_airports_location.get(detective2_info['location'])
+    return detective1_location, detective2_location
