@@ -4,7 +4,8 @@ from airport_table import get_airports, airports_location, get_recommended_airpo
 from player_management import get_players_info, game_screen_names
 
 
-def ai_criminal_move():
+
+def ai_criminal_move(name):
     # Get all airports and their locations
     all_airports = get_airports()
     all_airports_location = airports_location()
@@ -24,7 +25,7 @@ def ai_criminal_move():
     detective2_coords = all_airports_location.get(detective2_info['location'])
 
     # Get recommended airports for the fugitive
-    recommended_airports = get_recommended_airports('kakkapylly')
+    recommended_airports = get_recommended_airports(name)
 
     # Prepare ticket options based on the recommended airports
     sorted_airports = sorted(recommended_airports.items(), key=lambda x: x[1]['distance'])
@@ -55,8 +56,8 @@ def ai_criminal_move():
     destination_info = all_airports[best_destination_code]
 
 
-    # sql = f"UPDATE player SET location = '{best_destination_code}' WHERE screen_name = 'kakkapylly'"
-    # db_insert(sql)
+    #sql = f"UPDATE player SET location = '{best_destination_code}' WHERE screen_name = {name}"
+
 
     return {
         'ticket_type': best_ticket_type,
@@ -69,4 +70,4 @@ def ai_criminal_move():
         'total_distance_from_detectives': best_total_distance
     }
 
-print(ai_criminal_move())
+print(ai_criminal_move('kakkapylly'))

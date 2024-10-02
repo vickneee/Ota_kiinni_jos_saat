@@ -1,4 +1,4 @@
-from db_functions import db_query, db_insert
+from db_functions import db_query, db_insert, db_update
 from tickets_table import insert_tickets
 import random
 
@@ -120,6 +120,14 @@ def criminal_choose_starting_point(name, is_computer=0):
     add = insert_player(name, 0, selected_icao, is_computer)
     insert_player_tickets(add, 0)
     return add
+
+def update_location(location, name):
+    sql = f"""
+    UPDATE player
+    SET location = '{location}'
+    WHERE screen_name = '{name}'
+    """
+    db_update(sql)
 
 
 
