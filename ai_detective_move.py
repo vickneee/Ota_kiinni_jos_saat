@@ -14,6 +14,7 @@ def ai_detective_move(criminal_name, detective_name):
         criminal_location = criminal_info.get('location')
         detective_location = detective_info.get('location')
 
+
         # Suositellut lentokentät etsivälle
         recommended_airports = get_recommended_airports(detective_name)
 
@@ -35,19 +36,13 @@ def ai_detective_move(criminal_name, detective_name):
         else:
             closest_three = sorted(airport_distances.items(), key=lambda x: x[1])[:3]
 
-        # Check if closest_three is not empty before choosing
-        if closest_three:
-            chosen_airport_code = random.choice(closest_three)[0]
-        else:
-            raise ValueError("No airports available to choose from")
-        #Valitaan satunnaisesti yksi kolmesta lähimmästä lentokentästä
+
+
         chosen_airport_code = random.choice(closest_three)[0]
         chosen_airport = recommended_airports[chosen_airport_code]
-        print(closest_three)
-        print(recommended_airports)
-
-        #Päivitetään etsivän sijainti valittuun lentokenttään
         update_location(chosen_airport_code, detective_name)
-        delete_ticket(ticket_type=chosen_airport['ticket_type'], player_name=detective_name)
+        delete_ticket(chosen_airport['ticket_type'], detective_name)
 
-ai_detective_move('jorma','pp')
+
+
+
