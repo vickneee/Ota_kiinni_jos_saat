@@ -1,4 +1,4 @@
-from db_functions import db_delete,db_insert
+from db_functions import db_delete,db_insert,db_query
 
 
 # Lipun poistaminen
@@ -12,3 +12,16 @@ def insert_tickets(player_id, ticket_type):
     sql = f"""INSERT INTO tickets (player_id, ticket_type) 
     VALUES ('{player_id}', '{ticket_type}')"""
     db_insert(sql)
+
+def player_tickets(player_id):
+    sql = f"""SELECT ticket_type, count(*)FROM tickets 
+    WHERE player_id = '{player_id}'
+    group by ticket_type"""
+    result = db_query(sql)
+    tickets = {}
+    for row in result:
+        tickets[row[0]] = row[1]
+    return tickets
+
+
+
