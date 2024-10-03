@@ -20,3 +20,4 @@ def winner_ceremony():
         location = result[0][1]
         play_celebration_sound()
         return winners, location
+

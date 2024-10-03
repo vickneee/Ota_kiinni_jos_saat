@@ -1,13 +1,13 @@
 import os
 from assisting_functions import tyhj
-
-from airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
-from player_management import update_location, get_players_info,get_criminal_movements
 from tickets_table import player_tickets, delete_ticket
 from past_movement_table import add_player_past_movement
 
 
 def player_move(name, round, player_ids, screen_names):
+    from airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
+    from player_management import update_location, get_players_info, get_criminal_movements
+
     print("Kaikki lentokentät:")
 
     # Print all available airports
@@ -90,5 +90,5 @@ def player_move(name, round, player_ids, screen_names):
 
 
 # Example call to the function
-player_move("pahis",1, [1,2,3],['pahis','etsivä1','etsivä2'])
+
 
