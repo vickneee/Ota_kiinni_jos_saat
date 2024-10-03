@@ -44,9 +44,9 @@ def screen_names():
         names.append(row[0])
     return names
 
-def game_screen_names():
-    sql =  f"""select screen_name from player left join game_player on player.id = game_player.player_id
-           left join game on game.player_id = player.id"""
+def game_screen_names(game_id):
+    sql = f"""select screen_name from player left join game_player on player.id = game_player.player_id 
+    left join game on game_player.game_id = game.id where game.id = '{game_id}'"""
     result = db_query(sql)
     names = []
     for row in result:
