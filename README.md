@@ -1,8 +1,10 @@
 # Ota kiinni jos saat!
 
+Tämä projekti kehitettiin osana ryhmätyötä Ohjelmisto 1 -kurssilla Metropolia Ammattikorkeakoulussa.
+
 ------------
 
-## Sisällysluettelo
+### Sisällysluettelo
   1. [Projektin yleiskuvaus](#projektin-yleiskuvaus)
   2. [Ominaisuudet](#Ominaisuudet)
   3. [Tekniset tiedot](#Tekniset-tiedot)
@@ -11,8 +13,6 @@
 ------------
 
 ### Projektin yleiskuvaus
-
-Tämä projekti kehitettiin osana ryhmätyötä Ohjelmisto 1 -kurssilla Metropolia Ammattikorkeakoulussa.
 
 Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa ympäristörikollista ympäri Euroopan lentokenttiä tavoitteenaan saada hänet kiinni ennen ajan loppumista. Rikollisen liikkeet näkyvät etsiville vain satunnaisesti, mutta johtolankoja seuraamalla hänet voi jäljittää. Pelaajat liikkuvat eri lentokenttien välillä käyttämällä eri kokoisia lentokoneita ja lentolippuja.
 
