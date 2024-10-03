@@ -2,35 +2,57 @@ import os
 from assisting_functions import tyhj
 
 from airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
-from player_management import update_location, get_players_info
+from player_management import update_location, get_players_info,get_criminal_movements
 from tickets_table import player_tickets, delete_ticket
+from past_movement_table import add_player_past_movement
 
 
-def player_move(name):
+def player_move(name, round, player_ids, screen_names):
     print("Kaikki lentokentät:")
 
     # Print all available airports
     airports = get_airports()
     print_airports(airports)
-
+    criminal_id = player_ids[0]
     # Get recommended airports for the player
     recommended_airports = get_recommended_airports(name)
 
     get_players_info(name)
     player_id = get_players_info(name).get('id')
+    player_type= get_players_info(name).get('type')
+
     # print(player_id)
     available_tickets = player_tickets(player_id)
     # print(available_tickets)
+    print("")
     print("Sinulla on seuraavat lentoliput:")
     for key, value in available_tickets.items():
         print(f"{key}: {value} kpl")
 
+    print("")
+
+    if player_type == 0:
+
+        for detective in screen_names[1:]:
+            detective_info = get_players_info(detective)
+            print(f"Etsivän {detective_info.get('screen_name')} sijainti: {detective_info.get('airport_name')}, {detective_info.get('country_name')}")
+
+    #if player is detective print criminal location depending on round
+    if player_type == 1 and round in [1,4,7,10]:
+        criminal_info = get_criminal_movements(criminal_id)
+        print(f"Rikollisen {criminal_info.get('screen_name')} viime sijainti: {criminal_info.get('airport')}, {criminal_info.get('country')} käytetty lippu: {criminal_info.get('ticket_type')}")
+
+    print("")
+    print(f"Oma sijaintisi: {get_players_info(name).get('airport_name')}, {get_players_info(name).get('country_name')}")
+    print("")
     # Print recommended airports using the name parameter (sorted from farthest to nearest)
     print_recommended_airports(name)  # This function handles sorting and printing
 
     # Extract keys for indexing from recommended_airports
     recommended_keys = list(recommended_airports.keys())  # Get keys directly from the dictionary
-    # print(recommended_keys)  # Print the keys for debugging
+
+    #if player is criminal, detectives locations
+
 
     # Ask the player to select an airport
     while True:
@@ -52,19 +74,21 @@ def player_move(name):
 
     # Update the player location
     location = selected_key  # Get the location of the selected airport
-    # print(location)
+
     update_location(location, name)
 
     # Update the ticket count
     ticket_type = selected_airport['ticket_type']
-    # print(ticket_type)  #
-    # print(ticket_type)
-    delete_ticket(ticket_type, player_id)
-    # print(player_tickets(player_id))
+
+    if player_type == 0:
+        add_player_past_movement(player_id, location, ticket_type)
+    else:
+        delete_ticket(ticket_type, player_id)
+
 
     tyhj()
 
 
 # Example call to the function
-# player_move("Kimmo")
+player_move("pahis",1, [1,2,3],['pahis','etsivä1','etsivä2'])
 

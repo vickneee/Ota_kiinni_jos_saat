@@ -72,7 +72,7 @@ def setup_players(player_ids, criminal_is_computer,detectives_are_computer):
     insert_player_tickets(detective2_id, 1)
     player_ids.append(detective2_id)
 
-
+"""
 def game_player_round(player, round):
     player_info = get_players_info(player)
     if player_info.get('is_computer') == 1:
@@ -83,6 +83,8 @@ def game_player_round(player, round):
     else:
         if player_info.get('role') == 0:
             player_move(player)
+"""
+
 
 
 
