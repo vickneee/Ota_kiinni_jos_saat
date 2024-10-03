@@ -83,7 +83,7 @@ def get_criminal_movements(player_id):
     info["ticket_type"] = criminal_movement[0][3]
     return info
 
-print(get_criminal_movements(1))
+
 
 
 #Funktio kysyy pelaajan nimeä, tarkistaa onko se tyhjä, liian pitkä
