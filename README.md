@@ -20,5 +20,8 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 
   
 ### Tekniset tiedot
+- Peli on toteutettu python kielellä
+- Pelissä on käytetty mysql tietokantaa
+- **sql**:
 
 ### Ryhmäjäsenet
