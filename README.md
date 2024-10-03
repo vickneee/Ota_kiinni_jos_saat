@@ -5,7 +5,7 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 
 
 ## Sisällysluettelo
-  1. [Projektin yleiskuvaus] (#projektin-yleiskuvaus)
+  1. [Projektin yleiskuvaus](#projektin-yleiskuvaus)
   2. Ominaisuudet
   3. Tekniset tiedot
   4. Ryhmäjäsenet
