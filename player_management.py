@@ -15,7 +15,7 @@ def add_player_game(player_id, game_id):
 
 def get_players_info(name):
     sql = f"""
-        select player.id, player.screen_name, player.is_computer,player.location, airport.name, country.name,airport.latitude_deg, airport.longitude_deg 
+        select player.id, player.screen_name, player.type,player.is_computer,player.location, airport.name, country.name,airport.latitude_deg, airport.longitude_deg 
         from player 
         left join airport on player.location = airport.ident 
         left join country on airport.iso_country = country.iso_country 
@@ -26,12 +26,13 @@ def get_players_info(name):
     if result:
         player_info["id"] = result[0][0]
         player_info["screen_name"] = result[0][1]
-        player_info["is_computer"] = result[0][2]
-        player_info["location"] = result[0][3]
-        player_info["airport_name"] = result[0][4]
-        player_info["country_name"] = result[0][5]
-        player_info["latitude"] = result[0][6]
-        player_info["longitude"] = result[0][7]
+        player_info["type"] = result[0][2]
+        player_info["is_computer"] = result[0][3]
+        player_info["location"] = result[0][4]
+        player_info["airport_name"] = result[0][5]
+        player_info["country_name"] = result[0][6]
+        player_info["latitude"] = result[0][7]
+        player_info["longitude"] = result[0][8]
     return player_info
 
 
@@ -54,16 +55,23 @@ def game_screen_names():
 
 # Haetaan kannasta rikollisen viimeisin lokaatio, sekä lentolippu
 # Kysely hakee taulun viimeiseimpänä lisätyt tiedot
-def get_criminal_movements():
+def get_criminal_movements(player_id):
+    info = {}
     sql = f"""
-    SELECT location, ticket_type
+    SELECT player.screen_name,airport.name,country.name, past_movement.ticket_type
     FROM past_movement
-    JOIN player ON past_movement.player_id = player.id
-    WHERE player.type = 0
+    LEFT JOIN player ON past_movement.player_id = player.id
+    LEFT JOIN airport ON past_movement.location = airport.ident
+    LEFT JOIN country ON airport.iso_country = country.iso_country
+    WHERE past_movement.player_id = '{player_id}'
     ORDER BY past_movement.rowid DESC
     LIMIT 1
     """
     criminal_movement=db_query(sql)
+    info["screen_name"] = criminal_movement[0][0]
+    info["airport"] = criminal_movement[0][1]
+    info["country"] = criminal_movement[0][2]
+    info["ticket_type"] = criminal_movement[0][3]
     return criminal_movement
 
 
