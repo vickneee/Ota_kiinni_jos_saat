@@ -31,7 +31,7 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 #### Poikkeavien suorituspolkujen hallinta
 - Pelissä on sisäänrakennettuja virheilmoituksia, jotka käsittelevät tilanteet, joissa pelaajat antavat virheellisiä syötteitä
 
-
+---------
   
 ### Tekniset tiedot
 - Peli on toteutettu Python kielellä
