@@ -38,7 +38,7 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 
 ### Ryhmäjäsenet
 
-|                    |
+| Nimet              |
 |--------------------|
 | Samu Kirjonen      |
 | Alessa Pentinmikko |
