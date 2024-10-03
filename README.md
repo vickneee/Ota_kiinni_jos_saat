@@ -26,7 +26,7 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
 #### Eri kokoiset lentokoneet ja lentoliput:
 - Pelaajilla on käytössä erilaisia lentolippuja, jotka rajoittavat tai mahdollistavat liikkumisen eri etäisyyksillä:
     - Potkurikone: Lähimmät kaksi lentokenttää.
-    - Matkustahakone: Lähimmistä kahdesta kaksi seuraavaa lentokenttää.
+    - Matkustjahakone: Lähimmistä kahdesta kaksi seuraavaa lentokenttää.
     - Yksityiskone: Kaksi kauimmaista lentokenttää.
 #### Kätketyt liikkeet ja johtolankojen seuraaminen:
 - Rikollisen edellinen olinpaikka ja käytetty lentolippu paljastetaan etsiville kierroksilla (1, 4, 7 ja 10).
