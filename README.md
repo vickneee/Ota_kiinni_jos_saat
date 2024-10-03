@@ -20,8 +20,19 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 
   
 ### Tekniset tiedot
-- Peli on toteutettu python kielellä
-- Pelissä on käytetty mysql tietokantaa
-- **sql**:
+- Peli on toteutettu Python kielellä
+- Pelissä hyödynnetään MariaDB-tietokantaa
+
+#### Tietokantataulut:
+- airport
+- country
+- game
+- game_player
+- past_movement
+- player
+- tickets
+
+![Tietokanta](https://github.com/user-attachments/assets/5d0ca8c2-7ff7-439c-b886-d3c23762cf33)
+  
 
 ### Ryhmäjäsenet
