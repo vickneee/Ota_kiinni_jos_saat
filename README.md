@@ -24,16 +24,16 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
 - Yksinpelissä pelaaja voi valita roolin ja pelata tietokonetta vastaan.
 - Kahden pelaajan tilassa toinen pelaaja ohjaa molempia etsiviä.
 #### Eri kokoiset lentokoneet ja lentoliput:
-- Pelaajilla on käytössä erilaisia lentolippuja, jotka rajoittavat tai mahdollistavat liikkumisen eri etäisyyksillä.
+- Pelaajilla on käytössä erilaisia lentolippuja, jotka rajoittavat tai mahdollistavat liikkumisen eri etäisyyksillä:
     - Potkurikone: Lähimmät kaksi lentokenttää.
     - Matkustahakone: Lähimmistä kahdesta kaksi seuraavaa lentokenttää.
     - Yksityiskone: Kaksi kauimmaista lentokenttää.
-#### Kätketyt liikkeet ja johtolankojen seuraaminen.
+#### Kätketyt liikkeet ja johtolankojen seuraaminen:
 - Rikollisen edellinen olinpaikka ja käytetty lentolippu paljastetaan etsiville kierroksilla (1, 4, 7 ja 10).
 - Rikolliset näkevät joka vuorolla, mistä etsivät ovat liikkuneet ja mitä lentolippua on käytetty.
-#### Pelimekaniikka.
+#### Pelimekaniikka:
 - Jokaisella vuorolla rikollisen siirrot piilotetaan etsiviltä konsolin tyhjentämisen avulla.
-#### Poikkeavien suorituspolkujen hallinta.
+#### Poikkeavien suorituspolkujen hallinta:
 - Pelissä on sisäänrakennettuja virheilmoituksia, jotka käsittelevät virheelliset syötteet, kuten:
     - Liian pitkä nimimerkki.
     - Käytössä oleva tai tyhjä nimimerkki.
