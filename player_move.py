@@ -14,6 +14,7 @@ def player_move(name, round, player_ids, screen_names):
     airports = get_airports()
     print_airports(airports)
     criminal_id = player_ids[0]
+    criminal_name = screen_names[0]
     # Get recommended airports for the player
     recommended_airports = get_recommended_airports(name)
 
@@ -40,6 +41,7 @@ def player_move(name, round, player_ids, screen_names):
     #if player is detective print criminal location depending on round
     if player_type == 1 and round in [1,4,7,10]:
         criminal_info = get_criminal_movements(criminal_id)
+
         print(f"Rikollisen {criminal_info.get('screen_name')} viime sijainti: {criminal_info.get('airport')}, {criminal_info.get('country')} käytetty lippu: {criminal_info.get('ticket_type')}")
 
     print("")
