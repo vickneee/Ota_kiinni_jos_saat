@@ -1,10 +1,11 @@
 from db_functions import db_update
 
 # Lisätään yksi kierros round columniin
-def insert_round():
-    sql= """
+def insert_round(game_id):
+    sql= f"""
         UPDATE game
         SET round = round +1
+        where id = '{game_id}'
         """
     db_update(sql)
 

@@ -53,9 +53,9 @@ def game_screen_names(game_id):
         names.append(row[0])
     return names[-2:]
 
-def all_game_screen_names():
-    sql =  f"""select screen_name from player left join game_player on player.id = game_player.player_id
-           left join game on game.player_id = player.id"""
+def all_game_screen_names(game_id):
+    sql = f"""select screen_name from player left join game_player on player.id = game_player.player_id 
+        left join game on game_player.game_id = game.id where game.id = '{game_id}'"""
     result = db_query(sql)
     names = []
     for row in result:
@@ -125,6 +125,7 @@ def insert_player_tickets(player_id, player_type):
 def criminal_choose_starting_point(name, is_computer=0):
     # Karkuri valitsee aloituspaikan
     from airport_table import print_airports, get_airports
+    from assisting_functions import tyhj
     airports = get_airports()
     if is_computer:
         selected_icao = random.choice(list(airports.keys()))
@@ -136,6 +137,7 @@ def criminal_choose_starting_point(name, is_computer=0):
         location = airports[selected_icao]
         print(f"Rikollinen on valinnut aloituspaikakseen lentokentän numero {choose}.")
         print(f"Lentokenttä: {location['name']}, Maa: {location['country']}, Sijainti: ({location['latitude']}, {location['longitude']})")
+    tyhj()
     #insert the player into the database
     add = insert_player(name, 0, selected_icao, is_computer)
     insert_player_tickets(add, 0)
