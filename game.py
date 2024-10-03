@@ -37,23 +37,25 @@ def game(game_id):
     from player_management import all_game_screen_names,get_players_info
     welcome()
     ids = start_game(game_id)
-    print(ids)
+
     screen_names = all_game_screen_names(game_id)
-    print(screen_names)
+
 
     for round in range(10):
-        print(f"Kierros {round + 1}")
+
         round += 1
         insert_round(game_id)
         for player in screen_names:
-            player_id = get_players_info(player).get('id')
-            print(f"Pelaaja: {player}")
+            player_info = get_players_info(player)
+            print(f"Pelaaja: {player_info.get('screen_name')}")
+            player_id = player_info.get('id')
             game_player_round(player, round, ids, game_id, screen_names)
             update_round_player(player_id, game_id)
-            if game_over(game_id, ids[0], player_id):
-                print(game_over(game_id, ids[0], player_id))
-                print("Peli päättyi!")
-                return
+            if player_info.get('type') == 1:
+                if game_over(game_id, ids[0], player_id):
+                    print(game_over(game_id, ids[0], player_id))
+                    print("Peli päättyi!")
+                    return
 
 
 

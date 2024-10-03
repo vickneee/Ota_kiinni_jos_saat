@@ -20,15 +20,14 @@ def game_over(game_id,criminal_id,detective_id):
             WHERE p.id='{detective_id}' AND gp.game_id = {game_id}
         """
     detective_location = db_query(sql_detective)
-    print(criminal_location)
-    print(detective_location)
+
 
     if criminal_location == detective_location:
         return True
     else:
         return False
 
-#print(game_over(5,10,11)) # True
+#print(game_over(1,1,2)) # True
 
 
 

@@ -73,7 +73,7 @@ def get_criminal_movements(player_id):
     LEFT JOIN airport ON past_movement.location = airport.ident
     LEFT JOIN country ON airport.iso_country = country.iso_country
     WHERE past_movement.player_id = '{player_id}'
-    ORDER BY past_movement.rowid DESC
+    ORDER BY past_movement.id DESC
     LIMIT 1
     """
     criminal_movement=db_query(sql)
@@ -81,7 +81,9 @@ def get_criminal_movements(player_id):
     info["airport"] = criminal_movement[0][1]
     info["country"] = criminal_movement[0][2]
     info["ticket_type"] = criminal_movement[0][3]
-    return criminal_movement
+    return info
+
+print(get_criminal_movements(1))
 
 
 #Funktio kysyy pelaajan nimeä, tarkistaa onko se tyhjä, liian pitkä
