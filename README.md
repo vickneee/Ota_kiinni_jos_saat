@@ -12,10 +12,9 @@
 
 ### Projektin yleiskuvaus
 
-Tämä projekti kehitettiin osana ryhmätyötä ohjelmisto 1 kurssilla Metropolia Ammattikorkeakoulussa. 
+Tämä projekti kehitettiin osana ryhmätyötä Ohjelmisto 1 -kurssilla Metropolia Ammattikorkeakoulussa.
 
-Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa ympäristörikollista ympäri Euroopan lentokenttiä tavoitteena saada hänet kiinni ennen kuin aika loppuu. Rikollisen liikkeitä on mahdollista nähdä vain ajoittain mutta johtolankoja seuraamalla hänet voi saada kiinni. Lentokenttien välillä liikutaan eri kokoisilla lentokoneilla käyttäen lentolippuja. 
-
+Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa ympäristörikollista ympäri Euroopan lentokenttiä tavoitteenaan saada hänet kiinni ennen ajan loppumista. Rikollisen liikkeet näkyvät etsiville vain satunnaisesti, mutta johtolankoja seuraamalla hänet voi jäljittää. Pelaajat liikkuvat eri lentokenttien välillä käyttämällä eri kokoisia lentokoneita ja lentolippuja.
 ------------
 
 ### Ominaisuudet
@@ -34,7 +33,10 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 #### Pelimekaniikka
 - Jokaisella vuorolla rikollisen siirrot piilotetaan etsiviltä konsolin tyhjentämisen avulla
 #### Poikkeavien suorituspolkujen hallinta
-- Pelissä on sisäänrakennettuja virheilmoituksia, jotka käsittelevät tilanteet, joissa pelaajat antavat virheellisiä syötteitä
+- Pelissä on sisäänrakennettuja virheilmoituksia, jotka käsittelevät virheelliset syötteet, kuten:
+    - Liian pitkä nimimerkki
+    - Käytössä oleva tai tyhjä nimimerkki
+    - Virheellinen lentokenttävalinta
 
 ------------
   
@@ -42,6 +44,7 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 - Peli on toteutettu Python kielellä
 - Pelissä hyödynnetään MariaDB-tietokantaa
 - Pythonin ja MariaDB välinen yhteys perustuu SQL-kyselyihin
+- Peli on pelattavissa konsolissa
 
 #### Tietokantataulut:
 - airport 
