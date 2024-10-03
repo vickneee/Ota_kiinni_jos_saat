@@ -22,9 +22,10 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 ### Tekniset tiedot
 - Peli on toteutettu Python kielellä
 - Pelissä hyödynnetään MariaDB-tietokantaa
+- Pythonin ja MariaDB välinen yhteys perustuu SQL-kyselyihin
 
 #### Tietokantataulut:
-- airport
+- airport 
 - country
 - game
 - game_player
@@ -36,3 +37,10 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
   
 
 ### Ryhmäjäsenet
+
+|                    |
+|--------------------|
+| Samu Kirjonen      |
+| Alessa Pentinmikko |
+| Doni Trivedi       |
+| Victoria Vavulina  |
