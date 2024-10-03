@@ -1,7 +1,8 @@
 from db_functions import db_insert
-from game_logic import how_many_players
+from game_logic import how_many_players, game_player_round
 from game_over import game_over
 from player_management import add_player_game
+from insert_rounds import insert_round, update_round_player
 
 # Welcome to the game of Catch me if you can!
 def welcome():
@@ -26,20 +27,39 @@ def start_game(game_id):
     for i in range (3):
         player_id = players[i]
         add_player_game(player_id, game_id)
+    return players
 
-start_game(game_id)
+#start_game(game_id)
 
 # Pelin runko.
 
-#def game():
-    #pelaajat = ['matti', 'pekka', 'ritva']
-    #start_game(game_id)
-    #for kierros in range(10):
-        #print(f"Kierros {kierros + 1}")
-        #kierros += 1
-        #for pelaaja in pelaajat:
-            #print(f"Pelaaja: {pelaaja}")
-#game()
+def game(game_id):
+    from player_management import all_game_screen_names,get_players_info
+    welcome()
+    ids = start_game(game_id)
+    print(ids)
+    screen_names = all_game_screen_names(game_id)
+    print(screen_names)
+
+    for round in range(10):
+        print(f"Kierros {round + 1}")
+        round += 1
+        insert_round(game_id)
+        for player in screen_names:
+            player_id = get_players_info(player).get('id')
+            print(f"Pelaaja: {player}")
+            game_player_round(player, round, ids, game_id, screen_names)
+            update_round_player(player_id, game_id)
+            if game_over(game_id, ids[0], player_id):
+                print(game_over(game_id, ids[0], player_id))
+                print("Peli päättyi!")
+                return
+
+
+
+game(game_id)
+
+
 
 
 

@@ -1,6 +1,6 @@
 from player_move import player_move
 from ai_move import ai_criminal_move, ai_detective_move
-from player_management import new_player, insert_player, all_game_screen_names, insert_player_tickets, get_players_info, screen_names,criminal_choose_starting_point
+from player_management import new_player, insert_player,insert_player_tickets, get_players_info, screen_names,criminal_choose_starting_point
 from airport_table import two_farthest_airport
 
 
@@ -71,16 +71,16 @@ def setup_players(player_ids, criminal_is_computer,detectives_are_computer):
     player_ids.append(detective2_id)
 
 
-def game_player_round(player, round,ids):
-    screen_names = all_game_screen_names()
-    player_info = get_players_info(player)
+def game_player_round(player, round,ids,game_id,screen_names):
+
+    player = player_info = get_players_info(player)
     if player_info.get('is_computer') == 1:
         if player_info.get('type') == 0:
-            ai_criminal_move(player_info.get('screen_name'))
+            ai_criminal_move(player.get('screen_name'),game_id)
         else:
-            ai_detective_move(screen_names[0].get('screen_name'))
+            ai_detective_move(screen_names[0], player.get('screen_name'))
     else:
-        player_move(player)
+        player_move(player.get('screen_name'),round,ids,screen_names)
 
 
 

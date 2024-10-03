@@ -1,21 +1,34 @@
-from db_functions import get_db_connection, db_query
+from db_functions import db_query
 
 # Tarkistetaan sijaitseeko rikollinen ja etsivä samalla lentokentällä.
 # Kysely kokeilee onko type 0 eli rikollisella
 # ja type 1 eli etsivällä sama arvo location sarakkeessa
-def game_over():
-    sql= f"""
-        select location
-        from player
-        where type = 0
-        intersect
-        select location
-        from player
-        where type = 1
+def game_over(game_id,criminal_id,detective_id):
+    sql_criminal = f"""
+            SELECT p.location
+            FROM player p
+            LEFT JOIN game_player gp ON p.id = gp.player_id
+            LEFT JOIN game g ON gp.game_id = g.id
+            WHERE p.id='{criminal_id}' AND gp.game_id = {game_id}
         """
-    result = db_query(sql)
-    # Palautetaan True, jos rikollinen ja etsivä sijaitsevat samalla lentokentällä
-    # Muuten False, peli jatkuu
-    if result:
+    criminal_location = db_query(sql_criminal)
+    sql_detective = f"""
+            SELECT p.location
+            FROM player p
+            LEFT JOIN game_player gp ON p.id = gp.player_id
+            LEFT JOIN game g ON gp.game_id = g.id
+            WHERE p.id='{detective_id}' AND gp.game_id = {game_id}
+        """
+    detective_location = db_query(sql_detective)
+    print(criminal_location)
+    print(detective_location)
+
+    if criminal_location == detective_location:
         return True
-    return False
+    else:
+        return False
+
+#print(game_over(5,10,11)) # True
+
+
+
