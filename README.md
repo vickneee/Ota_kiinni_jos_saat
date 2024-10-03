@@ -14,8 +14,22 @@ Tämä projekti kehitettiin osana ryhmätyötä ohjelmisto 1 kurssilla Metropoli
 Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa ympäristörikollista ympäri Euroopan lentokenttiä tavoitteena saada hänet kiinni ennen kuin aika loppuu. Rikollisen liikkeitä on mahdollista nähdä vain ajoittain mutta johtolankoja seuraamalla hänet voi saada kiinni. Lentokenttien välillä liikutaan eri kokoisilla lentokoneilla käyttäen lentolippuja. 
 
 ### Ominaisuudet
-
-.....
+#### Peli:
+- Peli tukee 1-3 pelaajaa, jolloin pelaajat voivat toimia joko rikollisena tai etsivänä
+- Yksinpelissä pelaaja voi valita roolin ja pelata tietokonetta vastaan
+- Kahden pelaajan tilassa toinen pelaaja ohjaa molempia etsiviä
+#### Eri kokoiset lentokoneet ja lentoliput:
+- Pelaajilla on käytössä erilaisia lentolippuja, jotka rajoittavat tai mahdollistavat liikkumisen eri etäisyyksillä
+    - Potkurikone: Lähimmät kaksi lentokenttää
+    - Matkustahakone: Lähimmistä kahdesta kaksi seuraavaa lentokenttää
+    - Yksityiskone: Kaksi kauimmaista lentokenttää
+#### Kätketyt liikkeet ja johtolankojen seuraaminen
+- Rikollisen edellinen olinpaikka ja käytetty lentolippu paljastetaan etsiville kierroksilla (1,4,7 ja 10)
+- Rikolliset näkevät joka vuorolla, mistä etsivät ovat liikkuneet ja mitä lentolippua on käytetty
+#### Pelimekaniikka
+- Jokaisella vuorolla rikollisen siirrot piilotetaan etsiviltä konsolin tyhjentämisen avulla
+#### Poikkeavien suorituspolkujen hallinta
+- Pelissä on sisäänrakennettuja virheilmoituksia, jotka käsittelevät tilanteet, joissa pelaajat antavat virheellisiä syötteitä
 
 
   
