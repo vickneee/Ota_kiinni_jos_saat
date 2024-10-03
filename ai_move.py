@@ -4,7 +4,7 @@ from tickets_table import delete_ticket
 import random
 
 
-def ai_criminal_move(name):
+def ai_criminal_move(name, game_id):
     from airport_table import get_airports, airports_location, get_recommended_airports
     from player_management import get_players_info, game_screen_names, update_location
     # Get all airports and their locations
@@ -17,7 +17,7 @@ def ai_criminal_move(name):
     criminal_location = criminal_info.get('location')
 
     # Get detectives' locations
-    detective_names = game_screen_names()
+    detective_names = game_screen_names(game_id)
     detective1_name = detective_names[0]
     detective2_name = detective_names[1]
     detective1_info = get_players_info(detective1_name)
@@ -50,7 +50,7 @@ def ai_criminal_move(name):
     destination_info = all_airports[best_destination_code]
 
     # Update player's movement and location
-    add_player_past_movement(best_ticket_type, criminal_id, criminal_location)
+    add_player_past_movement(criminal_id,criminal_location,best_ticket_type)
     update_location(best_destination_code, name)
     # Optionally delete the ticket if it's used
     #delete_ticket(best_ticket_type, criminal_id)
