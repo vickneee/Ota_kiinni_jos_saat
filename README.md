@@ -5,12 +5,10 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 
 
 ## Sisällysluettelo
-  1. Projektin yleiskuvaus
+  1. [Projektin yleiskuvaus] (#projektin-yleiskuvaus)
   2. Ominaisuudet
-  3. Asennus
-  4. Käyttö
-  5. Osallistuminen
-  6. Ryhmäjäsenet
+  3. Tekniset tiedot
+  4. Ryhmäjäsenet
 
 ### Projektin yleiskuvaus
 
@@ -21,19 +19,7 @@ Tämä projekti kehitettiin osana ryhmätyötä ohjelmisto 1 kurssilla Metropoli
 .....
 
 
-### Asennus
-
-#### Edellytykset
-- versiot?
-
-#### Asennusvaiheet
-
-1. Kloonaa repository:
-   - ...
-
-2. Siirry projektikansioon
-   - cd....
-3. Asenna riippuvuudet
-   - tehdäänkö requirements file?
   
-### Käyttö
+### Tekniset tiedot
+
+### Ryhmäjäsenet
