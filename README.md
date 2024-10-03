@@ -5,7 +5,7 @@
   1. [Projektin yleiskuvaus](#projektin-yleiskuvaus)
   2. [Ominaisuudet](#Ominaisuudet)
   3. [Tekniset tiedot](#Tekniset-tiedot)
-  4. [Ryhmän jäsenet](#Ryhmän_jäsenet)
+  4. [Ryhmän jäsenet](#Ryhmän-jäsenet)
 
 ### Projektin yleiskuvaus
 
