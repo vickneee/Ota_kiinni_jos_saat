@@ -2,7 +2,7 @@ from db_functions import db_insert, db_query
 from tickets_table import delete_ticket
 
 
-def add_player_past_movement(player_id, location,ticket_type, ):
+def add_player_past_movement(player_id, location,ticket_type ):
 
     # Add the ticket and player information to the database
     sql = f"""INSERT INTO past_movement (player_id, location, ticket_type) 

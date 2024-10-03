@@ -53,6 +53,15 @@ def game_screen_names(game_id):
         names.append(row[0])
     return names[-2:]
 
+def all_game_screen_names():
+    sql =  f"""select screen_name from player left join game_player on player.id = game_player.player_id
+           left join game on game.player_id = player.id"""
+    result = db_query(sql)
+    names = []
+    for row in result:
+        names.append(row[0])
+    return names
+
 # Haetaan kannasta rikollisen viimeisin lokaatio, sekä lentolippu
 # Kysely hakee taulun viimeiseimpänä lisätyt tiedot
 def get_criminal_movements(player_id):
