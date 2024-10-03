@@ -12,7 +12,7 @@
 Tämä projekti kehitettiin osana ryhmätyötä ohjelmisto 1 kurssilla Metropolia Ammattikorkeakoulussa. 
 
 Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa ympäristörikollista ympäri Euroopan lentokenttiä tavoitteena saada hänet kiinni ennen kuin aika loppuu. Rikollisen liikkeitä on mahdollista nähdä vain ajoittain mutta johtolankoja seuraamalla hänet voi saada kiinni. Lentokenttien välillä liikutaan eri kokoisilla lentokoneilla käyttäen lentolippuja. 
-----------
+------------
 ### Ominaisuudet
 #### Peli:
 - Peli tukee 1-3 pelaajaa, jolloin pelaajat voivat toimia joko rikollisena tai etsivänä
@@ -31,7 +31,7 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 #### Poikkeavien suorituspolkujen hallinta
 - Pelissä on sisäänrakennettuja virheilmoituksia, jotka käsittelevät tilanteet, joissa pelaajat antavat virheellisiä syötteitä
 
----------
+------------
   
 ### Tekniset tiedot
 - Peli on toteutettu Python kielellä
@@ -49,7 +49,7 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
 
 ![Tietokanta](https://github.com/user-attachments/assets/5d0ca8c2-7ff7-439c-b886-d3c23762cf33)
   
---------------
+------------
 ### Ryhmän jäsenet
 
 | Nimet              |
