@@ -29,7 +29,7 @@ Pelin idea pohjautuu Scotland Yard lautapeliin.  Pelissä kaksi etsivää jahtaa
     - Matkustahakone: Lähimmistä kahdesta kaksi seuraavaa lentokenttää
     - Yksityiskone: Kaksi kauimmaista lentokenttää
 #### Kätketyt liikkeet ja johtolankojen seuraaminen
-- Rikollisen edellinen olinpaikka ja käytetty lentolippu paljastetaan etsiville kierroksilla (1,4,7 ja 10)
+- Rikollisen edellinen olinpaikka ja käytetty lentolippu paljastetaan etsiville kierroksilla (1, 4, 7 ja 10)
 - Rikolliset näkevät joka vuorolla, mistä etsivät ovat liikkuneet ja mitä lentolippua on käytetty
 #### Pelimekaniikka
 - Jokaisella vuorolla rikollisen siirrot piilotetaan etsiviltä konsolin tyhjentämisen avulla
