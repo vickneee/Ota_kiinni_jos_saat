@@ -2,14 +2,14 @@ from player_move import player_move
 from ai_move import ai_criminal_move, ai_detective_move
 from player_management import new_player, insert_player,insert_player_tickets, get_players_info, screen_names,criminal_choose_starting_point
 from airport_table import two_farthest_airport
-
+from termcolor import colored
 
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
     player_ids=[]
     role_type = int(input("Valitse roolisi. Syötä 0 rikolliselle tai 1 etsijällä: "))
     while role_type != 0 and role_type != 1:
-        print("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.")
+        print(colored("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.", "red"))
         role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
 
     if role_type == 0:
