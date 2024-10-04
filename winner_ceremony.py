@@ -1,4 +1,3 @@
-
 from game_over import game_over
 from db_functions import db_query
 from playsound import playsound
@@ -11,16 +10,16 @@ def winner_ceremony(game_id, criminal_id, detective_id):
     if game_over(game_id, criminal_id, detective_id):
     # Haetaan tietokannasta pelaajien nimet ja lokaatio
     # Lokaation avulla voidaan selventää pelin päättyessä missä rikollinen lopulta jäi kiinni
-        sql = """
-            SELECT p.screen_name, a.name AS location
-            FROM player p
-            LEFT JOIN game_player gp ON p.id = gp.player_id
-            LEFT JOIN airport a ON p.location = a.ident
-            WHERE gp.game_id = {game_id} 
-            AND (p.id = {criminal_id} OR p.id = {detective_id})
-        """
-        result = db_query(sql)
 
+        sql = """
+            SELECT screen_name, location
+            FROM player
+            LEFT JOIN game_player on player.id = game_player.player_id
+            WHERE game_player.game_id = {game_id}
+            """
+
+        result = db_query(sql)
+        """
         # Voittajien nimet
         winners = [row[0] for row in result]
         criminal_location = None
@@ -29,12 +28,16 @@ def winner_ceremony(game_id, criminal_id, detective_id):
         for row in result:
             if row[0] == criminal_id:
                 criminal_location = row[1]
-
+        """
         play_celebration_sound()
 
         # Palautetaan aina rikollisen sijainti
         # Palautetaan voittajien nimet
-        return ", ".join(winners), criminal_location
+        # Palautetaan rikollisen sijainti
+
+        #return ", ".join(winners), criminal_location
+        return result
+
 
     #Alkuperäinen, palauttaa vain ensimmäisen tuloksen lokaation
     # Vaikka pitäisi palauttaa sen lokaation jossa kiinni ottanut etsivä ja kiinni jäänyt roisto sijaitsee
@@ -44,4 +47,5 @@ def winner_ceremony(game_id, criminal_id, detective_id):
         play_celebration_sound()
         return winners, location
     """
+
 
