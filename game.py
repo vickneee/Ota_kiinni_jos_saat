@@ -4,7 +4,7 @@ from game_over import game_over
 from player_management import add_player_game
 from insert_rounds import insert_round, update_round_player
 from winner_ceremony import winner_ceremony
-
+from assisting_functions import play_celebration_sound, thank_you
 
 
 # Welcome to the game of Catch me if you can!
@@ -55,14 +55,20 @@ def game(game_id):
             game_player_round(player, round, ids, game_id, screen_names)
             update_round_player(player_id, game_id)
             if player_info.get('type') == 1:
-
-                    #print(game_over(game_id, ids[0], player_id))
-                    #winner_ceremony(game_id, ids[0], player_id)
+                if game_over(game_id, ids[0], player_id):
+                    play_celebration_sound()
+                    print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
+                    thank_you()
                     return
-    if round == 1:
-        winners, location = winner_ceremony(game_id, ids[0], ids[1])
-        print(f"Voittajat: {winners}")
-        print(f"Rikollisen sijainti: {location}")
+    # Kierrokset päättyvät 10 jälkeen
+    # Tällöin rikollinen voittaa!
+    # Soitetaan musiikkia kun peli päättyy
+    if round == 10:
+        winners = winner_ceremony(game_id)
+        print("Kierrokset loppuivat.")
+        print(f"Rikollinen {winners[0][0]} pääsi karkuun!")
+        print(f"{winners[0][0]} lensi vapauteen lentokentältä {winners[0][3]}, {winners[0][2]}.")
+        play_celebration_sound()
 
 
 game(game_id)
