@@ -3,6 +3,8 @@ from game_logic import how_many_players, game_player_round
 from game_over import game_over
 from player_management import add_player_game
 from insert_rounds import insert_round, update_round_player
+from winner_ceremony import winner_ceremony
+
 
 
 # Welcome to the game of Catch me if you can!
@@ -43,7 +45,7 @@ def game(game_id):
     screen_names = all_game_screen_names(game_id)
 
 
-    for round in range(10):
+    for round in range(1):
 
         round += 1
         insert_round(game_id)
@@ -58,10 +60,14 @@ def game(game_id):
                     #print(game_over(game_id, ids[0], player_id))
                     winner_ceremony(game_id, ids[0], player_id)
                     return
-
+    if round == 1:
+        winners, location = winner_ceremony(game_id, ids[0], ids[1])
+        print(f"Voittajat: {winners}")
+        print(f"Rikollisen sijainti: {location}")
 
 
 game(game_id)
+
 
 
 
