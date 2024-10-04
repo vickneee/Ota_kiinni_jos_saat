@@ -1,4 +1,4 @@
-from geopy.distance import geodesic as GD, distance
+from geopy.distance import geodesic as GD
 from past_movement_table import add_player_past_movement
 from tickets_table import delete_ticket
 import random
@@ -50,16 +50,15 @@ def ai_criminal_move(name, game_id):
     destination_info = all_airports[best_destination_code]
 
     # Update player's movement and location
-    add_player_past_movement(criminal_id,criminal_location,best_ticket_type)
+    add_player_past_movement(criminal_id, criminal_location, best_ticket_type)
     update_location(best_destination_code, name)
-    # Optionally delete the ticket if it's used
-    #delete_ticket(best_ticket_type, criminal_id)
 
 
+# Function of the detective's move
 def ai_detective_move(criminal_name, detective_name):
     from airport_table import airports_location, get_recommended_airports
     from player_management import get_players_info, update_location
-    # Rikollisen ja etsivien tiedot
+    # Criminal and Detectives information
     criminal_info = get_players_info(criminal_name)
     detective_info = get_players_info(detective_name)
     detective_id = detective_info.get('id')
@@ -67,7 +66,7 @@ def ai_detective_move(criminal_name, detective_name):
     criminal_location = criminal_info.get('location')
     detective_location = detective_info.get('location')
 
-    # Recomended airports for detective
+    # Recommended airports for detective
     recommended_airports = get_recommended_airports(detective_name)
 
     # Calculate every recommended airport's distance to the criminal
@@ -88,6 +87,7 @@ def ai_detective_move(criminal_name, detective_name):
     else:
         closest_three = sorted(airport_distances.items(), key=lambda x: x[1])[:3]
 
+    # Choose one of the three closest airports
     chosen_airport_code = random.choice(closest_three)[0]
     chosen_airport = recommended_airports[chosen_airport_code]
     update_location(chosen_airport_code, detective_name)

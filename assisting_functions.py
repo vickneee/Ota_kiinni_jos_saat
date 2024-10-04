@@ -2,13 +2,16 @@ import os
 from math import radians, cos, sin, asin, sqrt
 from playsound import playsound
 
+
 # Play music when the game ends
 def play_celebration_sound():
     playsound('assets/celebration.mp3')
 
+
 # Clear console
 def tyhj():
     os.system('cls' if os.name == 'nt' else 'clear')
+
 
 # Game instructions
 def game_instructions():
@@ -61,6 +64,7 @@ def haversine(lat1, lon1, lat2, lon2):
     c = 2 * asin(sqrt(a))
     r = 6371  # Radius of Earth in kilometers
     return c * r
+
 
 # Ascii art. And the end message
 def thank_you():

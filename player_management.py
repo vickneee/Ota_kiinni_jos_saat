@@ -1,8 +1,8 @@
 from termcolor import colored
-
 from db_functions import db_query, db_insert, db_update
 from tickets_table import insert_tickets
 import random
+
 
 # Function to insert a new player into the database
 def insert_player(name, type, location, is_computer=0):
@@ -11,20 +11,22 @@ def insert_player(name, type, location, is_computer=0):
     add = db_insert(sql)
     return add
 
+
 # Function to add a player to a game
 def add_player_game(player_id, game_id):
-    sql = f"""insert into game_player (game_id,player_id) 
-    values ('{game_id}', '{player_id}')"""
+    sql = f"""INSERT INTO game_player (game_id, player_id) 
+    VALUES ('{game_id}', '{player_id}')"""
     add = db_insert(sql)
+
 
 # Function to get player information by screen name
 def get_players_info(name):
     sql = f"""
-        select player.id, player.screen_name, player.type,player.is_computer,player.location, airport.name, country.name,airport.latitude_deg, airport.longitude_deg 
-        from player 
-        left join airport on player.location = airport.ident 
-        left join country on airport.iso_country = country.iso_country 
-        where screen_name = '{name}'
+        SELECT player.id, player.screen_name, player.type,player.is_computer,player.location, airport.name, country.name, airport.latitude_deg, airport.longitude_deg 
+        FROM player 
+        LEFT JOIN airport ON player.location = airport.ident 
+        LEFT JOIN country ON airport.iso_country = country.iso_country 
+        WHERE screen_name = '{name}'
     """
     result = db_query(sql)
     player_info = {}
@@ -43,31 +45,40 @@ def get_players_info(name):
 
 # Function to get all screen names of players
 def screen_names():
-    sql = "select screen_name from player"
+    sql = "SELECT screen_name FROM player"
     result = db_query(sql)
     names = []
     for row in result:
         names.append(row[0])
     return names
 
+
 def game_screen_names(game_id):
-    sql = f"""select screen_name from player left join game_player on player.id = game_player.player_id 
-    left join game on game_player.game_id = game.id where game.id = '{game_id}'"""
+    sql = f"""SELECT screen_name 
+    FROM player 
+    LEFT JOIN game_player ON player.id = game_player.player_id 
+    LEFT JOIN game on game_player.game_id = game.id 
+    WHERE game.id = '{game_id}'"""
     result = db_query(sql)
     names = []
     for row in result:
         names.append(row[0])
     return names[-2:]
 
+
 # Function to get screen names of players in a specific game
 def all_game_screen_names(game_id):
-    sql = f"""select screen_name from player left join game_player on player.id = game_player.player_id 
-        left join game on game_player.game_id = game.id where game.id = '{game_id}'"""
+    sql = f"""SELECT screen_name 
+    FROM player 
+    LEFT JOIN game_player ON player.id = game_player.player_id 
+    LEFT JOIN game ON game_player.game_id = game.id 
+    WHERE game.id = '{game_id}'"""
     result = db_query(sql)
     names = []
     for row in result:
         names.append(row[0])
     return names
+
 
 # Function to get the latest movement of a criminal
 def get_criminal_movements(player_id):
@@ -82,14 +93,12 @@ def get_criminal_movements(player_id):
     ORDER BY past_movement.id DESC
     LIMIT 1
     """
-    criminal_movement=db_query(sql)
+    criminal_movement = db_query(sql)
     info["screen_name"] = criminal_movement[0][0]
     info["airport"] = criminal_movement[0][1]
     info["country"] = criminal_movement[0][2]
     info["ticket_type"] = criminal_movement[0][3]
     return info
-
-
 
 
 # Function to prompt for a new player name and validate it
@@ -104,11 +113,12 @@ def new_player(type):
             print(f"Nimimerkki {name} lisätty.")
             return name
         elif not name:
-            print(colored("Tyhjä nimimerkki. Yritä uudelleen!","red"))
+            print(colored("Tyhjä nimimerkki. Yritä uudelleen!", "red"))
         elif len(name) > max_char:
-            print(colored(f"Nimimerkin on oltava enintään {max_char} merkkiä pitkä.","red"))
+            print(colored(f"Nimimerkin on oltava enintään {max_char} merkkiä pitkä.", "red"))
         elif name in names:
-            print(colored("Nimimerkki on varattu. Valitse uusi.","red"))
+            print(colored("Nimimerkki on varattu. Valitse uusi.", "red"))
+
 
 # Function to insert tickets for a player based on their type
 def insert_player_tickets(player_id, player_type):
@@ -128,10 +138,9 @@ def insert_player_tickets(player_id, player_type):
             insert_tickets(player_id, "yksityiskone")
 
 
-
 # Function for the criminal to choose a starting point
 def criminal_choose_starting_point(name, is_computer=0):
-    # Karkuri valitsee aloituspaikan
+    # Criminal chooses a starting point
     from airport_table import print_airports, get_airports
     from assisting_functions import tyhj
     airports = get_airports()
@@ -142,7 +151,7 @@ def criminal_choose_starting_point(name, is_computer=0):
         print_airports(get_airports())
         choose = int(input("Valitse aloituspaikka (1-21): "))
         while choose < 1 or choose > 21:
-            print(colored("Virheellinen syöte. Valitse aloituspaikka (1-21): ","red"))
+            print(colored("Virheellinen syöte. Valitse aloituspaikka (1-21): ", "red"))
             choose = int(input("Valitse aloituspaikka (1-21): "))
 
         selected_icao = list(airports.keys())[choose - 1]
@@ -150,10 +159,12 @@ def criminal_choose_starting_point(name, is_computer=0):
         print(f"Rikollinen on valinnut aloituspaikakseen lentokentän numero {choose}.")
         print(f"Lentokenttä: {location['name']}, Maa: {location['country']}, Sijainti: ({location['latitude']}, {location['longitude']})")
     tyhj()
-    #insert the player into the database
+
+    # Insert the player into the database
     add = insert_player(name, 0, selected_icao, is_computer)
     insert_player_tickets(add, 0)
     return add
+
 
 # Function to update the location of a player
 def update_location(location, name):
@@ -164,6 +175,7 @@ def update_location(location, name):
     """
     db_update(sql)
 
+
 # Function to show the locations of detectives
 def show_detective_locations():
     detective_names = game_screen_names()
@@ -173,4 +185,3 @@ def show_detective_locations():
     detective2_info = get_players_info(detective2_name)
     print(f"Etsivän {detective1_name} sijainti: {detective1_info['country_name']}, {detective1_info['airport_name']}")
     print(f"Etsivän {detective2_name} sijainti: {detective2_info['country_name']}, {detective2_info['airport_name']}")
-

@@ -5,7 +5,6 @@ def winner_ceremony(game_id):
     # Retrieve players and their information from the database for the completed game
     # The location helps clarify where the criminal was finally caught at the end of the game
     # Or from where they flew to freedom after ten rounds
-
     sql = f"""
             SELECT screen_name, location, country.name, airport.name
             FROM player
@@ -18,4 +17,3 @@ def winner_ceremony(game_id):
 
     result = db_query(sql)
     return result
-
