@@ -12,7 +12,7 @@ def game_instructions():
     print("1. Pelaajamäärä:")
     print("   - Peliä voi pelata yksi, kaksi tai kolme pelaajaa.")
     print(
-        "   - Yhden pelaajan pelissä pelaaja saa päättää, että pelaako hän etsivän vai rikollisen roolia ja pelaa tietokonetta vastaan.")
+        "- Yhden pelaajan pelissä pelaaja saa päättää, että pelaako hän etsivän vai rikollisen roolia ja pelaa tietokonetta vastaan.")
     print("   - Kahden pelaajan pelissä toinen pelaajista ohjaa molempia etsiviä.\n")
 
     print("2. Roolit ja lentoliput:")
@@ -55,3 +55,26 @@ def haversine(lat1, lon1, lat2, lon2):
     c = 2 * asin(sqrt(a))
     r = 6371  # Radius of Earth in kilometers
     return c * r
+
+
+def thank_you():
+    print("""
+▄    ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄
+▐░▌  ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌
+▐░▌ ▐░▌  ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀▀▀ ▐░▌
+▐░▌▐░▌       ▐░▌          ▐░▌          ▐░▌     ▐░▌       ▐░▌▐░▌          ▐░▌
+▐░▌░▌        ▐░▌          ▐░▌          ▐░▌     ▐░▌       ▐░▌▐░█▄▄▄▄▄▄▄▄▄ ▐░▌
+▐░░▌         ▐░▌          ▐░▌          ▐░▌     ▐░▌       ▐░▌▐░░░░░░░░░░░▌▐░▌
+▐░▌░▌        ▐░▌          ▐░▌          ▐░▌     ▐░▌       ▐░▌ ▀▀▀▀▀▀▀▀▀█░▌▐░▌
+▐░▌▐░▌       ▐░▌          ▐░▌          ▐░▌     ▐░▌       ▐░▌          ▐░▌ ▀
+▐░▌ ▐░▌  ▄▄▄▄█░█▄▄▄▄  ▄▄▄▄█░█▄▄▄▄      ▐░▌     ▐░█▄▄▄▄▄▄▄█░▌ ▄▄▄▄▄▄▄▄▄█░▌ ▄
+▐░▌  ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌     ▐░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌
+▀    ▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀ 
+    """)
+    print("Kiitos kun pelasit lentokonepeliä!")
+    print("Peli on kehitetty osana Ohjelmisto 1 -kurssia.")
+    print("Koodin ovat kirjoittaneet: ")
+    print("    - Samu Kirjonen")
+    print("    - Alessa Pentinmikko")
+    print("    - Doni Trivedi")
+    print("    - Victoria Vavulina")
