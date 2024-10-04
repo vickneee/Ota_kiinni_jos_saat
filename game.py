@@ -4,7 +4,7 @@ from game_over import game_over
 from player_management import add_player_game
 from insert_rounds import insert_round, update_round_player
 from winner_ceremony import winner_ceremony
-
+from assisting_functions import play_celebration_sound, thank_you
 
 
 # Welcome to the game of Catch me if you can!
