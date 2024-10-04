@@ -1,12 +1,10 @@
-import os
-
 from termcolor import colored
-
 from assisting_functions import tyhj
 from tickets_table import player_tickets, delete_ticket
 from past_movement_table import add_player_past_movement
 
 
+# Function to handle player movement
 def player_move(name, round, player_ids, screen_names):
     from airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
     from player_management import update_location, get_players_info, get_criminal_movements
@@ -21,11 +19,12 @@ def player_move(name, round, player_ids, screen_names):
     # Get recommended airports for the player
     recommended_airports = get_recommended_airports(name)
 
+    # Get player information
     get_players_info(name)
     player_id = get_players_info(name).get('id')
-    player_type= get_players_info(name).get('type')
+    player_type = get_players_info(name).get('type')
 
-    # print(player_id)
+    # Get available tickets for the player
     available_tickets = player_tickets(player_id)
     # print(available_tickets)
     print("")
@@ -38,14 +37,15 @@ def player_move(name, round, player_ids, screen_names):
 
     print("")
 
+    # If player is criminal print detective locations
     if player_type == 0:
 
         for detective in screen_names[1:]:
             detective_info = get_players_info(detective)
             print(f"Etsivän {detective_info.get('screen_name')} sijainti: {detective_info.get('airport_name')}, {detective_info.get('country_name')}")
 
-    #if player is detective print criminal location depending on round
-    if player_type == 1 and round in [1,4,7,10]:
+    # If player is detective print criminal location depending on round
+    if player_type == 1 and round in [1, 4, 7, 10]:
         criminal_info = get_criminal_movements(criminal_id)
 
         print(f"Rikollisen {criminal_info.get('screen_name')} viime sijainti: {criminal_info.get('airport')}, {criminal_info.get('country')} käytetty lippu: {criminal_info.get('ticket_type')}")
@@ -58,9 +58,6 @@ def player_move(name, round, player_ids, screen_names):
 
     # Extract keys for indexing from recommended_airports
     recommended_keys = list(recommended_airports.keys())  # Get keys directly from the dictionary
-
-    #if player is criminal, detectives locations
-
 
     # Ask the player to select an airport
     while True:
@@ -82,21 +79,15 @@ def player_move(name, round, player_ids, screen_names):
 
     # Update the player location
     location = selected_key  # Get the location of the selected airport
-
     update_location(location, name)
 
-    # Update the ticket count
+    # Update the ticket type
     ticket_type = selected_airport['ticket_type']
 
+    # Add the player's past movement to the database
     if player_type == 0:
         add_player_past_movement(player_id, location, ticket_type)
     else:
         delete_ticket(ticket_type, player_id)
 
-
     tyhj()
-
-
-# Example call to the function
-
-

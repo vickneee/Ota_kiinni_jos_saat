@@ -1,12 +1,13 @@
 from player_move import player_move
 from ai_move import ai_criminal_move, ai_detective_move
-from player_management import new_player, insert_player,insert_player_tickets, get_players_info, screen_names,criminal_choose_starting_point
+from player_management import new_player, insert_player, insert_player_tickets, get_players_info, criminal_choose_starting_point
 from airport_table import two_farthest_airport
 from termcolor import colored
 
+
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
-    player_ids=[]
+    player_ids = []
     role_type = int(input("Valitse roolisi. Syötä 0 rikolliselle tai 1 etsijällä: "))
     while role_type != 0 and role_type != 1:
         print(colored("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.", "red"))
@@ -21,14 +22,13 @@ def player_choose_the_role():
         print("Anna ensin vastustajasi (tietokoneen) nimi")
         setup_players(player_ids, criminal_is_computer=True, detectives_are_computer=False)
 
-
     print(player_ids)
     return player_ids
 
 
 # How many players will be playing the game?
 def how_many_players():
-    player_ids=[]
+    player_ids = []
     print("Kuinka monta pelaajaa pelaa peliä?\n"
           "Jos vastaus on 1:\n"
           "Pelaaja pelaa tietokonetta vastaan ja pelaajan täytyy valita rooli.\n"
@@ -48,16 +48,14 @@ def how_many_players():
                 setup_players(player_ids, criminal_is_computer=False, detectives_are_computer=False)
                 return player_ids
             else:
-                print(colored("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ","red"))
+                print(colored("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ", "red"))
 
         except ValueError:
             print(colored("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ", "red"))
 
 
-
-
 # Create a new player for the criminal
-def setup_players(player_ids, criminal_is_computer,detectives_are_computer):
+def setup_players(player_ids, criminal_is_computer, detectives_are_computer):
     criminal = new_player(0)
     criminal_id = criminal_choose_starting_point(criminal, criminal_is_computer)
     player_ids.append(criminal_id)
@@ -78,20 +76,16 @@ def setup_players(player_ids, criminal_is_computer,detectives_are_computer):
     player_ids.append(detective2_id)
 
 
-def game_player_round(player, round,ids,game_id,screen_names):
+# Game player round function
+def game_player_round(player, round, ids, game_id, screen_names):
     # Get player information
     player = player_info = get_players_info(player)
     if player_info.get('is_computer') == 1:
         if player_info.get('type') == 0:
             # Computer move for criminal
-            ai_criminal_move(player.get('screen_name'),game_id)
+            ai_criminal_move(player.get('screen_name'), game_id)
         else:
             ai_detective_move(screen_names[0], player.get('screen_name'))
     else:
         # Human player move
-        player_move(player.get('screen_name'),round,ids,screen_names)
-
-
-
-
-
+        player_move(player.get('screen_name'), round, ids, screen_names)

@@ -1,8 +1,9 @@
-from db_functions import db_insert, db_query
+from db_functions import db_insert
 from tickets_table import delete_ticket
 
+
 # Add the player's past movement to the past_movement table
-def add_player_past_movement(player_id, location,ticket_type ):
+def add_player_past_movement(player_id, location, ticket_type):
 
     # Add the ticket and player information to the database
     sql = f"""INSERT INTO past_movement (player_id, location, ticket_type) 
@@ -14,6 +15,4 @@ def add_player_past_movement(player_id, location,ticket_type ):
     if not result:
         return False
 
-    #return add
-
-
+    # return add

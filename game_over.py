@@ -1,9 +1,10 @@
 from db_functions import db_query
 
+
 # Check if criminal and detective are in the same location.
 # Query checks if type 0 i.e. criminal has the same value in location column
 # And type 1 i.e. detective has the same value in location column
-def game_over(game_id,criminal_id,detective_id):
+def game_over(game_id, criminal_id, detective_id):
     sql_criminal = f"""
             SELECT p.location
             FROM player p
@@ -26,8 +27,3 @@ def game_over(game_id,criminal_id,detective_id):
         return True
     else:
         return False
-
-#print(game_over(1,1,2)) # True
-
-
-

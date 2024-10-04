@@ -1,12 +1,12 @@
 import os
+import mysql.connector
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
 
-import mysql.connector
 
-
+# Connect to the database
 def get_db_connection():
     conn = mysql.connector.connect(
         host='127.0.0.1',
@@ -19,6 +19,7 @@ def get_db_connection():
     return conn
 
 
+# Query the database
 def db_query(sql):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -26,6 +27,8 @@ def db_query(sql):
     result = cursor.fetchall()
     return result
 
+
+# Insert into the database
 def db_insert(sql):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -35,7 +38,7 @@ def db_insert(sql):
     return lastrowid
 
 
-
+# Delete from the database
 def db_delete(sql):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -43,6 +46,7 @@ def db_delete(sql):
     conn.commit()
 
 
+# Update the database
 def db_update(sql):
     conn = get_db_connection()
     cursor = conn.cursor()

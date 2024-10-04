@@ -13,13 +13,13 @@ def get_airports():
                   'ESSA', 'EPWA', 'LHBP',
                   'LROP', 'LKPR', 'LYBE',
                   'BIKF', 'LBSF', 'UKBB')
-    sql = f"""select airport.ident, airport.name, country.name, airport.latitude_deg, airport.longitude_deg 
-    from airport inner join country on airport.iso_country = country.iso_country 
-    where ident in {icao_codes}"""
+    sql = f"""SELECT airport.ident, airport.name, country.name, airport.latitude_deg, airport.longitude_deg 
+    FROM airport 
+    INNER JOIN country ON airport.iso_country = country.iso_country 
+    WHERE ident in {icao_codes}"""
     result = db_query(sql)
     for row in result:
         airports[row[0]] = {"name": row[1], "country": row[2], "latitude": row[3], "longitude": row[4]}
-
     return airports
 
 
@@ -56,12 +56,12 @@ def get_recommended_airports(name):
             airport_distances[key] = GD(player_location, value).kilometers
 
     all_sorted_locations = sorted(airport_distances.items(), key=lambda x: x[1])
-    #print(all_sorted_locations)
+    # print(all_sorted_locations)
     recommended = {}
-    if 'potkurikone' in tickets.keys() :
+    if 'potkurikone' in tickets.keys():
         for key, value in all_sorted_locations[:2]:
             recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
-                                "distance": value,"ticket_type": 'potkurikone'}
+                                "distance": value, "ticket_type": 'potkurikone'}
     if 'matkustajakone' in tickets.keys():
         for key, value in all_sorted_locations[2:4]:
             recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
@@ -81,6 +81,7 @@ def print_recommended_airports(name):
     # Sort the recommended airports by distance
     sorted_airports = sorted(recommended.items(), key=lambda x: x[1]['distance'])
 
+    # Print the recommended airports
     print("Suositellut lentokentät lähimmästä kauimpaan:")
     for i, (key, value) in enumerate(sorted_airports[:6], start=1):
         print(f"{i}. {value['country']} : {value['name']} - lipputyyppi : {value['ticket_type']}")
@@ -88,6 +89,7 @@ def print_recommended_airports(name):
     return sorted_airports
 
 
+# Function to get the two farthest airports from the criminal starting point
 def two_farthest_airport(name):
     from player_management import get_players_info
     airports = get_airports()
@@ -114,6 +116,3 @@ def two_farthest_airport(name):
             farthest_airports[1] = (icao, location['name'], location['country'], f"{distance:.2f} km")
     # Return the two farthest airports
     return farthest_airports
-
-
-
