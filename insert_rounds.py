@@ -1,6 +1,6 @@
 from db_functions import db_update
 
-# Lisätään yksi kierros round columniin
+# Add one round to the round column
 def insert_round(game_id):
     sql= f"""
         UPDATE game
@@ -9,7 +9,7 @@ def insert_round(game_id):
     """
     db_update(sql)
 
-
+# Update the player_id column in the game table
 def update_round_player(player_id,game_id):
     sql = f"""
         UPDATE game 
@@ -18,4 +18,5 @@ def update_round_player(player_id,game_id):
     """
     db_update(sql)
 
+# Insert a new round
 insert_round(1)

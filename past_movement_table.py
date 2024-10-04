@@ -1,7 +1,7 @@
 from db_functions import db_insert, db_query
 from tickets_table import delete_ticket
 
-
+# Add the player's past movement to the past_movement table
 def add_player_past_movement(player_id, location,ticket_type ):
 
     # Add the ticket and player information to the database

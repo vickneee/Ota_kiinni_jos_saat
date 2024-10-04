@@ -1,8 +1,8 @@
 from db_functions import db_query
 
-# Tarkistetaan sijaitseeko rikollinen ja etsivä samalla lentokentällä.
-# Kysely kokeilee onko type 0 eli rikollisella
-# ja type 1 eli etsivällä sama arvo location sarakkeessa
+# Check if criminal and detective are in the same location.
+# Query checks if type 0 i.e. criminal has the same value in location column
+# And type 1 i.e. detective has the same value in location column
 def game_over(game_id,criminal_id,detective_id):
     sql_criminal = f"""
             SELECT p.location
@@ -21,7 +21,7 @@ def game_over(game_id,criminal_id,detective_id):
         """
     detective_location = db_query(sql_detective)
 
-
+    # Return True if criminal and detective are in the same location
     if criminal_location == detective_location:
         return True
     else:

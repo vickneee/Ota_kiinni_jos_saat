@@ -56,15 +56,22 @@ def how_many_players():
 
 
 
+# Create a new player for the criminal
 def setup_players(player_ids, criminal_is_computer,detectives_are_computer):
     criminal = new_player(0)
     criminal_id = criminal_choose_starting_point(criminal, criminal_is_computer)
     player_ids.append(criminal_id)
+
+    # Find the two farthest airports for detectives
     farthest = two_farthest_airport(criminal)
+
+    # Create and insert the first detective
     detective1 = new_player(1)
     detective1_id = insert_player(detective1, 1, farthest[0][0], detectives_are_computer)
     insert_player_tickets(detective1_id, 1)
     player_ids.append(detective1_id)
+
+    # Create and insert the second detective
     detective2 = new_player(1)
     detective2_id = insert_player(detective2, 1, farthest[1][0], detectives_are_computer)
     insert_player_tickets(detective2_id, 1)
@@ -72,14 +79,16 @@ def setup_players(player_ids, criminal_is_computer,detectives_are_computer):
 
 
 def game_player_round(player, round,ids,game_id,screen_names):
-
+    # Get player information
     player = player_info = get_players_info(player)
     if player_info.get('is_computer') == 1:
         if player_info.get('type') == 0:
+            # Computer move for criminal
             ai_criminal_move(player.get('screen_name'),game_id)
         else:
             ai_detective_move(screen_names[0], player.get('screen_name'))
     else:
+        # Human player move
         player_move(player.get('screen_name'),round,ids,screen_names)
 
 
