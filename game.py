@@ -9,13 +9,12 @@ from assisting_functions import play_celebration_sound, thank_you
 
 # Welcome to the game of Catch me if you can!
 def welcome():
-    print("Tervetuloa Ota kiinni jos saat -peliin!\n"
-          "Peli on yksinkertainen peli, jossa rikollinen yrittää välttää etsijöitä.\n"
-          "Pelissä on 10 kierrosta, joiden aikana rikollinen yrittää välttää etsijöitä.\n"
-          "Etsijät yrittävät löytää rikollisen ennen kuin rikollinen ehtii paeta.\n"
-          "Peli on ohi, kun rikollinen on saatu kiinni eli löydetty.\n"
-          "(Etsijät voittavat) tai rikollinen pääsee pakoon (Rikollinen voittaa).\n"
-          "Onnea peliin!")
+    print("Tervetuloa 'Ota kiinni jos saat' -peliin!\n"
+          "Tavoitteena on, että rikollinen välttelee etsiviä 10 kierroksen ajan.\n"
+          "Etsivät yrittävät löytää rikollisen ennen kierrosten loppua.\n"
+          "Peli päättyy, kun rikollinen joko jää kiinni (etsivät voittavat) "
+          "tai onnistuu pakenemaan kierrosten loputtua (rikollinen voittaa).\n"
+          "\nOnnea peliin!")
     return
 
 # Create game function
@@ -46,7 +45,7 @@ def game(game_id):
     screen_names = all_game_screen_names(game_id)
 
 
-    for round in range(1):
+    for round in range(10):
 
         round += 1
         insert_round(game_id)
@@ -58,9 +57,9 @@ def game(game_id):
             update_round_player(player_id, game_id)
             if player_info.get('type') == 1:
                 if game_over(game_id, ids[0], player_id):
-                    play_celebration_sound()
                     print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
                     thank_you()
+                    play_celebration_sound()
                     return
     # The rounds end after 10 rounds
     # That's when the criminal wins!
