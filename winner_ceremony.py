@@ -2,9 +2,9 @@ from db_functions import db_query
 
 
 def winner_ceremony(game_id):
-    # Haetaan tietokannasta päättyneen pelin pelaajat ja heidän tiedot
-    # Lokaation avulla voidaan selventää pelin päättyessä missä rikollinen lopulta jäi kiinni
-    # Tai mistä hän lensi vapauteen kymmenen kierroksen jälkeen
+    # Retrieve players and their information from the database for the completed game
+    # The location helps clarify where the criminal was finally caught at the end of the game
+    # Or from where they flew to freedom after ten rounds
 
     sql = f"""
             SELECT screen_name, location, country.name, airport.name

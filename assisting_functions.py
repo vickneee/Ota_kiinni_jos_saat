@@ -2,14 +2,15 @@ import os
 from math import radians, cos, sin, asin, sqrt
 from playsound import playsound
 
-# Soitetaan musiikkia kun peli päättyy
+# Play music when the game ends
 def play_celebration_sound():
     playsound('assets/celebration.mp3')
 
+# Clear console
 def tyhj():
     os.system('cls' if os.name == 'nt' else 'clear')
 
-
+# Game instructions
 def game_instructions():
     print("Pelin ohjeet:\n")
 
@@ -45,6 +46,7 @@ def game_instructions():
     print("     tai rikollinen lentää samalle lentokentälle, jossa etsivä sijaitsee.")
 
 
+# Calculate the distance between two geographical points using the Haversine formula
 def haversine(lat1, lon1, lat2, lon2):
     # Convert latitude and longitude from degrees to radians
     lat1 = radians(lat1)
@@ -60,7 +62,7 @@ def haversine(lat1, lon1, lat2, lon2):
     r = 6371  # Radius of Earth in kilometers
     return c * r
 
-
+# Ascii art. And the end message
 def thank_you():
     print("""
 ▄    ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄

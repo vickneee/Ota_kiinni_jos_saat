@@ -63,26 +63,26 @@ def ai_detective_move(criminal_name, detective_name):
     criminal_info = get_players_info(criminal_name)
     detective_info = get_players_info(detective_name)
     detective_id = detective_info.get('id')
-    # Rikollisen ja etsivien sijainnit
+    # Criminal and Detectives locations
     criminal_location = criminal_info.get('location')
     detective_location = detective_info.get('location')
 
-    # Suositellut lentokentät etsivälle
+    # Recomended airports for detective
     recommended_airports = get_recommended_airports(detective_name)
 
-    # Laske jokaisen suositellun lentokentän etäisyys rikolliseen
+    # Calculate every recommended airport's distance to the criminal
     criminal_coords = airports_location()[criminal_location]
     airport_distances = {}
 
     for code, airport_info in recommended_airports.items():
-        # Lasketaan lentokentän koordinaattien perusteella
-        # etäisyys rikolliseen ja muutetaan kilometreiksi
+        # Calculate airport coordinates based on the airport's code
+        # Distance to criminal and change it to kilometers
         airport_coords = airports_location()[code]
         distance_to_criminal = f"{GD(criminal_coords, airport_coords).kilometers:.2f}"
         airport_distances[code] = distance_to_criminal
 
-        # Lentokentät suodatetaan etäisyyden mukaan
-        # ja valitaan kolme lähintä lentokenttää rikolliseen nähden
+        # Airports sorted by distance
+        # And select three closest airports to the criminal
     if len(airport_distances) < 3:
         closest_three = sorted(airport_distances.items())
     else:

@@ -18,6 +18,7 @@ def welcome():
           "Onnea peliin!")
     return
 
+# Create game function
 def create_game():
     sql = "INSERT INTO game (round,player_id) VALUES (0,null)"
     game_id = db_insert(sql)
@@ -25,6 +26,7 @@ def create_game():
 
 game_id = create_game()
 
+# Start game function
 def start_game(game_id):
     players = how_many_players()
     for i in range (3):
@@ -34,8 +36,7 @@ def start_game(game_id):
 
 #start_game(game_id)
 
-# Pelin runko.
-
+# Main game function
 def game(game_id):
     from player_management import all_game_screen_names,get_players_info
     from winner_ceremony import winner_ceremony
@@ -61,14 +62,15 @@ def game(game_id):
                     print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
                     thank_you()
                     return
-    # Kierrokset päättyvät 10 jälkeen
-    # Tällöin rikollinen voittaa!
-    # Soitetaan musiikkia kun peli päättyy
+    # The rounds end after 10 rounds
+    # That's when the criminal wins!
+    # Play music when the game ends
     if round == 10:
         winners = winner_ceremony(game_id)
         print("Kierrokset loppuivat.")
         print(f"Rikollinen {winners[0][0]} pääsi karkuun!")
         print(f"{winners[0][0]} lensi vapauteen lentokentältä {winners[0][3]}, {winners[0][2]}.")
+        thank_you()
         play_celebration_sound()
 
 

@@ -96,18 +96,23 @@ def two_farthest_airport(name):
     second_max_distance = 0
     starting_point = get_players_info(name)
 
+    # Iterate through all airports to find the two farthest ones
     for icao, location in airports.items():
         distance = haversine(starting_point['latitude'], starting_point['longitude'], location['latitude'],
                              location['longitude'])
+
+        # Update the farthest airports if the current distance is greater than the max distance
         if distance > max_distance:
             second_max_distance = max_distance
             max_distance = distance
             farthest_airports[1] = farthest_airports[0]
             farthest_airports[0] = (icao, location['name'], location['country'], f"{distance:.2f} km")
+
+        # Update the second-farthest airport if the current distance is greater than the second max distance
         elif distance > second_max_distance:
             second_max_distance = distance
             farthest_airports[1] = (icao, location['name'], location['country'], f"{distance:.2f} km")
-
+    # Return the two farthest airports
     return farthest_airports
 
 

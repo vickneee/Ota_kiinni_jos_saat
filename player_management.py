@@ -4,17 +4,20 @@ from db_functions import db_query, db_insert, db_update
 from tickets_table import insert_tickets
 import random
 
+# Function to insert a new player into the database
 def insert_player(name, type, location, is_computer=0):
     sql = f"""INSERT INTO player (screen_name, type, location, is_computer)
               VALUES ('{name}', '{type}', '{location}', {is_computer})"""
     add = db_insert(sql)
     return add
 
+# Function to add a player to a game
 def add_player_game(player_id, game_id):
     sql = f"""insert into game_player (game_id,player_id) 
     values ('{game_id}', '{player_id}')"""
     add = db_insert(sql)
 
+# Function to get player information by screen name
 def get_players_info(name):
     sql = f"""
         select player.id, player.screen_name, player.type,player.is_computer,player.location, airport.name, country.name,airport.latitude_deg, airport.longitude_deg 
@@ -38,6 +41,7 @@ def get_players_info(name):
     return player_info
 
 
+# Function to get all screen names of players
 def screen_names():
     sql = "select screen_name from player"
     result = db_query(sql)
@@ -55,6 +59,7 @@ def game_screen_names(game_id):
         names.append(row[0])
     return names[-2:]
 
+# Function to get screen names of players in a specific game
 def all_game_screen_names(game_id):
     sql = f"""select screen_name from player left join game_player on player.id = game_player.player_id 
         left join game on game_player.game_id = game.id where game.id = '{game_id}'"""
@@ -64,8 +69,7 @@ def all_game_screen_names(game_id):
         names.append(row[0])
     return names
 
-# Haetaan kannasta rikollisen viimeisin lokaatio, sekä lentolippu
-# Kysely hakee taulun viimeiseimpänä lisätyt tiedot
+# Function to get the latest movement of a criminal
 def get_criminal_movements(player_id):
     info = {}
     sql = f"""
@@ -88,8 +92,7 @@ def get_criminal_movements(player_id):
 
 
 
-#Funktio kysyy pelaajan nimeä, tarkistaa onko se tyhjä, liian pitkä
-#tai käytössä. Palauttaa hyväksytyn nimimerkin.
+# Function to prompt for a new player name and validate it
 def new_player(type):
     names = screen_names()
     max_char = 20
@@ -107,6 +110,7 @@ def new_player(type):
         elif name in names:
             print(colored("Nimimerkki on varattu. Valitse uusi.","red"))
 
+# Function to insert tickets for a player based on their type
 def insert_player_tickets(player_id, player_type):
     if player_type == 0:
         for i in range(10):
@@ -125,7 +129,7 @@ def insert_player_tickets(player_id, player_type):
 
 
 
-
+# Function for the criminal to choose a starting point
 def criminal_choose_starting_point(name, is_computer=0):
     # Karkuri valitsee aloituspaikan
     from airport_table import print_airports, get_airports
@@ -151,6 +155,7 @@ def criminal_choose_starting_point(name, is_computer=0):
     insert_player_tickets(add, 0)
     return add
 
+# Function to update the location of a player
 def update_location(location, name):
     sql = f"""
     UPDATE player
@@ -159,6 +164,7 @@ def update_location(location, name):
     """
     db_update(sql)
 
+# Function to show the locations of detectives
 def show_detective_locations():
     detective_names = game_screen_names()
     detective1_name = detective_names[0]
