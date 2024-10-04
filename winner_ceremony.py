@@ -1,4 +1,4 @@
-from game import game_id
+
 from game_over import game_over
 from db_functions import db_query
 from playsound import playsound

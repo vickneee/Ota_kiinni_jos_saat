@@ -23,5 +23,7 @@ def player_tickets(player_id):
         tickets[row[0]] = row[1]
     return tickets
 
+print(player_tickets(1))
+
 
 
