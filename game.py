@@ -18,7 +18,6 @@ def welcome():
           "\nOnnea peliin!")
     return
 
-
 def create_game():
     sql = "INSERT INTO game (round,player_id) VALUES (0,null)"
     game_id = db_insert(sql)
