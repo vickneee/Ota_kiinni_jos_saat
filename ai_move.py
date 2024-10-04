@@ -1,4 +1,4 @@
-from geopy.distance import geodesic as GD
+from geopy.distance import geodesic as GD, distance
 from past_movement_table import add_player_past_movement
 from tickets_table import delete_ticket
 import random
@@ -78,7 +78,7 @@ def ai_detective_move(criminal_name, detective_name):
         # Lasketaan lentokentän koordinaattien perusteella
         # etäisyys rikolliseen ja muutetaan kilometreiksi
         airport_coords = airports_location()[code]
-        distance_to_criminal = f"{GD.distance(criminal_coords, airport_coords).kilometers:.2f}"
+        distance_to_criminal = f"{GD(criminal_coords, airport_coords).kilometers:.2f}"
         airport_distances[code] = distance_to_criminal
 
         # Lentokentät suodatetaan etäisyyden mukaan
