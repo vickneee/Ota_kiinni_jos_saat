@@ -3,8 +3,8 @@ from game_logic import how_many_players, game_player_round
 from game_over import game_over
 from player_management import add_player_game
 from insert_rounds import insert_round, update_round_player
-from winner_ceremony import winner_ceremony
-
+from assisting_functions import thank_you
+from winner_ceremony import winner_ceremony, play_celebration_sound
 
 
 # Welcome to the game of Catch me if you can!
@@ -17,6 +17,8 @@ def welcome():
           "(Etsijät voittavat) tai rikollinen pääsee pakoon (Rikollinen voittaa).\n"
           "Onnea peliin!")
     return
+
+
 
 def create_game():
     sql = "INSERT INTO game (round,player_id) VALUES (0,null)"
@@ -56,9 +58,10 @@ def game(game_id):
             game_player_round(player, round, ids, game_id, screen_names)
             update_round_player(player_id, game_id)
             if player_info.get('type') == 1:
-
-                    #print(game_over(game_id, ids[0], player_id))
-                    #winner_ceremony(game_id, ids[0], player_id)
+                if game_over(game_id, ids[0], player_id):
+                    play_celebration_sound()
+                    print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
+                    thank_you()
                     return
     if round == 1:
         winners, location = winner_ceremony(game_id, ids[0], ids[1])
