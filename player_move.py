@@ -1,4 +1,7 @@
 import os
+
+from termcolor import colored
+
 from assisting_functions import tyhj
 from tickets_table import player_tickets, delete_ticket
 from past_movement_table import add_player_past_movement
@@ -14,7 +17,7 @@ def player_move(name, round, player_ids, screen_names):
     airports = get_airports()
     print_airports(airports)
     criminal_id = player_ids[0]
-    criminal_name = screen_names[0]
+
     # Get recommended airports for the player
     recommended_airports = get_recommended_airports(name)
 
@@ -26,9 +29,12 @@ def player_move(name, round, player_ids, screen_names):
     available_tickets = player_tickets(player_id)
     # print(available_tickets)
     print("")
+    print(f"Pelin kierros: {round}\n")
+
     print("Sinulla on seuraavat lentoliput:")
-    for key, value in available_tickets.items():
-        print(f"{key}: {value} kpl")
+    print("Potkurikone: ", available_tickets.get('potkurikone'))
+    print("Matkustajakone: ", available_tickets.get('matkustajakone'))
+    print("Yksityiskone: ", available_tickets.get('yksityiskone'))
 
     print("")
 
@@ -45,8 +51,8 @@ def player_move(name, round, player_ids, screen_names):
         print(f"Rikollisen {criminal_info.get('screen_name')} viime sijainti: {criminal_info.get('airport')}, {criminal_info.get('country')} käytetty lippu: {criminal_info.get('ticket_type')}")
 
     print("")
-    print(f"Oma sijaintisi: {get_players_info(name).get('airport_name')}, {get_players_info(name).get('country_name')}")
-    print("")
+    print(f"Sinun vuorosi {get_players_info(name).get('screen_name')}, Sijaintisi: {get_players_info(name).get('airport_name')}, {get_players_info(name).get('country_name')}\n")
+
     # Print recommended airports using the name parameter (sorted from farthest to nearest)
     print_recommended_airports(name)  # This function handles sorting and printing
 
@@ -70,9 +76,9 @@ def player_move(name, round, player_ids, screen_names):
                     f"Valitsit lentokentän: {selected_airport['country']} : {selected_airport['name']} ja käytit {selected_airport['ticket_type']} lentolipun.")
                 break  # Exit loop if input is valid
             else:
-                print("Virheellinen valinta. Yritä uudelleen.")
+                print(colored("Virheellinen valinta. Yritä uudelleen.","red"))
         except ValueError:
-            print("Virheellinen syöte. Syötä numero.")
+            print(colored("Virheellinen syöte. Syötä numero."))
 
     # Update the player location
     location = selected_key  # Get the location of the selected airport

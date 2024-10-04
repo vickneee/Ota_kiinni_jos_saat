@@ -1,3 +1,5 @@
+from termcolor import colored
+
 from db_functions import db_query, db_insert, db_update
 from tickets_table import insert_tickets
 import random
@@ -99,11 +101,11 @@ def new_player(type):
             print(f"Nimimerkki {name} lisätty.")
             return name
         elif not name:
-            print("Tyhjä nimimerkki. Yritä uudelleen!")
+            print(colored("Tyhjä nimimerkki. Yritä uudelleen!","red"))
         elif len(name) > max_char:
-            print(f"Nimimerkin on oltava enintään {max_char} merkkiä pitkä.")
+            print(colored(f"Nimimerkin on oltava enintään {max_char} merkkiä pitkä.","red"))
         elif name in names:
-            print("Nimimerkki on varattu. Valitse uusi.")
+            print(colored("Nimimerkki on varattu. Valitse uusi.","red"))
 
 def insert_player_tickets(player_id, player_type):
     if player_type == 0:
@@ -135,6 +137,10 @@ def criminal_choose_starting_point(name, is_computer=0):
         print("Rikollinen valitsee aloituspaikan")
         print_airports(get_airports())
         choose = int(input("Valitse aloituspaikka (1-21): "))
+        while choose < 1 or choose > 21:
+            print(colored("Virheellinen syöte. Valitse aloituspaikka (1-21): ","red"))
+            choose = int(input("Valitse aloituspaikka (1-21): "))
+
         selected_icao = list(airports.keys())[choose - 1]
         location = airports[selected_icao]
         print(f"Rikollinen on valinnut aloituspaikakseen lentokentän numero {choose}.")
