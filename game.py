@@ -44,7 +44,7 @@ def game(game_id):
     screen_names = all_game_screen_names(game_id)
 
 
-    for round in range(1):
+    for round in range(10):
 
         round += 1
         insert_round(game_id)
@@ -56,9 +56,9 @@ def game(game_id):
             update_round_player(player_id, game_id)
             if player_info.get('type') == 1:
                 if game_over(game_id, ids[0], player_id):
-                    play_celebration_sound()
                     print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
                     thank_you()
+                    play_celebration_sound()
                     return
     # Kierrokset päättyvät 10 jälkeen
     # Tällöin rikollinen voittaa!
@@ -68,6 +68,7 @@ def game(game_id):
         print("Kierrokset loppuivat.")
         print(f"Rikollinen {winners[0][0]} pääsi karkuun!")
         print(f"{winners[0][0]} lensi vapauteen lentokentältä {winners[0][3]}, {winners[0][2]}.")
+        thank_you()
         play_celebration_sound()
 
 
