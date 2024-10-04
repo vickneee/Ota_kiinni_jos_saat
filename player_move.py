@@ -1,4 +1,7 @@
 import os
+
+from termcolor import colored
+
 from assisting_functions import tyhj
 from tickets_table import player_tickets, delete_ticket
 from past_movement_table import add_player_past_movement
@@ -73,9 +76,9 @@ def player_move(name, round, player_ids, screen_names):
                     f"Valitsit lentokentän: {selected_airport['country']} : {selected_airport['name']} ja käytit {selected_airport['ticket_type']} lentolipun.")
                 break  # Exit loop if input is valid
             else:
-                print("Virheellinen valinta. Yritä uudelleen.")
+                print(colored("Virheellinen valinta. Yritä uudelleen.","red"))
         except ValueError:
-            print("Virheellinen syöte. Syötä numero.")
+            print(colored("Virheellinen syöte. Syötä numero."))
 
     # Update the player location
     location = selected_key  # Get the location of the selected airport
