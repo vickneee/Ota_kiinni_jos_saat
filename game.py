@@ -17,7 +17,7 @@ def welcome():
     return
 
 def create_game():
-    sql = "INSERT INTO game () VALUES ()"
+    sql = "INSERT INTO game (round,player_id) VALUES (0,null)"
     game_id = db_insert(sql)
     return game_id
 
@@ -43,7 +43,7 @@ def game(game_id):
     screen_names = all_game_screen_names(game_id)
 
 
-    for round in range(10):
+    for round in range(1):
 
         round += 1
         insert_round(game_id)
@@ -54,9 +54,9 @@ def game(game_id):
             game_player_round(player, round, ids, game_id, screen_names)
             update_round_player(player_id, game_id)
             if player_info.get('type') == 1:
-                if game_over(game_id, ids[0], player_id):
+
                     #print(game_over(game_id, ids[0], player_id))
-                    winner_ceremony(game_id, ids[0], player_id)
+                    #winner_ceremony(game_id, ids[0], player_id)
                     return
 
 
