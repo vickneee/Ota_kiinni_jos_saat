@@ -1,6 +1,10 @@
 import os
 from math import radians, cos, sin, asin, sqrt
+from playsound import playsound
 
+# Soitetaan musiikkia kun peli päättyy
+def play_celebration_sound():
+    playsound('assets/celebration.mp3')
 
 def tyhj():
     os.system('cls' if os.name == 'nt' else 'clear')
