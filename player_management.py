@@ -138,7 +138,7 @@ def criminal_choose_starting_point(name, is_computer=0):
         print_airports(get_airports())
         choose = int(input("Valitse aloituspaikka (1-21): "))
         while choose < 1 or choose > 21:
-            print("Virheellinen syöte. Valitse aloituspaikka (1-21): ")
+            print(colored("Virheellinen syöte. Valitse aloituspaikka (1-21): ","red"))
             choose = int(input("Valitse aloituspaikka (1-21): "))
 
         selected_icao = list(airports.keys())[choose - 1]
