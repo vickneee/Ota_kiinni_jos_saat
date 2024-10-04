@@ -29,8 +29,9 @@ def player_move(name, round, player_ids, screen_names):
     print(f"Pelin kierros: {round}\n")
 
     print("Sinulla on seuraavat lentoliput:")
-    for key, value in available_tickets.items():
-        print(f"{key}: {value} kpl")
+    print("Potkurikone: ", available_tickets.get('potkurikone'))
+    print("Matkustajakone: ", available_tickets.get('matkustajakone'))
+    print("Yksityiskone: ", available_tickets.get('yksityiskone'))
 
     print("")
 
@@ -47,7 +48,7 @@ def player_move(name, round, player_ids, screen_names):
         print(f"Rikollisen {criminal_info.get('screen_name')} viime sijainti: {criminal_info.get('airport')}, {criminal_info.get('country')} käytetty lippu: {criminal_info.get('ticket_type')}")
 
     print("")
-    print(f"Sinun vuorosi {get_players_info(name).get('name')}, Sijaintisi: {get_players_info(name).get('airport_name')}, {get_players_info(name).get('country_name')}\n")
+    print(f"Sinun vuorosi {get_players_info(name).get('screen_name')}, Sijaintisi: {get_players_info(name).get('airport_name')}, {get_players_info(name).get('country_name')}\n")
 
     # Print recommended airports using the name parameter (sorted from farthest to nearest)
     print_recommended_airports(name)  # This function handles sorting and printing
