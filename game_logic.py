@@ -48,10 +48,10 @@ def how_many_players():
                 setup_players(player_ids, criminal_is_computer=False, detectives_are_computer=False)
                 return player_ids
             else:
-                print("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ")
+                print(colored("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ","red"))
 
         except ValueError:
-            print("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ")
+            print(colored("Virheellinen syöte. Syötä numero 1:n ja 3:n väliltä: ", "red"))
 
 
 
