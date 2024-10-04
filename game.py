@@ -8,15 +8,16 @@ from winner_ceremony import winner_ceremony
 
 
 # Welcome to the game of Catch me if you can!
+
 def welcome():
-    print("Tervetuloa Ota kiinni jos saat -peliin!\n"
-          "Peli on yksinkertainen peli, jossa rikollinen yrittää välttää etsijöitä.\n"
-          "Pelissä on 10 kierrosta, joiden aikana rikollinen yrittää välttää etsijöitä.\n"
-          "Etsijät yrittävät löytää rikollisen ennen kuin rikollinen ehtii paeta.\n"
-          "Peli on ohi, kun rikollinen on saatu kiinni eli löydetty.\n"
-          "(Etsijät voittavat) tai rikollinen pääsee pakoon (Rikollinen voittaa).\n"
-          "Onnea peliin!")
+    print("Tervetuloa 'Ota kiinni jos saat' -peliin!\n"
+          "Tavoitteena on, että rikollinen välttelee etsiviä 10 kierroksen ajan.\n"
+          "Etsivät yrittävät löytää rikollisen ennen kierrosten loppua.\n"
+          "Peli päättyy, kun rikollinen joko jää kiinni (etsivät voittavat) "
+          "tai onnistuu pakenemaan kierrosten loputtua (rikollinen voittaa).\n"
+          "\nOnnea peliin!")
     return
+
 
 def create_game():
     sql = "INSERT INTO game (round,player_id) VALUES (0,null)"
