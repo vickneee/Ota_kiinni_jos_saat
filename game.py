@@ -8,7 +8,6 @@ from winner_ceremony import winner_ceremony
 
 
 # Welcome to the game of Catch me if you can!
-
 def welcome():
     print("Tervetuloa 'Ota kiinni jos saat' -peliin!\n"
           "Tavoitteena on, että rikollinen välttelee etsiviä 10 kierroksen ajan.\n"
