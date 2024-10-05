@@ -5,10 +5,10 @@ import random
 
 
 def ai_criminal_move(name, game_id):
-    from game_functions.airport_table import get_airports, airports_location, get_recommended_airports
+    from game_functions.airport_table import airports_location, get_recommended_airports
     from game_functions.player_management import get_players_info, game_screen_names, update_location
     # Get all airports and their locations
-    #all_airports = get_airports()
+    # all_airports = get_airports()
     all_airports_location = airports_location()
 
     # Get fugitive's current location
@@ -47,7 +47,7 @@ def ai_criminal_move(name, game_id):
             best_destination_code = airport_code
 
     # Get destination details
-    #destination_info = all_airports[best_destination_code]
+    # destination_info = all_airports[best_destination_code]
 
     # Update player's movement and location
     add_player_past_movement(criminal_id, criminal_location, best_ticket_type)
@@ -64,7 +64,7 @@ def ai_detective_move(criminal_name, detective_name):
     detective_id = detective_info.get('id')
     # Criminal and Detectives locations
     criminal_location = criminal_info.get('location')
-    #detective_location = detective_info.get('location')
+    # detective_location = detective_info.get('location')
 
     # Recommended airports for detective
     recommended_airports = get_recommended_airports(detective_name)

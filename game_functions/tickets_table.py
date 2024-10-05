@@ -1,10 +1,11 @@
+from termcolor import colored
 from game_functions.db_functions import db_delete, db_insert, db_query
 
 
 # Function to delete a ticket from the tickets table
 def delete_ticket(ticket_type, player_id):
     sql = f"""DELETE FROM tickets 
-    WHERE ticket_type = '{ticket_type}' and player_id='{player_id}'  LIMIT 1"""
+    WHERE ticket_type = '{ticket_type}' AND player_id='{player_id}'  LIMIT 1"""
     delete = db_delete(sql)
     return delete
 
@@ -28,12 +29,13 @@ def player_tickets(player_id):
         tickets[row[0]] = row[1]
     return tickets
 
+
+# Function to print available tickets
 def print_available_tickets(tickets):
-    print("Sinulla on seuraavat liput:")
+    print(colored("Sinulla on seuraavat liput:", "green"))
     if tickets.get('potkurikone'):
         print(f"Potkurikone: {tickets.get('potkurikone')}")
     if tickets.get('matkustajakone'):
         print(f"Matkustajakone: {tickets.get('matkustajakone')}")
     if tickets.get('yksityiskone'):
         print(f"Yksityiskone: {tickets.get('yksityiskone')}")
-

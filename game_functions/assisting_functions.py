@@ -1,14 +1,16 @@
 import os
+from termcolor import colored
 from math import radians, cos, sin, asin, sqrt
 from playsound import playsound
 
 
 # Play music when the game ends
 def play_celebration_sound():
-    #playsound('../assets/Celebration.mp3')
+    # playsound('../assets/Celebration.mp3')
     base_dir = os.path.dirname(os.path.abspath(__file__))
     sound_path = os.path.join(base_dir, '..', 'assets', 'Celebration.mp3')
     playsound(sound_path)
+
 
 # Clear console
 def clear():
@@ -21,8 +23,8 @@ def game_instructions():
 
     print("1. Pelaajamäärä:")
     print("   - Peliä voi pelata yksi, kaksi tai kolme pelaajaa.")
-    print(
-        "- Yhden pelaajan pelissä pelaaja saa päättää, että pelaako hän etsivän vai rikollisen roolia ja pelaa tietokonetta vastaan.")
+    print("   - Yhden pelaajan pelissä pelaaja saa päättää, että pelaako hän etsivän vai rikollisen roolia ja pelaa "
+          "tietokonetta vastaan.")
     print("   - Kahden pelaajan pelissä toinen pelaajista ohjaa molempia etsiviä.\n")
 
     print("2. Roolit ja lentoliput:")
@@ -46,22 +48,20 @@ def game_instructions():
     print("   - Rikollisen edellinen olinpaikka näytetään kierroksilla 1, 4, 7 ja 10.")
     print("   - Rikollinen näkee etsivien sijainnin joka vuorolla.")
     print("   - Peli alkaa rikollisen vuorolla.")
-    print(
-        "   - Peli päättyy kymmenen kierroksen jälkeen tai kunnes toinen etsivistä saa rikollisen kiinni menemällä samalle lentokentälle, jossa rikollinen on,")
-    print("     tai rikollinen lentää samalle lentokentälle, jossa etsivä sijaitsee.")
-
+    print("   - Peli päättyy kymmenen kierroksen jälkeen ")
+    print("     tai kunnes toinen etsivistä saa rikollisen kiinni menemällä samalle lentokentälle, jossa rikollinen on,")
+    print("     tai rikollinen lentää samalle lentokentälle, jossa etsivä sijaitsee.\n")
 
 
 # Welcome to the game of Catch me if you can!
 def welcome():
-    print("Tervetuloa 'Ota kiinni jos saat' -peliin!\n"
-          "Tavoitteena on, että rikollinen välttelee etsiviä 10 kierroksen ajan.\n"
+    print(colored("Tervetuloa 'Ota kiinni jos saat' -peliin!", 'green'))
+    print("Tavoitteena on, että rikollinen välttelee etsiviä 10 kierroksen ajan.\n"
           "Etsivät yrittävät löytää rikollisen ennen kierrosten loppua.\n"
           "Peli päättyy, kun rikollinen joko jää kiinni (etsivät voittavat) "
-          "tai onnistuu pakenemaan kierrosten loputtua (rikollinen voittaa).\n"
-          "\nOnnea peliin!")
+          "tai onnistuu pakenemaan kierrosten loputtua (rikollinen voittaa).")
+    print(colored("\nOnnea peliin!", 'green'))
     return
-
 
 
 # Calculate the distance between two geographical points using the Haversine formula
@@ -83,7 +83,7 @@ def haversine(lat1, lon1, lat2, lon2):
 
 # Ascii art. And the end message
 def thank_you():
-    print("""
+    print(colored("""
 ▄    ▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄▄▄▄▄▄▄▄▄▄▄  ▄
 ▐░▌  ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌
 ▐░▌ ▐░▌  ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀  ▀▀▀▀█░█▀▀▀▀ ▐░█▀▀▀▀▀▀▀█░▌▐░█▀▀▀▀▀▀▀▀▀ ▐░▌
@@ -95,7 +95,7 @@ def thank_you():
 ▐░▌ ▐░▌  ▄▄▄▄█░█▄▄▄▄  ▄▄▄▄█░█▄▄▄▄      ▐░▌     ▐░█▄▄▄▄▄▄▄█░▌ ▄▄▄▄▄▄▄▄▄█░▌ ▄
 ▐░▌  ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌     ▐░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌
 ▀    ▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀ 
-    """)
+    """, 'green'))
     print("Kiitos kun pelasit lentokonepeliä!")
     print("Peli on kehitetty osana Ohjelmisto 1 -kurssia.")
     print("Koodin ovat kirjoittaneet: ")
