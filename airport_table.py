@@ -43,9 +43,14 @@ def airports_location():
 def get_recommended_airports(name):
     from player_management import get_players_info
     from tickets_table import player_tickets
+    from insert_rounds import get_round
+
     all_airports = get_airports()
     player = get_players_info(name)
     player_id = player.get('id')
+    player_type = player.get('type')
+    round=get_round(player_id)
+
     tickets = player_tickets(player_id)
     all_airports_location = airports_location()
     player_location = all_airports_location[player['location']]
@@ -56,7 +61,7 @@ def get_recommended_airports(name):
             airport_distances[key] = GD(player_location, value).kilometers
 
     all_sorted_locations = sorted(airport_distances.items(), key=lambda x: x[1])
-    #print(all_sorted_locations)
+
     recommended = {}
     if 'potkurikone' in tickets.keys() :
         for key, value in all_sorted_locations[:2]:
@@ -66,12 +71,18 @@ def get_recommended_airports(name):
         for key, value in all_sorted_locations[2:4]:
             recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
                             "distance": value, "ticket_type": 'matkustajakone'}
-    if 'yksityiskone' in tickets.keys():
+    if player_type == 0:
+        if 'yksityiskone' in tickets.keys():
+            for key, value in all_sorted_locations[-2:]:
+                recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
+                                "distance": value, "ticket_type": 'yksityiskone'}
+    elif player_type == 1 and round > 1 and 'yksityiskone' in tickets.keys():
         for key, value in all_sorted_locations[-2:]:
             recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
                             "distance": value, "ticket_type": 'yksityiskone'}
 
     return recommended
+
 
 
 # Print the recommended airports for the player
@@ -97,7 +108,7 @@ def two_farthest_airport(name):
     starting_point = get_players_info(name)
 
     for icao, location in airports.items():
-        distance = haversine(starting_point['latitude'], starting_point['longitude'], location['latitude'],
+        distance = haversine(starting_point.get('latitude'), starting_point.get['longitude'], location['latitude'],
                              location['longitude'])
         if distance > max_distance:
             second_max_distance = max_distance
@@ -109,6 +120,8 @@ def two_farthest_airport(name):
             farthest_airports[1] = (icao, location['name'], location['country'], f"{distance:.2f} km")
 
     return farthest_airports
+
+
 
 
 

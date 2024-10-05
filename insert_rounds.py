@@ -1,4 +1,4 @@
-from db_functions import db_update
+from db_functions import db_update,db_query
 
 # Lisätään yksi kierros round columniin
 def insert_round(game_id):
@@ -18,4 +18,14 @@ def update_round_player(player_id,game_id):
     """
     db_update(sql)
 
-insert_round(1)
+def get_round(player_id):
+    sql = f"""
+        select round from game 
+        left join game_player on game.id = game_player.game_id
+        left join player on game_player.player_id = player.id
+        where player.id = {player_id}
+    """
+    result = db_query(sql)
+    round = result[0][0]
+    return round
+
