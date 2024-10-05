@@ -34,7 +34,7 @@ def game(game_id):
     ids = start_game(game_id)
     screen_names = all_game_screen_names(game_id)
 
-    #nested for loops to iterate through the rounds and players
+    # Nested for loops to iterate through the rounds and players
     for round in range(10):
         round += 1
         insert_round(game_id)
@@ -50,7 +50,6 @@ def game(game_id):
             game_player_round(player, round, ids, game_id, screen_names)
             update_round_player(player_id, game_id)
             # If the player is the detective, check if the game is over
-
 
     # The rounds end after 10 rounds
     # That's when the criminal wins!
