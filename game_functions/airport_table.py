@@ -1,5 +1,5 @@
-from db_functions import db_query
-from assisting_functions import haversine
+from game_functions.db_functions import db_query
+from game_functions.assisting_functions import haversine
 from geopy.distance import geodesic as GD
 
 
@@ -41,8 +41,8 @@ def airports_location():
 
 # Get the six(or less depending on remaining tickets) recommended airports for the player, sorted by distance
 def get_recommended_airports(name):
-    from player_management import get_players_info
-    from tickets_table import player_tickets
+    from game_functions.player_management import get_players_info
+    from game_functions.tickets_table import player_tickets
     all_airports = get_airports()
     player = get_players_info(name)
     player_id = player.get('id')
@@ -91,7 +91,7 @@ def print_recommended_airports(name):
 
 # Function to get the two farthest airports from the criminal starting point
 def two_farthest_airport(name):
-    from player_management import get_players_info
+    from game_functions.player_management import get_players_info
     airports = get_airports()
     farthest_airports = [None, None]
     max_distance = 0

@@ -1,4 +1,4 @@
-from db_functions import db_query
+from game_functions.db_functions import db_query
 
 
 # Check if criminal and detective are in the same location.
@@ -27,3 +27,4 @@ def game_over(game_id, criminal_id, detective_id):
         return True
     else:
         return False
+

@@ -1,4 +1,4 @@
-from db_functions import db_query
+from game_functions.db_functions import db_query
 
 
 def winner_ceremony(game_id):

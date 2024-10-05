@@ -1,4 +1,4 @@
-from db_functions import db_delete, db_insert, db_query
+from game_functions.db_functions import db_delete, db_insert, db_query
 
 
 # Function to delete a ticket from the tickets table
