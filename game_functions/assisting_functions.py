@@ -5,11 +5,13 @@ from playsound import playsound
 
 # Play music when the game ends
 def play_celebration_sound():
-    playsound('assets/celebration.mp3')
-
+    #playsound('../assets/Celebration.mp3')
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    sound_path = os.path.join(base_dir, '..', 'assets', 'Celebration.mp3')
+    playsound(sound_path)
 
 # Clear console
-def tyhj():
+def clear():
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
@@ -47,6 +49,19 @@ def game_instructions():
     print(
         "   - Peli päättyy kymmenen kierroksen jälkeen tai kunnes toinen etsivistä saa rikollisen kiinni menemällä samalle lentokentälle, jossa rikollinen on,")
     print("     tai rikollinen lentää samalle lentokentälle, jossa etsivä sijaitsee.")
+
+
+
+# Welcome to the game of Catch me if you can!
+def welcome():
+    print("Tervetuloa 'Ota kiinni jos saat' -peliin!\n"
+          "Tavoitteena on, että rikollinen välttelee etsiviä 10 kierroksen ajan.\n"
+          "Etsivät yrittävät löytää rikollisen ennen kierrosten loppua.\n"
+          "Peli päättyy, kun rikollinen joko jää kiinni (etsivät voittavat) "
+          "tai onnistuu pakenemaan kierrosten loputtua (rikollinen voittaa).\n"
+          "\nOnnea peliin!")
+    return
+
 
 
 # Calculate the distance between two geographical points using the Haversine formula

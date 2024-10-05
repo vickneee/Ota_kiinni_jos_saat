@@ -1,20 +1,9 @@
-from db_functions import db_insert
-from game_logic import how_many_players, game_player_round
-from game_over import game_over
-from player_management import add_player_game
-from insert_rounds import insert_round, update_round_player
-from assisting_functions import play_celebration_sound, thank_you
-
-
-# Welcome to the game of Catch me if you can!
-def welcome():
-    print("Tervetuloa 'Ota kiinni jos saat' -peliin!\n"
-          "Tavoitteena on, että rikollinen välttelee etsiviä 10 kierroksen ajan.\n"
-          "Etsivät yrittävät löytää rikollisen ennen kierrosten loppua.\n"
-          "Peli päättyy, kun rikollinen joko jää kiinni (etsivät voittavat) "
-          "tai onnistuu pakenemaan kierrosten loputtua (rikollinen voittaa).\n"
-          "\nOnnea peliin!")
-    return
+from game_functions.db_functions import db_insert
+from game_functions.game_logic import how_many_players, game_player_round
+from game_functions.game_over import game_over
+from game_functions.player_management import add_player_game
+from game_functions.insert_rounds import insert_round, update_round_player
+from game_functions.assisting_functions import play_celebration_sound, thank_you, welcome
 
 
 # Create game function
@@ -39,29 +28,29 @@ def start_game(game_id):
 
 # Main game function
 def game(game_id):
-    from player_management import all_game_screen_names, get_players_info
-    from winner_ceremony import winner_ceremony
+    from game_functions.player_management import all_game_screen_names, get_players_info
+    from game_functions.winner_ceremony import winner_ceremony
     welcome()
     ids = start_game(game_id)
-
     screen_names = all_game_screen_names(game_id)
 
+    #nested for loops to iterate through the rounds and players
     for round in range(10):
-
         round += 1
         insert_round(game_id)
         for player in screen_names:
             player_info = get_players_info(player)
-            print(f"Pelaaja: {player_info.get('screen_name')}")
             player_id = player_info.get('id')
             game_player_round(player, round, ids, game_id, screen_names)
             update_round_player(player_id, game_id)
+            # If the player is the detective, check if the game is over
             if player_info.get('type') == 1:
                 if game_over(game_id, ids[0], player_id):
                     print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
                     thank_you()
                     play_celebration_sound()
                     return
+
     # The rounds end after 10 rounds
     # That's when the criminal wins!
     # Play music when the game ends

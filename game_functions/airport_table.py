@@ -1,5 +1,5 @@
-from db_functions import db_query
-from assisting_functions import haversine
+from game_functions.db_functions import db_query
+from game_functions.assisting_functions import haversine
 from geopy.distance import geodesic as GD
 
 
@@ -42,10 +42,8 @@ def airports_location():
 
 # Get the six(or less depending on remaining tickets) recommended airports for the player, sorted by distance
 def get_recommended_airports(name):
-    from player_management import get_players_info
-    from tickets_table import player_tickets
-    from insert_rounds import get_round
-
+    from game_functions.player_management import get_players_info
+    from game_functions.tickets_table import player_tickets
     all_airports = get_airports()
     player = get_players_info(name)
     player_id = player.get('id')
@@ -64,10 +62,10 @@ def get_recommended_airports(name):
     all_sorted_locations = sorted(airport_distances.items(), key=lambda x: x[1])
 
     recommended = {}
-    if 'potkurikone' in tickets.keys() :
+    if 'potkurikone' in tickets.keys():
         for key, value in all_sorted_locations[:2]:
             recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
-                                "distance": value,"ticket_type": 'potkurikone'}
+                                "distance": value, "ticket_type": 'potkurikone'}
     if 'matkustajakone' in tickets.keys():
         for key, value in all_sorted_locations[2:4]:
             recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
@@ -102,7 +100,7 @@ def print_recommended_airports(name):
 
 # Function to get the two farthest airports from the criminal starting point
 def two_farthest_airport(name):
-    from player_management import get_players_info
+    from game_functions.player_management import get_players_info
     airports = get_airports()
     farthest_airports = [None, None]
     max_distance = 0
@@ -127,6 +125,3 @@ def two_farthest_airport(name):
             farthest_airports[1] = (icao, location['name'], location['country'], f"{distance:.2f} km")
     # Return the two farthest airports
     return farthest_airports
-
-
-

@@ -1,13 +1,13 @@
 from termcolor import colored
-from assisting_functions import tyhj
-from tickets_table import player_tickets, delete_ticket
-from past_movement_table import add_player_past_movement
+from game_functions.assisting_functions import clear
+from game_functions.tickets_table import player_tickets, delete_ticket
+from game_functions.past_movement_table import add_player_past_movement
 
 
 # Function to handle player movement
 def player_move(name, round, player_ids, screen_names):
-    from airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
-    from player_management import update_location, get_players_info, get_criminal_movements
+    from game_functions.airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
+    from game_functions.player_management import update_location, get_players_info, get_criminal_movements
 
     print("Kaikki lentokentät:")
 
@@ -90,4 +90,4 @@ def player_move(name, round, player_ids, screen_names):
     else:
         delete_ticket(ticket_type, player_id)
 
-    tyhj()
+    clear()

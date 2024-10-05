@@ -1,7 +1,7 @@
-from player_move import player_move
-from ai_move import ai_criminal_move, ai_detective_move
-from player_management import new_player, insert_player, insert_player_tickets, get_players_info, criminal_choose_starting_point
-from airport_table import two_farthest_airport
+from game_functions.player_move import player_move
+from game_functions.ai_move import ai_criminal_move, ai_detective_move
+from game_functions.player_management import new_player, insert_player, insert_player_tickets, get_players_info, criminal_choose_starting_point
+from game_functions.airport_table import two_farthest_airport
 from termcolor import colored
 
 

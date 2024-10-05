@@ -1,6 +1,6 @@
 from termcolor import colored
-from db_functions import db_query, db_insert, db_update
-from tickets_table import insert_tickets
+from game_functions.db_functions import db_query, db_insert, db_update
+from game_functions.tickets_table import insert_tickets
 import random
 
 
@@ -141,8 +141,8 @@ def insert_player_tickets(player_id, player_type):
 # Function for the criminal to choose a starting point
 def criminal_choose_starting_point(name, is_computer=0):
     # Criminal chooses a starting point
-    from airport_table import print_airports, get_airports
-    from assisting_functions import tyhj
+    from game_functions.airport_table import print_airports, get_airports
+    from game_functions.assisting_functions import clear
     airports = get_airports()
     if is_computer:
         selected_icao = random.choice(list(airports.keys()))
@@ -158,7 +158,7 @@ def criminal_choose_starting_point(name, is_computer=0):
         location = airports[selected_icao]
         print(f"Rikollinen on valinnut aloituspaikakseen lentokentän numero {choose}.")
         print(f"Lentokenttä: {location['name']}, Maa: {location['country']}, Sijainti: ({location['latitude']}, {location['longitude']})")
-    tyhj()
+    clear()
 
     # Insert the player into the database
     add = insert_player(name, 0, selected_icao, is_computer)
