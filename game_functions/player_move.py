@@ -23,6 +23,7 @@ def player_move(name, round, player_ids, screen_names):
     get_players_info(name)
     player_id = get_players_info(name).get('id')
     player_type = get_players_info(name).get('type')
+    old_location = get_players_info(name).get('location')
     # Get available tickets for the player
     available_tickets = player_tickets(player_id)
     # print(available_tickets)
@@ -74,15 +75,15 @@ def player_move(name, round, player_ids, screen_names):
             print(colored("Virheellinen syöte. Syötä numero."))
 
     # Update the player location
-    location = selected_key  # Get the location of the selected airport
-    update_location(location, name)
+    new_location = selected_key  # Get the location of the selected airport
+    update_location(new_location, name)
 
     # Update the ticket type
     ticket_type = selected_airport['ticket_type']
 
     # Add the player's past movement to the database
     if player_type == 0:
-        add_player_past_movement(player_id, location, ticket_type)
+        add_player_past_movement(player_id, old_location, ticket_type)
     else:
         delete_ticket(ticket_type, player_id)
 

@@ -42,7 +42,7 @@ def game(game_id):
             player_info = get_players_info(player)
             player_id = player_info.get('id')
             if player_info.get('type') == 1:
-                if game_over(game_id, ids[0], player_id):
+                if game_over(game_id, ids):
                     print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
                     thank_you()
                     play_celebration_sound()
