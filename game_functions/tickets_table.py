@@ -27,3 +27,13 @@ def player_tickets(player_id):
     for row in result:
         tickets[row[0]] = row[1]
     return tickets
+
+def print_available_tickets(tickets):
+    print("Sinulla on seuraavat liput:")
+    if tickets.get('potkurikone'):
+        print(f"Potkurikone: {tickets.get('potkurikone')}")
+    if tickets.get('matkustajakone'):
+        print(f"Matkustajakone: {tickets.get('matkustajakone')}")
+    if tickets.get('yksityiskone'):
+        print(f"Yksityiskone: {tickets.get('yksityiskone')}")
+

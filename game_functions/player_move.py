@@ -1,6 +1,6 @@
 from termcolor import colored
 from game_functions.assisting_functions import clear
-from game_functions.tickets_table import player_tickets, delete_ticket
+from game_functions.tickets_table import player_tickets, delete_ticket,print_available_tickets
 from game_functions.past_movement_table import add_player_past_movement
 
 
@@ -29,10 +29,7 @@ def player_move(name, round, player_ids, screen_names):
     print("")
     print(f"Pelin kierros: {round}\n")
 
-    print("Sinulla on seuraavat lentoliput:")
-    print("Potkurikone: ", available_tickets.get('potkurikone'))
-    print("Matkustajakone: ", available_tickets.get('matkustajakone'))
-    print("Yksityiskone: ", available_tickets.get('yksityiskone'))
+    print_available_tickets(available_tickets)
 
     print("")
 
