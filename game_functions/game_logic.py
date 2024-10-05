@@ -8,10 +8,10 @@ from termcolor import colored
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
     player_ids = []
-    role_type = int(input("Valitse roolisi. Syötä 0 rikolliselle tai 1 etsijällä: "))
+    role_type = int(input(colored("Valitse roolisi. Syötä 0 rikolliselle tai 1 etsijällä: ", "green")))
     while role_type != 0 and role_type != 1:
         print(colored("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.", "red"))
-        role_type = int(input("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: "))
+        role_type = int(input(colored("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: ", "green")))
 
     if role_type == 0:
         print("Valitsit roolin rikolliselle.")
@@ -21,7 +21,6 @@ def player_choose_the_role():
         print("Valitsit roolin etsijälle.")
         print("Anna ensin vastustajasi (tietokoneen) nimi")
         setup_players(player_ids, criminal_is_computer=True, detectives_are_computer=False)
-
 
     return player_ids
 
@@ -38,7 +37,7 @@ def how_many_players():
           "Ensimmäinen pelaaja pelaa rikollista, toinen pelaaja pelaa etsijää ja kolmas pelaaja pelaa etsijää.")
     while True:
         try:
-            num_players = int(input("Syötä numero 1:n ja 3:n väliltä: "))
+            num_players = int(input(colored("Syötä numero 1:n ja 3:n väliltä: ", "green")))
             if num_players == 1:
                 print("Pelaaja pelaa tietokonetta vastaan.")
                 player_ids = player_choose_the_role()

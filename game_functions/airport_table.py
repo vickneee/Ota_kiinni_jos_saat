@@ -1,3 +1,4 @@
+from termcolor import colored
 from game_functions.db_functions import db_query
 from game_functions.assisting_functions import haversine
 from geopy.distance import geodesic as GD
@@ -50,7 +51,7 @@ def get_recommended_airports(name):
     player = get_players_info(name)
     player_id = player.get('id')
     player_type = player.get('type')
-    round=get_round(player_id)
+    round = get_round(player_id)
 
     tickets = player_tickets(player_id)
     all_airports_location = airports_location()
@@ -71,16 +72,16 @@ def get_recommended_airports(name):
     if 'matkustajakone' in tickets.keys():
         for key, value in all_sorted_locations[2:4]:
             recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
-                            "distance": value, "ticket_type": 'matkustajakone'}
+                                "distance": value, "ticket_type": 'matkustajakone'}
     if player_type == 0:
         if 'yksityiskone' in tickets.keys():
             for key, value in all_sorted_locations[-2:]:
                 recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
-                                "distance": value, "ticket_type": 'yksityiskone'}
+                                    "distance": value, "ticket_type": 'yksityiskone'}
     elif player_type == 1 and round > 1 and 'yksityiskone' in tickets.keys():
         for key, value in all_sorted_locations[-2:]:
             recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
-                            "distance": value, "ticket_type": 'yksityiskone'}
+                                "distance": value, "ticket_type": 'yksityiskone'}
 
     return recommended
 
@@ -93,7 +94,7 @@ def print_recommended_airports(name):
     sorted_airports = sorted(recommended.items(), key=lambda x: x[1]['distance'])
 
     # Print the recommended airports
-    print("Suositellut lentokentät lähimmästä kauimpaan:")
+    print(colored("Suositellut lentokentät lähimmästä kauimpaan:", "green"))
     for i, (key, value) in enumerate(sorted_airports[:6], start=1):
         print(f"{i}. {value['country']} : {value['name']} - lipputyyppi : {value['ticket_type']}")
 

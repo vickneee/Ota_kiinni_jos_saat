@@ -53,6 +53,7 @@ def screen_names():
     return names
 
 
+# Function to get the screen names of players in the current game
 def game_screen_names(game_id):
     sql = f"""SELECT screen_name 
     FROM player 
@@ -108,7 +109,7 @@ def new_player(type):
 
     role = "rikollisen" if type == 0 else "etsivän"
     while True:
-        name = input(f"Syötä {role} nimimerkki: ")
+        name = input(colored(f"Syötä {role} nimimerkki: ", "green"))
         if name not in names and name and len(name) <= max_char:
             print(f"Nimimerkki {name} lisätty.")
             return name
@@ -147,13 +148,13 @@ def criminal_choose_starting_point(name, is_computer=0):
     if is_computer:
         selected_icao = random.choice(list(airports.keys()))
     else:
-        print("Rikollinen valitsee aloituspaikan")
+        print(colored("Rikollinen valitsee aloituspaikan: ", "green"))
         print_airports(get_airports())
         valid_input = False
         choose = None
         while not valid_input:
             try:
-                choose = int(input("Valitse aloituspaikka (1-21): "))
+                choose = int(input(colored("Valitse aloituspaikka (1-21): ", "green")))
                 if 1 <= choose <= 21:
                     valid_input = True
                 else:

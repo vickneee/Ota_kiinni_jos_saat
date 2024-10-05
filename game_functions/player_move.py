@@ -9,7 +9,7 @@ def player_move(name, round, player_ids, screen_names):
     from game_functions.airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
     from game_functions.player_management import update_location, get_players_info, get_criminal_movements
 
-    print("Kaikki lentokentät:")
+    print(colored("Kaikki lentokentät:", "green"))
 
     # Print all available airports
     airports = get_airports()
@@ -27,7 +27,7 @@ def player_move(name, round, player_ids, screen_names):
     available_tickets = player_tickets(player_id)
     # print(available_tickets)
     print("")
-    print(f"Pelin kierros: {round}\n")
+    print(colored(f"Pelin kierros: {round}\n", "green"))
 
     print_available_tickets(available_tickets)
 
@@ -59,7 +59,8 @@ def player_move(name, round, player_ids, screen_names):
     while True:
         try:
             selected_index = int(
-                input(f"Valitse lentokenttä (1-{len(recommended_keys)}): "))  # Prompt user for selection
+                # Prompt user for selection
+                input(colored(f"Valitse lentokenttä (1-{len(recommended_keys)}): ", "green")))
             if 1 <= selected_index <= len(recommended_keys):
                 selected_key = recommended_keys[selected_index - 1]  # Get the corresponding key
                 selected_airport = recommended_airports[selected_key]  # Get the airport details using the key
@@ -69,9 +70,9 @@ def player_move(name, round, player_ids, screen_names):
                     f"Valitsit lentokentän: {selected_airport['country']} : {selected_airport['name']} ja käytit {selected_airport['ticket_type']} lentolipun.")
                 break  # Exit loop if input is valid
             else:
-                print(colored("Virheellinen valinta. Yritä uudelleen.","red"))
+                print(colored("Virheellinen valinta. Yritä uudelleen.", "red"))
         except ValueError:
-            print(colored("Virheellinen syöte. Syötä numero."))
+            print(colored("Virheellinen syöte. Syötä numero.", "red"))
 
     # Update the player location
     location = selected_key  # Get the location of the selected airport

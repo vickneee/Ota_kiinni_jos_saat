@@ -1,6 +1,7 @@
 from game_functions.db_functions import db_query
 
 
+# Function to retrieve the winner of the game
 def winner_ceremony(game_id):
     # Retrieve players and their information from the database for the completed game
     # The location helps clarify where the criminal was finally caught at the end of the game
