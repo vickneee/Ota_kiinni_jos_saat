@@ -149,11 +149,17 @@ def criminal_choose_starting_point(name, is_computer=0):
     else:
         print("Rikollinen valitsee aloituspaikan")
         print_airports(get_airports())
-        choose = int(input("Valitse aloituspaikka (1-21): "))
-        while choose < 1 or choose > 21:
-            print(colored("Virheellinen syöte. Valitse aloituspaikka (1-21): ", "red"))
-            choose = int(input("Valitse aloituspaikka (1-21): "))
-
+        valid_input = False
+        choose = None
+        while not valid_input:
+            try:
+                choose = int(input("Valitse aloituspaikka (1-21): "))
+                if 1 <= choose <= 21:
+                    valid_input = True
+                else:
+                    print(colored("Virheellinen syöte. Valitse aloituspaikka (1-21): ", "red"))
+            except ValueError:
+                print(colored("Virheellinen syöte. Valitse aloituspaikka (1-21): ", "red"))
         selected_icao = list(airports.keys())[choose - 1]
         location = airports[selected_icao]
         print(f"Rikollinen on valinnut aloituspaikakseen lentokentän numero {choose}.")

@@ -1,4 +1,4 @@
-from game_functions.db_functions import db_update
+from game_functions.db_functions import db_update,db_query
 
 # Lisätään yksi kierros round columniin
 def insert_round(game_id):

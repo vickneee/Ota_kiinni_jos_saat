@@ -41,15 +41,16 @@ def game(game_id):
         for player in screen_names:
             player_info = get_players_info(player)
             player_id = player_info.get('id')
-            game_player_round(player, round, ids, game_id, screen_names)
-            update_round_player(player_id, game_id)
-            # If the player is the detective, check if the game is over
             if player_info.get('type') == 1:
                 if game_over(game_id, ids[0], player_id):
                     print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
                     thank_you()
                     play_celebration_sound()
                     return
+            game_player_round(player, round, ids, game_id, screen_names)
+            update_round_player(player_id, game_id)
+            # If the player is the detective, check if the game is over
+
 
     # The rounds end after 10 rounds
     # That's when the criminal wins!

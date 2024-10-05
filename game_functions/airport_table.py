@@ -44,6 +44,8 @@ def airports_location():
 def get_recommended_airports(name):
     from game_functions.player_management import get_players_info
     from game_functions.tickets_table import player_tickets
+    from game_functions.insert_rounds import get_round
+
     all_airports = get_airports()
     player = get_players_info(name)
     player_id = player.get('id')

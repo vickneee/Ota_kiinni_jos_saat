@@ -22,7 +22,7 @@ def player_choose_the_role():
         print("Anna ensin vastustajasi (tietokoneen) nimi")
         setup_players(player_ids, criminal_is_computer=True, detectives_are_computer=False)
 
-    print(player_ids)
+
     return player_ids
 
 

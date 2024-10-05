@@ -23,7 +23,6 @@ def player_move(name, round, player_ids, screen_names):
     get_players_info(name)
     player_id = get_players_info(name).get('id')
     player_type = get_players_info(name).get('type')
-
     # Get available tickets for the player
     available_tickets = player_tickets(player_id)
     # print(available_tickets)
