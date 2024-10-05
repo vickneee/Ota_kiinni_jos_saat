@@ -23,7 +23,8 @@ def game_instructions():
 
     print("1. Pelaajamäärä:")
     print("   - Peliä voi pelata yksi, kaksi tai kolme pelaajaa.")
-    print("   - Yhden pelaajan pelissä pelaaja saa päättää, että pelaako hän etsivän vai rikollisen roolia ja pelaa tietokonetta vastaan.")
+    print("   - Yhden pelaajan pelissä pelaaja saa päättää, että pelaako hän etsivän vai rikollisen roolia ja pelaa "
+          "tietokonetta vastaan.")
     print("   - Kahden pelaajan pelissä toinen pelaajista ohjaa molempia etsiviä.\n")
 
     print("2. Roolit ja lentoliput:")
@@ -51,6 +52,8 @@ def game_instructions():
     print("     tai kunnes toinen etsivistä saa rikollisen kiinni menemällä samalle lentokentälle, jossa rikollinen on,")
     print("     tai rikollinen lentää samalle lentokentälle, jossa etsivä sijaitsee.\n")
 
+
+game_instructions()
 
 # Welcome to the game of Catch me if you can!
 def welcome():
