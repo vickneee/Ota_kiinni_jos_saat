@@ -53,8 +53,6 @@ def game_instructions():
     print("     tai rikollinen lentää samalle lentokentälle, jossa etsivä sijaitsee.\n")
 
 
-game_instructions()
-
 # Welcome to the game of Catch me if you can!
 def welcome():
     print(colored("Tervetuloa 'Ota kiinni jos saat' -peliin!", 'green'))
