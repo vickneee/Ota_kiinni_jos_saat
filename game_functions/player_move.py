@@ -39,16 +39,16 @@ def player_move(name, round, player_ids, screen_names):
 
         for detective in screen_names[1:]:
             detective_info = get_players_info(detective)
-            print(f"Etsivän {detective_info.get('screen_name')} sijainti: {detective_info.get('airport_name')}, {detective_info.get('country_name')}")
+            print(colored(f"Etsivän {detective_info.get('screen_name')} sijainti: {detective_info.get('airport_name')}, {detective_info.get('country_name')}", "light_green"))
 
     # If player is detective print criminal location depending on round
     if player_type == 1 and round in [1, 4, 7, 10]:
         criminal_info = get_criminal_movements(criminal_id)
 
-        print(f"Rikollisen {criminal_info.get('screen_name')} viime sijainti: {criminal_info.get('airport')}, {criminal_info.get('country')} käytetty lippu: {criminal_info.get('ticket_type')}")
+        print(colored(f"Rikollisen {criminal_info.get('screen_name')} viime sijainti: {criminal_info.get('airport')}, {criminal_info.get('country')} käytetty lippu: {criminal_info.get('ticket_type')}", "magenta"))
 
     print("")
-    print(f"Sinun vuorosi {get_players_info(name).get('screen_name')}, Sijaintisi: {get_players_info(name).get('airport_name')}, {get_players_info(name).get('country_name')}\n")
+    print(colored(f"Sinun vuorosi {get_players_info(name).get('screen_name')}, Sijaintisi: {get_players_info(name).get('airport_name')}, {get_players_info(name).get('country_name')}\n", "blue"))
 
     # Print recommended airports using the name parameter (sorted from farthest to nearest)
     print_recommended_airports(name)  # This function handles sorting and printing
