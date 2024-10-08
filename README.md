@@ -63,9 +63,9 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
 
 #### Konsolipelin kuvia:
 
-<img width="900" alt="Screenshot 2024-10-09 at 1 31 16" src="https://github.com/user-attachments/assets/6e66d7ea-477b-42b0-992d-7750cedc5905">
-<img width="900" alt="Screenshot 2024-10-09 at 1 32 39" src="https://github.com/user-attachments/assets/627b62b9-0151-4222-bdbf-303044cf7794">
-<img width="900" alt="Screenshot 2024-10-09 at 1 37 36" src="https://github.com/user-attachments/assets/5d5c3db8-9e8a-4fdc-be57-0429893b5f70">
+<img width="947" alt="Screenshot 2024-10-09 at 1 47 20" src="https://github.com/user-attachments/assets/823d7d91-b84a-4ab9-bd73-7081f33e5daf">
+<img width="1084" alt="Screenshot 2024-10-09 at 1 46 41" src="https://github.com/user-attachments/assets/015b344a-8f04-4382-953f-e460e8693196">
+<img width="905" alt="Screenshot 2024-10-09 at 1 48 36" src="https://github.com/user-attachments/assets/f8d02356-fc73-46c2-bb0a-482d01e82c50">
 
 ------------
 
