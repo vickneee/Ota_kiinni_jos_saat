@@ -96,9 +96,9 @@ def thank_you():
 ▐░▌  ▐░▌▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌     ▐░▌     ▐░░░░░░░░░░░▌▐░░░░░░░░░░░▌▐░▌
 ▀    ▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀       ▀       ▀▀▀▀▀▀▀▀▀▀▀  ▀▀▀▀▀▀▀▀▀▀▀  ▀ 
     """, 'green'))
-    print("Kiitos kun pelasit lentokonepeliä!")
+    print("Kiitos kun pelasit Ota kiinni jos saat - peliä!")
     print("Peli on kehitetty osana Ohjelmisto 1 -kurssia.")
-    print("Koodin ovat kirjoittaneet: ")
+    print("Pelin luojat: ")
     print("    - Samu Kirjonen")
     print("    - Alessa Pentinmikko")
     print("    - Doni Trivedi")

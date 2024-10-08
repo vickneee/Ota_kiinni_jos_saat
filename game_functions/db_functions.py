@@ -38,7 +38,7 @@ def db_insert(sql):
     return lastrowid
 
 
-# Delete from the database
+# Delete from the database1
 def db_delete(sql):
     conn = get_db_connection()
     cursor = conn.cursor()
