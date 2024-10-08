@@ -35,7 +35,7 @@ def game(game_id):
     screen_names = all_game_screen_names(game_id)
 
     # Nested for loops to iterate through the rounds and players
-    for round in range(2):
+    for round in range(10):
         round += 1
         insert_round(game_id)
         for player in screen_names:
