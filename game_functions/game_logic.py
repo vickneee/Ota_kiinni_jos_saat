@@ -8,10 +8,10 @@ from termcolor import colored
 # Player 1, choose your role: (0 or 1)
 def player_choose_the_role():
     player_ids = []
-    role_type = int(input(colored("Valitse roolisi. Syötä 0 rikolliselle tai 1 etsijällä: ", "green")))
+    role_type = int(input(colored("Valitse roolisi. Syötä 0 rikolliselle tai 1 etsivälle: ", "green")))
     while role_type != 0 and role_type != 1:
-        print(colored("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsijälle.", "red"))
-        role_type = int(input(colored("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsijälle: ", "green")))
+        print(colored("Virheellinen syöte. Ole hyvä ja syötä 0 rikolliselle tai 1 etsivälle.", "red"))
+        role_type = int(input(colored("Valitse nyt roolisi. Syötä 0 rikolliselle tai 1 etsivälle: ", "green")))
 
     if role_type == 0:
         print("Valitsit roolin rikolliselle.")
