@@ -81,7 +81,7 @@ def player_move(name, round, player_ids, screen_names):
                 print(colored("Virheellinen valinta. Yritä uudelleen.", "red"))
         except ValueError:
             print(colored("Virheellinen syöte. Syötä numero.", "red"))
-    if selected_index == "x":
+    if selected_index != "x":
         # Update the player location
         new_location = selected_key  # Get the location of the selected airport
         update_location(new_location, name)
