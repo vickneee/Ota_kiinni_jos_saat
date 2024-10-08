@@ -32,9 +32,9 @@ def how_many_players():
           "Jos vastaus on 1:\n"
           "Pelaaja pelaa tietokonetta vastaan ja pelaajan täytyy valita rooli.\n"
           "Jos vastaus on 2: \n"
-          "Ensimmäinen pelaaja pelaa rikollista ja toinen pelaaja pelaa kahta etsijää.\n"
+          "Ensimmäinen pelaaja pelaa rikollista ja toinen pelaaja pelaa kahta etsivää.\n"
           "Jos vastaus on 3: \n"
-          "Ensimmäinen pelaaja pelaa rikollista, toinen pelaaja pelaa etsijää ja kolmas pelaaja pelaa etsijää.")
+          "Ensimmäinen pelaaja pelaa rikollista, toinen pelaaja pelaa etsivänä ja kolmas pelaaja pelaa etsivänä.")
     while True:
         try:
             num_players = int(input(colored("Syötä numero 1:n ja 3:n väliltä: ", "green")))
