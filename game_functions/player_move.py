@@ -64,7 +64,7 @@ def player_move(name, round, player_ids, screen_names):
     # Ask the player to select an airport
     while True:
         try:
-            selected_index = input(colored(f"Valitse lentokenttä (1-{len(recommended_keys)} (x lopettaa pelin): ", "green"))  # Prompt user for selection
+            selected_index = input(colored(f"Valitse lentokenttä (1-{len(recommended_keys)}) (x lopettaa pelin): ", "green"))  # Prompt user for selection
             if selected_index == "x":
                 return selected_index
             else:
