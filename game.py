@@ -43,7 +43,9 @@ def game(game_id):
             player_id = player_info.get('id')
 
             if game_over(game_id, ids):
-                print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
+                print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat! \n")
+                print(f"Etsivä {player_info.get('screen_name')} on saanut kiinni rikollisen {screen_names[0]}!")
+                print(f"Rikollinen jäi kiinni lentokentällä {player_info.get('airport_name')}, {player_info.get('country_name')}.")
                 thank_you()
                 play_celebration_sound()
                 return
