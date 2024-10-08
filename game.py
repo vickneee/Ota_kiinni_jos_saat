@@ -48,7 +48,6 @@ def game(game_id):
                     play_celebration_sound()
                     return
             player_turn = game_player_round(player, round, ids, game_id, screen_names)
-            print(player_turn)
             if player_turn == "x":
                 thank_you()
                 return
