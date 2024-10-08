@@ -41,13 +41,15 @@ def game(game_id):
         for player in screen_names:
             player_info = get_players_info(player)
             player_id = player_info.get('id')
-            if player_info.get('type') == 1:
-                if game_over(game_id, ids):
-                    print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
-                    thank_you()
-                    play_celebration_sound()
-                    return
+
+            if game_over(game_id, ids):
+                print(f"Rikollinen on saatu kiinni ja etsivät {screen_names[1]} ja {screen_names[2]} voittavat!")
+                thank_you()
+                play_celebration_sound()
+                return
+
             player_turn = game_player_round(player, round, ids, game_id, screen_names)
+
             if player_turn == "x":
                 thank_you()
                 return
