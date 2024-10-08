@@ -64,7 +64,7 @@ def welcome():
     return
 
 
-# Calculate the distance between two geographical points using the Haversine formula
+# Calculate the distance between two geographical points using the Haversine formula.
 def haversine(lat1, lon1, lat2, lon2):
     # Convert latitude and longitude from degrees to radians
     lat1 = radians(lat1)
