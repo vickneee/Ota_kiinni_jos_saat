@@ -42,6 +42,11 @@ def player_move(name, round, player_ids, screen_names):
             print(f"Etsivän {detective_info.get('screen_name')} sijainti: {detective_info.get('airport_name')}, {detective_info.get('country_name')}")
 
     # If player is detective print criminal location depending on round
+    if player_type == 1 and round in [2,3,5,6,8,9]:
+        criminal_info = get_criminal_movements(criminal_id)
+
+        print(f"Rikollisen {criminal_info.get('screen_name')} viimeksi käytetty lippu: {criminal_info.get('ticket_type')}")
+
     if player_type == 1 and round in [1, 4, 7, 10]:
         criminal_info = get_criminal_movements(criminal_id)
 
@@ -59,9 +64,11 @@ def player_move(name, round, player_ids, screen_names):
     # Ask the player to select an airport
     while True:
         try:
-            selected_index = int(
-                # Prompt user for selection
-                input(colored(f"Valitse lentokenttä (1-{len(recommended_keys)}): ", "green")))
+            selected_index = input(colored(f"Valitse lentokenttä (1-{len(recommended_keys)}): ", "green"))  # Prompt user for selection
+            if selected_index == "x":
+                return selected_index
+            else:
+                selected_index = int(selected_index)
             if 1 <= selected_index <= len(recommended_keys):
                 selected_key = recommended_keys[selected_index - 1]  # Get the corresponding key
                 selected_airport = recommended_airports[selected_key]  # Get the airport details using the key
@@ -74,18 +81,20 @@ def player_move(name, round, player_ids, screen_names):
                 print(colored("Virheellinen valinta. Yritä uudelleen.", "red"))
         except ValueError:
             print(colored("Virheellinen syöte. Syötä numero.", "red"))
+    if selected_index == "x":
+        # Update the player location
+        new_location = selected_key  # Get the location of the selected airport
+        update_location(new_location, name)
 
-    # Update the player location
-    new_location = selected_key  # Get the location of the selected airport
-    update_location(new_location, name)
+        # Update the ticket type
+        ticket_type = selected_airport['ticket_type']
 
-    # Update the ticket type
-    ticket_type = selected_airport['ticket_type']
+        # Add the player's past movement to the database
+        if player_type == 0:
+            add_player_past_movement(player_id, old_location, ticket_type)
+        else:
+            delete_ticket(ticket_type, player_id)
 
-    # Add the player's past movement to the database
-    if player_type == 0:
-        add_player_past_movement(player_id, old_location, ticket_type)
-    else:
-        delete_ticket(ticket_type, player_id)
+        clear()
+    return selected_index
 
-    clear()

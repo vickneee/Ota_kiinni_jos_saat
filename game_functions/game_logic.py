@@ -87,4 +87,6 @@ def game_player_round(player, round, ids, game_id, screen_names):
             ai_detective_move(screen_names[0], player.get('screen_name'))
     else:
         # Human player move
-        player_move(player.get('screen_name'), round, ids, screen_names)
+        player_moves = player_move(player.get('screen_name'), round, ids, screen_names)
+        return player_moves
+

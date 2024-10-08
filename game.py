@@ -35,7 +35,7 @@ def game(game_id):
     screen_names = all_game_screen_names(game_id)
 
     # Nested for loops to iterate through the rounds and players
-    for round in range(10):
+    for round in range(2):
         round += 1
         insert_round(game_id)
         for player in screen_names:
@@ -47,7 +47,11 @@ def game(game_id):
                     thank_you()
                     play_celebration_sound()
                     return
-            game_player_round(player, round, ids, game_id, screen_names)
+            player_turn = game_player_round(player, round, ids, game_id, screen_names)
+            print(player_turn)
+            if player_turn == "x":
+                thank_you()
+                return
             update_round_player(player_id, game_id)
             # If the player is the detective, check if the game is over
 
