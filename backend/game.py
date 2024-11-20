@@ -1,9 +1,9 @@
-from game_functions.db_functions import db_insert
-from game_functions.game_logic import how_many_players, game_player_round
-from game_functions.game_over import game_over
-from game_functions.player_management import add_player_game
-from game_functions.insert_rounds import insert_round, update_round_player
-from game_functions.assisting_functions import play_celebration_sound, thank_you, welcome
+from backend.game_functions.db_functions import db_insert
+from backend.game_functions.game_logic import how_many_players, game_player_round
+from backend.game_functions.game_over import game_over
+from backend.game_functions.player_management import add_player_game
+from backend.game_functions.insert_rounds import insert_round, update_round_player
+from backend.game_functions.assisting_functions import play_celebration_sound, thank_you, welcome
 
 
 # Create game function
@@ -28,8 +28,8 @@ def start_game(game_id):
 
 # Main game function
 def game(game_id):
-    from game_functions.player_management import all_game_screen_names, get_players_info
-    from game_functions.winner_ceremony import winner_ceremony
+    from backend.game_functions.player_management import all_game_screen_names, get_players_info
+    from backend.game_functions.winner_ceremony import winner_ceremony
     welcome()
     ids = start_game(game_id)
     screen_names = all_game_screen_names(game_id)

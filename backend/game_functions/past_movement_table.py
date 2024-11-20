@@ -1,5 +1,5 @@
-from game_functions.db_functions import db_insert
-from game_functions.tickets_table import delete_ticket
+from backend.game_functions.db_functions import db_insert
+from backend.game_functions.tickets_table import delete_ticket
 
 
 # Add the player's past movement to the past_movement table

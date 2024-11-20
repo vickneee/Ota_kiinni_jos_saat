@@ -1,13 +1,13 @@
 from termcolor import colored
-from game_functions.assisting_functions import clear
-from game_functions.tickets_table import player_tickets, delete_ticket,print_available_tickets
-from game_functions.past_movement_table import add_player_past_movement
+from backend.game_functions.assisting_functions import clear
+from backend.game_functions.tickets_table import player_tickets, delete_ticket,print_available_tickets
+from backend.game_functions.past_movement_table import add_player_past_movement
 
 
 # Function to handle player movement
 def player_move(name, round, player_ids, screen_names):
-    from game_functions.airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
-    from game_functions.player_management import update_location, get_players_info, get_criminal_movements
+    from backend.game_functions.airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
+    from backend.game_functions.player_management import update_location, get_players_info, get_criminal_movements
 
     print(colored("Kaikki lentokentät:", "green"))
 

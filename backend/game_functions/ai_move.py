@@ -1,12 +1,12 @@
 from geopy.distance import geodesic as GD
-from game_functions.past_movement_table import add_player_past_movement
-from game_functions.tickets_table import delete_ticket
+from backend.game_functions.past_movement_table import add_player_past_movement
+from backend.game_functions.tickets_table import delete_ticket
 import random
 
 
 def ai_criminal_move(name, game_id):
-    from game_functions.airport_table import airports_location, get_recommended_airports
-    from game_functions.player_management import get_players_info, game_screen_names, update_location
+    from backend.game_functions.airport_table import airports_location, get_recommended_airports
+    from backend.game_functions.player_management import get_players_info, game_screen_names, update_location
     # Get all airports and their locations
     # all_airports = get_airports()
     all_airports_location = airports_location()
@@ -56,8 +56,8 @@ def ai_criminal_move(name, game_id):
 
 # Function of the detective's move
 def ai_detective_move(criminal_name, detective_name):
-    from game_functions.airport_table import airports_location, get_recommended_airports
-    from game_functions.player_management import get_players_info, update_location
+    from backend.game_functions.airport_table import airports_location, get_recommended_airports
+    from backend.game_functions.player_management import get_players_info, update_location
     # Criminal and Detectives information
     criminal_info = get_players_info(criminal_name)
     detective_info = get_players_info(detective_name)

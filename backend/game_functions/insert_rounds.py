@@ -1,4 +1,4 @@
-from game_functions.db_functions import db_update, db_query
+from backend.game_functions.db_functions import db_update, db_query
 
 
 # Insert a new round into the game table
