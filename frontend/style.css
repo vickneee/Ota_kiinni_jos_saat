@@ -103,26 +103,9 @@ h1 {
     color: var(--raisin-black);
 }
 
-p {
-    font-size: 1.1rem;
-    line-height: 1;
-    color: var(--raisin-black);
-}
-
 a {
     text-decoration: none;
     color: var(--seasalt);
-}
-
-.video-link {
-    color: var(--darker-blue);
-    text-decoration: none;
-    margin-bottom: 2rem;
-}
-
-.video-link:hover {
-    color: var(--darker-blue);
-    text-decoration: underline;
 }
 
 .color-red {
@@ -167,17 +150,3 @@ button:hover {
     flex-direction: column;
     max-width: 30rem;
 }
-
-/***** Tekijät *****/
-
-.credits-container {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem 3rem;
-    margin-bottom: 2rem;
-    font-size: 1.2rem;
-    color: var(--light-gray);
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-}
-
