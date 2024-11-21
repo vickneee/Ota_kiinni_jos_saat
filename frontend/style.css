@@ -82,7 +82,7 @@ body {
 
 body {
     width: 85%;
-    height: 90vh;
+    height: 100vh;
 }
 
 .main-container {
@@ -97,7 +97,7 @@ body {
 .main-h1 {
     font-size: 4rem;
     color: var(--raisin-black);
-    margin-bottom: 1rem;
+    margin-bottom: 2.5rem;
 }
 
 .main-h1:hover {
@@ -108,6 +108,15 @@ h1 {
     font-family: 'Bodoni Moda', serif;
     font-size: 3rem;
     color: var(--raisin-black);
+}
+
+h2 {
+    margin: 0;
+    padding: 0.5rem 0;
+}
+
+h3 {
+    margin: 0;
 }
 
 p {
@@ -179,6 +188,31 @@ button:hover {
     display: flex;
     flex-direction: column;
     max-width: 30rem;
+}
+
+/***** List *****/
+
+ul {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    margin-bottom: 2rem;
+    max-width: 34rem;
+    line-height: 1.2;
+}
+li {
+    margin-bottom: 0.2rem;
+}
+
+/***** Instructions *****/
+
+.instructions-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    margin-bottom: 2rem;
 }
 
 /***** Tekijät *****/
