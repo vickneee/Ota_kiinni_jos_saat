@@ -8,8 +8,9 @@
     --seasalt: #F8F8F8; /* Secondary white */
     --light-gray: #999999; /* Light gray color */
     --gray: #666666; /* Gray color */
-    --main-blue: #6F99C2; /* Main blue */
-    --main-blue-hover: rgba(111, 153, 194, 0.8); /* Main blue */
+    --light-main-blue: #ADD1F8FF; /* Light main blue */
+    --main-blue: #add1f8; /* Main blue */
+    --main-blue-hover: rgb(141, 197, 246); /* Main blue */
     --darker-blue: #2A4176; /* Secondary blue */
     --light-gold: #dab97d; /* Luxury accent */
     --gold: #C49339; /* Luxury accent */
@@ -42,14 +43,14 @@
     }
 }
 
-.main-body::before {
+body::before {
     content: "";
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, var(--seasalt) 25%, rgba(0, 0, 0, 0.001) 100%);
+    background: linear-gradient(to bottom, var(--light-main-blue) 20%, rgba(0, 0, 0, 0.001) 100%);
     z-index: -1;
 }
 
@@ -62,7 +63,7 @@
     z-index: -2;
     object-fit: cover;
     object-position: center;
-    opacity: 0.1;
+    opacity: 0.2;
 }
 
 /***** General *****/
@@ -70,7 +71,7 @@
 body {
     margin: 0 auto;
     padding: 0;
-    font-family: "Exo 2", sans-serif;
+    font-family: 'Bodoni Moda', serif;
     background-color: var(--seasalt);
     text-align: center;
     display: flex;
@@ -93,13 +94,19 @@ body {
 
 /***** Typography *****/
 
-h1:hover {
+.main-h1 {
+    font-size: 4rem;
+    color: var(--raisin-black);
+    margin-bottom: 1rem;
+}
+
+.main-h1:hover {
     animation: firework 1s infinite;
 }
 
 h1 {
     font-family: 'Bodoni Moda', serif;
-    font-size: 4rem;
+    font-size: 3rem;
     color: var(--raisin-black);
 }
 
@@ -142,15 +149,22 @@ a {
 
 /***** Buttons *****/
 
-button {
+.main-buttons {
+    width: 16rem;
+    font-size: 1.3rem;
     margin: 0 1rem 1rem;
     padding: 1.2rem 2.8rem;
-    width: 16rem;
-    color: var(--seasalt);
-    font-size: 1.3rem;
+}
+
+button {
+    margin: 0 1rem 1rem;
+    padding: 0.6rem 1.6rem;
+    width: 10rem;
+    font-size: 1.1rem;
     font-family: "Bodoni Moda", serif;
+    color: var(--raisin-black);
     background-color: var(--main-blue);
-    border: 1px solid var(--gold);
+    border: 2px solid var(--gold);
     border-radius: 2px; /* Rounded corners */
     transition: all 0.3s ease; /* Smooth transition */
     cursor: pointer; /* Cursor changes to pointer */
@@ -158,8 +172,7 @@ button {
 
 button:hover {
     background-color: var(--main-blue-hover);
-    border: 1px solid var(--gold); /* Gold border */
-    transform: translateY(-0.5px); /* Slight upward movement */
+    transform: scale(1.03); /* Slightly bigger */
 }
 
 .buttons {
@@ -170,14 +183,27 @@ button:hover {
 
 /***** Tekijät *****/
 
-.credits-container {
+.card-container {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 2rem 3rem;
-    margin-bottom: 2rem;
-    font-size: 1.2rem;
-    color: var(--light-gray);
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
 }
 
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 2rem;
+    margin-bottom: 2rem;
+    font-size: 1.2rem;
+    width: 13rem;
+    color: var(--light-gray);
+    background-color: var(--seasalt);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 2px; /* Rounded corners */
+}
+
+card img {
+    border-radius: 20px; /* Rounded corners */
+}
