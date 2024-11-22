@@ -1,4 +1,4 @@
-from backend.game_functions.db_functions import db_query
+from backend.game_functions.database import db_query
 
 
 # Function to retrieve the winner of the game

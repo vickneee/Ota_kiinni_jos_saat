@@ -1,5 +1,5 @@
 from termcolor import colored
-from backend.game_functions.db_functions import db_query, db_insert, db_update
+from backend.game_functions.database import db_query, db_insert, db_update
 from backend.game_functions.tickets_table import insert_tickets
 import random
 

@@ -1,4 +1,4 @@
-from backend.game_functions.db_functions import db_insert
+from backend.game_functions.database import db_insert
 from backend.game_functions.game_logic import how_many_players, game_player_round
 from backend.game_functions.game_over import game_over
 from backend.game_functions.player_management import add_player_game

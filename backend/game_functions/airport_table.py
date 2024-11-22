@@ -1,5 +1,5 @@
 from termcolor import colored
-from backend.game_functions.db_functions import db_query
+from backend.game_functions.database import db_query
 from backend.game_functions.assisting_functions import haversine
 from geopy.distance import geodesic as GD
 

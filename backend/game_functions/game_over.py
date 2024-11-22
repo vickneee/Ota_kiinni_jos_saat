@@ -1,4 +1,4 @@
-from backend.game_functions.db_functions import db_query
+from backend.game_functions.database import db_query
 
 
 # Check if criminal and detective are in the same location.
