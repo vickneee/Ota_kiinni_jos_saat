@@ -31,7 +31,7 @@ def print_airports(airports):
         icao = list(airports.keys())[i - 1]
         print(f"{i}. {airports[icao]['country']} : {airports[icao]['name']}")
 
-
+print_airports(get_airports())
 # Get the location of the airports and put them in a dictionary
 def airports_location():
     airports_location = {}
