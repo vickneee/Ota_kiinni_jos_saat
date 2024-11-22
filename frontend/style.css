@@ -258,3 +258,9 @@ li {
 card img {
     border-radius: 20px; /* Rounded corners */
 }
+
+/** map **/
+
+#map {
+    height: 100%;
+  }

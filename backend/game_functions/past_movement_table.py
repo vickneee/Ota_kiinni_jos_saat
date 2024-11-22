@@ -1,4 +1,4 @@
-from backend.game_functions.db_functions import db_insert
+from backend.game_functions.database import db_insert
 from backend.game_functions.tickets_table import delete_ticket
 
 
