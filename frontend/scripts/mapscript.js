@@ -8,7 +8,7 @@ async function fetchEnv() {
  //       ({key: "MAP_KEY", v: "weekly"});
 
 fetchEnv().then(env => {
-  const mapKey = env.MAP_KEY;
+  //const mapKey = env.MAP_KEY;
 
   (g => {
     var h, a, k, p = "The Google Maps JavaScript API", c = "google", l = "importLibrary", q = "__ib__", m = document,
@@ -27,31 +27,31 @@ fetchEnv().then(env => {
           m.head.append(a);
         }));
     d[l] ? console.warn(p + " only loads once. Ignoring:", g) : d[l] = (f, ...n) => r.add(f) && u().then(() => d[l](f, ...n))
-  })({key: mapKey, v: "weekly"});
+  })({key: env.mapKey, v: "weekly"});
   async function initMap() {
   // The location of Uluru
-  const position = { lat: -25.344, lng: 131.031 };
+    const position = { lat: -25.344, lng: 131.031 };
   // Request needed libraries.
   //@ts-ignore
-  const { Map } = await google.maps.importLibrary("maps");
-  const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
   // The map, centered at Uluru
-  map = new Map(document.getElementById("map"), {
-    zoom: 4,
-    center: position,
-    mapId: "DEMO_MAP_ID",
-  });
+    map = new Map(document.getElementById("map"), {
+      zoom: 4,
+      center: position,
+      mapId: "DEMO_MAP_ID",
+    });
 
   // The marker, positioned at Uluru
-  const marker = new AdvancedMarkerElement({
-    map: map,
-    position: position,
-    title: "Uluru",
-  });
+    const marker = new AdvancedMarkerElement({
+      map: map,
+      position: position,
+      title: "Uluru",
+    });
 }
 
-initMap();
+initMap()
 })
 
 
