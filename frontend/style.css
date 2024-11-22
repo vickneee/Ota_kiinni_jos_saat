@@ -82,7 +82,6 @@ body {
 
 body {
     width: 85%;
-    height: 100vh;
 }
 
 .main-container {
@@ -198,9 +197,10 @@ ul {
     align-items: flex-start;
     justify-content: left;
     margin-bottom: 2rem;
-    max-width: 34rem;
+    max-width: 42rem;
     line-height: 1.2;
 }
+
 li {
     margin-bottom: 0.2rem;
 }
