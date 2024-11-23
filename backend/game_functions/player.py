@@ -1,6 +1,6 @@
 import random
 from backend.game_functions.tickets_table import insert_tickets
-from database import Database
+from backend.game_functions.database import Database
 
 class Player:
     def _init_(self, name, player_type, location, database, is_computer=0):
