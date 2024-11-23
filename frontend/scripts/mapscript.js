@@ -1,9 +1,10 @@
+'use strict';
 let map;
 
 async function fetchEnv() {
-  const response = await fetch('http://127.0.0.1:3000/api/env');
-  const env = await response.json();
-  return env;
+ const response = await fetch('http://127.0.0.1:3000/api/env');
+ const env = await response.json();
+ return env;
 }
 
 async function loadGoogleMapsAPI(apiKey) {
@@ -42,10 +43,10 @@ async function initMap() {
 }
 
 fetchEnv().then(env => {
-  const mapKey = env.MAP_KEY;
-  loadGoogleMapsAPI(mapKey).then(() => {
-    initMap();
-  }).catch(error => {
-    console.error(error);
-  });
+ const mapKey = env.MAP_KEY;
+ loadGoogleMapsAPI(mapKey).then(() => {
+   initMap();
+ }).catch(error => {
+   console.error(error);
+ });
 });
