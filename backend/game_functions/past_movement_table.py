@@ -1,7 +1,7 @@
 from backend.game_functions.database import db_insert
 from backend.game_functions.tickets_table import delete_ticket
 
-
+#player class
 # Add the player's past movement to the past_movement table
 def add_player_past_movement(player_id, location, ticket_type):
 
