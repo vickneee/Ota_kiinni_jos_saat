@@ -3,7 +3,7 @@ from backend.game_functions.database import db_query, db_insert, db_update
 from backend.game_functions.tickets_table import insert_tickets
 import random
 
-
+#class player metodi lisää aloituspisteet
 # Function to insert a new player into the database
 def insert_player(name, type, location, is_computer=0):
     sql = f"""INSERT INTO player (screen_name, type, location, is_computer)
