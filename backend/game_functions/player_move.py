@@ -3,7 +3,7 @@ from backend.game_functions.assisting_functions import clear
 from backend.game_functions.tickets_table import player_tickets, delete_ticket,print_available_tickets
 from backend.game_functions.past_movement_table import add_player_past_movement
 
-#Player class
+
 # Function to handle player movement
 def player_move(name, round, player_ids, screen_names):
     from backend.game_functions.airport_table import get_airports, print_airports, get_recommended_airports, print_recommended_airports
