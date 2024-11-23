@@ -1,18 +1,12 @@
 from backend.game_functions.assisting_functions import haversine
 from geopy.distance import geodesic as GD
-from database import Database
+from backend.game_functions.database import Database
 
 # Define airport class
 class Airport:
-    def __init__(self, ident, name, country, latitude, longitude):
-        self.ident = ident
-        self.name = name
-        self.country = country
-        self.latitude = latitude
-        self.longitude = longitude
 
     # Fetch 21 airports from the database
-    def get_airports(self, database):
+    def get_airports(self):
         airports = {}
         icao_codes = ('EFHK', 'ENGM', 'EGLL', 'LFPG', 'LEMD', 'EDDB', 'LIRF', 'LPPT', 'EIDW', 'LOWW', 'LGAV', 'EBBR',
                       'ESSA', 'EPWA', 'LHBP', 'LROP', 'LKPR', 'LYBE', 'BIKF', 'LBSF', 'UKBB')
@@ -21,16 +15,16 @@ class Airport:
                   INNER JOIN country ON airport.iso_country = country.iso_country 
                   WHERE ident IN {icao_codes}"""
 
-        result = database.db_query(sql)
+        result = Database().db_query(sql)
         for row in result:
             airports[row[0]] = {"name": row[1], "country": row[2], "latitude": row[3], "longitude": row[4]}
 
         return airports
 
     # Get locations (latitude and longitude) from all airports
-    def airports_location(self, database):
+    def airports_location(self):
         airports_location_dict = {}
-        airports = self.get_airports(database)
+        airports = self.get_airports()
 
         for key, value in airports.items():
             airports_location_dict[key] = (value['latitude'], value['longitude'])
@@ -38,8 +32,8 @@ class Airport:
         return airports_location_dict
 
     # Get recommended airports based on the players location and ticket types
-    def get_recommended_airports(self, player_location, tickets, player_type, database):
-        airport_locations = self.airports_location(database)
+    def get_recommended_airports(self, player_location, tickets, player_type):
+        airport_locations = self.airports_location()
         player_lat_lon = (player_location['latitude'], player_location['longitude'])
 
         airport_distances = {}
@@ -71,8 +65,8 @@ class Airport:
         return recommended
 
     # Find two farthest airports from players location
-    def two_farthest_airports(self, player_location, database):
-        airports = self.get_airports(database)
+    def two_farthest_airports(self, player_location):
+        airports = self.get_airports()
         farthest_airports = [None, None]
         max_distance = 0
         second_max_distance = 0

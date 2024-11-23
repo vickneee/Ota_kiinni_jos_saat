@@ -7,11 +7,11 @@ load_dotenv()
 
 class Database:
     def __init__(self):
-        self.host = '127.0.0.1',
-        self.port = 3306,
-        self.database = os.getenv("DB_NAME"),
-        self.user = os.getenv("DB_USER"),
-        self.password = os.getenv("DB_PASSWORD"),
+        self.host = '127.0.0.1'
+        self.port = 3306
+        self.database = os.getenv("DB_NAME")
+        self.user = os.getenv("DB_USER")
+        self.password = os.getenv("DB_PASSWORD")
 
     # Connect to the database
     def get_db_connection(self):
