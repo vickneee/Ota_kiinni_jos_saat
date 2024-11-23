@@ -1,16 +1,21 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
+
 import os
 import json
 from backend.game_functions.airport import Airport
 
+from dotenv import load_dotenv
+load_dotenv()
 app = Flask(__name__)
-
-
+CORS(app)
 @app.route('/api/env')
 def get_env():
     return jsonify({
         'MAP_KEY': os.getenv('MAP_KEY')
     })
+
+
 
 @app.route('/api/airports')
 def airport_locations():
