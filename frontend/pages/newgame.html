@@ -9,18 +9,39 @@
     <link rel="icon" type="image/x-icon" href="../favicon_io/favicon.ico?">
     <title>Ota Kiinni Jos Saat</title>
 </head>
-<body>
+<body class="main-body">
 <h1>Uusi peli</h1>
 
-<form action="" method="post">
-    <label for="player1">Karkuri: </label>
-    <input type="text" id="player1" name="player1" required>
-    <label for="player2">Etsivä 1:</label>
-    <input type="text" id="player2" name="player2" required>
-    <label for="player3">Etsivä 2:</label>
-    <input type="text" id="player3" name="player3" required>
-    <input type="submit" value="Aloita peli">
-</form>
+<div class="form-container">
+    <form action="" method="post">
+        <label for="player1">Karkuri: </label>
+        <input type="text" id="player1" name="player1" value="Anna nimi" required>
+        <label>AI
+            <input type="checkbox">
+        </label>
+        <label>Ihminen
+            <input type="checkbox">
+        </label>
+        <label for="player2">Etsivä 1:</label>
+        <input type="text" id="player2" name="player2" value="Anna nimi" required>
+        <label>AI
+            <input type="checkbox">
+        </label>
+        <label>Ihminen
+            <input type="checkbox">
+        </label>
+        <label for="player3">Etsivä 2:</label>
+        <input type="text" id="player3" name="player3" value="Anna nimi" required>
+        <label>AI
+            <input type="checkbox">
+        </label>
+        <label>Ihminen
+            <input type="checkbox">
+        </label>
+        <!--    <input type="submit" value="Aloita peli">-->
+    </form>
+</div>
+<button type="submit" value="Aloita peli">Aloita peli</button>
 <a href="../index.html">
     <button>Palaa</button>
 </a>
