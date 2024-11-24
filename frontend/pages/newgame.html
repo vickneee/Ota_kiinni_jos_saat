@@ -14,34 +14,62 @@
 
 <div class="form-container">
     <form action="" method="post">
-        <label for="player1">Karkuri: </label>
-        <input type="text" id="player1" name="player1" value="Anna nimi" required>
-        <label>AI
-            <input type="checkbox">
-        </label>
-        <label>Ihminen
-            <input type="checkbox">
-        </label>
-        <label for="player2">Etsivä 1:</label>
-        <input type="text" id="player2" name="player2" value="Anna nimi" required>
-        <label>AI
-            <input type="checkbox">
-        </label>
-        <label>Ihminen
-            <input type="checkbox">
-        </label>
-        <label for="player3">Etsivä 2:</label>
-        <input type="text" id="player3" name="player3" value="Anna nimi" required>
-        <label>AI
-            <input type="checkbox">
-        </label>
-        <label>Ihminen
-            <input type="checkbox">
-        </label>
+        <table>
+            <tr>
+                <th>Karkuri:</th>
+                <td>
+                    <label for="player1"></label><input type="text" id="player1" name="player1" value="Anna nimi" required>
+                </td>
+                <td>
+                    <label>🤖
+                        <input type="checkbox">
+                    </label>
+                </td>
+                <td>
+                    <label>👤
+                        <input type="checkbox">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th>Etsivä 1:</th>
+                <td>
+                    <input type="text" id="player2" name="player2" value="Anna nimi" required>
+                </td>
+                <td>
+                    <label>🤖
+                        <input type="checkbox">
+                    </label>
+                </td>
+                <td>
+                    <label>👤
+                        <input type="checkbox">
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <th>Etsivä 2:</th>
+                <td>
+                    <label for="player3"></label><input type="text" id="player3" name="player3" value="Anna nimi" required>
+                </td>
+                <td>
+                    <label>🤖
+                        <input type="checkbox">
+                    </label>
+                </td>
+                <td>
+                    <label>👤
+                        <input type="checkbox">
+                    </label>
+                </td>
+            </tr>
+        </table>
         <!--    <input type="submit" value="Aloita peli">-->
     </form>
 </div>
-<button type="submit" value="Aloita peli">Aloita peli</button>
+<a href="../pages/map.html">
+    <button type="submit" value="Aloita peli">Aloita peli</button>
+</a>
 <a href="../index.html">
     <button>Palaa</button>
 </a>
