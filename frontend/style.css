@@ -109,16 +109,6 @@ body {
 
 /***** Typography *****/
 
-.main-h1 {
-    font-size: 4rem;
-    color: var(--raisin-black);
-    margin-bottom: 2.5rem;
-}
-
-.main-h1:hover {
-    animation: firework 1s infinite;
-}
-
 h1 {
     font-family: 'Bodoni Moda', serif;
     font-size: 3rem;
@@ -173,6 +163,13 @@ input {
     padding: 1.2rem 2.8rem;
 }
 
+.buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 30rem;
+}
+
 button {
     margin: 0 1rem 1rem;
     padding: 0.6rem 1.6rem;
@@ -190,13 +187,6 @@ button {
 button:hover {
     background-color: var(--main-blue-hover);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-}
-
-.buttons {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    max-width: 30rem;
 }
 
 .new-game {
@@ -318,10 +308,6 @@ select:focus {
     background-color: var(--seasalt);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     border-radius: 2px; /* Rounded corners */
-}
-
-card img {
-    border-radius: 20px; /* Rounded corners */
 }
 
 /***** Map *****/
