@@ -9,15 +9,14 @@
     --light-gray: #999999; /* Light gray color */
     --gray: #666666; /* Gray color */
     --light-main-blue: #ADD1F8FF; /* Light main blue */
-    --main-blue: #add1f8; /* Main blue */
+    --main-blue: #ADD1F8; /* Main blue */
     --main-blue-hover: rgb(141, 197, 246); /* Main blue */
-    --darker-blue: #2A4176; /* Secondary blue */
-    --light-gold: #dab97d; /* Luxury accent */
+    --darker-blue: #23245c; /* Secondary blue */
     --gold: #C49339; /* Luxury accent */
     --raisin-black: #202231; /* Main black, text color */
-    --barn-red: #811E0E; /* Ticket text color */
-    --cal-poly-green: #2D4A1C; /* Ticket text color */
-    --space-cadet-blue: #231F53; /* Ticket text color */
+    --red: red; /* Ticket text color */
+    --green: green; /* Ticket text color */
+    --blue: blue; /* Ticket text color */
 }
 
 /***** Effects *****/
@@ -153,30 +152,16 @@ input {
     border-radius: 2px;
 }
 
-.video-link {
-    color: var(--darker-blue);
-    text-decoration: none;
-    margin-bottom: 2rem;
-}
-
-.video-link:hover {
-    color: var(--darker-blue);
-    text-decoration: underline;
-}
-
 .color-red {
-    font-size: 1.6rem;
-    color: var(--barn-red);
+    color: var(--red);
 }
 
 .color-green {
-    font-size: 1.6rem;
-    color: var(--cal-poly-green);
+    color: var(--green);
 }
 
 .color-blue {
-    font-size: 1.6rem;
-    color: var(--space-cadet-blue);
+    color: var(--blue);
 }
 
 /***** Buttons *****/
