@@ -71,6 +71,7 @@ body::before {
 body {
     margin: 0 auto;
     padding: 0;
+    height: 100vh;
     font-family: 'Bodoni Moda', serif;
     background-color: var(--seasalt);
     text-align: center;
@@ -80,8 +81,9 @@ body {
     align-items: center;
 }
 
-body {
-    width: 85%;
+.instructions-body {
+    height: fit-content;
+    padding: 6rem 0;
 }
 
 .main-body {
@@ -216,10 +218,7 @@ button:hover {
 /***** List *****/
 
 ul {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: left;
+    text-align: left;
     margin-bottom: 2rem;
     max-width: 42rem;
     line-height: 1.2;
@@ -232,7 +231,6 @@ li {
 /***** New Game *****/
 
 .form-container {
-    width: 520px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -245,14 +243,24 @@ label {
     margin-bottom: 0.5rem;
 }
 
+input[type='checkbox'] {
+    width: 20px;
+    height: 20px;
+    background: var(--seasalt);
+    border-radius: 5px;
+    border: 2px solid var(--gold);
+}
+
 /***** Instructions *****/
 
 .instructions-container {
+    font-size: 1.2rem;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: left;
     margin-bottom: 2rem;
+    max-width: 52rem;
 }
 
 /***** Tekijät *****/
@@ -284,3 +292,23 @@ card img {
 
 /***** Map *****/
 
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 1.2rem;
+}
+
+.map-table {
+    border: 2px solid var(--gold);
+    background-color: var(--seasalt);
+}
+
+.map-th {
+    border: 2px solid var(--gold);
+    padding: 1rem;
+}
