@@ -19,27 +19,43 @@ async function loadGoogleMapsAPI(apiKey) {
   });
 }
 
+async function fetchJSONData() {
+  const response = await fetch('http://localhost:3000/api/airports'); // Replace with the actual path to your JSON file
+  const data = await response.json();
+  return data;
+}
+
 async function initMap() {
-  // The location of Uluru
-  const position = {lat: -25.344, lng: 131.031};
+  // The location of Center of Europe
+  const position = {lat: 54.5260, lng: 15.2551};
   // Request needed libraries.
   //@ts-ignore
   const {Map} = await google.maps.importLibrary('maps');
   const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
 
-  // The map, centered at Uluru
+  // The map, centered at Center of Europe
   map = new Map(document.getElementById('map'), {
     zoom: 4,
     center: position,
     mapId: 'DEMO_MAP_ID',
   });
 
-  // The marker, positioned at Uluru
-  const marker = new AdvancedMarkerElement({
-    map: map,
-    position: position,
-    title: 'Uluru',
-  });
+    // Fetch JSON data and add markers
+  const data = await fetchJSONData();
+  for (const [code, coords] of Object.entries(data)) {
+    const marker = new AdvancedMarkerElement({
+      map: map,
+      position: { lat: coords[0], lng: coords[1] },
+      title: code,
+    });
+  }
+
+  // // The marker, positioned at Center of Europe
+  // const marker = new AdvancedMarkerElement({
+  //   map: map,
+  //   position: position,
+  //   title: 'Center of Europe',
+  // });
 }
 
 fetchEnv().then(env => {
