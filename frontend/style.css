@@ -81,7 +81,7 @@ body {
     align-items: center;
 }
 
-.instructions-body {
+.template-body {
     height: fit-content;
     padding: 6rem 0;
 }
@@ -204,7 +204,7 @@ button {
 
 button:hover {
     background-color: var(--main-blue-hover);
-    transform: scale(1.01); /* Slightly bigger */
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .buttons {
@@ -318,6 +318,7 @@ select:focus {
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .card {
@@ -360,3 +361,40 @@ table {
     border: 2px solid var(--gold);
     padding: 1rem;
 }
+
+/***** Game Over *****/
+
+.game-over-h1 {
+    font-size: 4rem;
+    color: var(--raisin-black);
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
+}
+
+.game-over-h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.game-over-p {
+    font-size: 2.5rem;
+    margin-bottom: 4rem;
+    text-transform: uppercase;
+}
+
+audio {
+    margin-bottom: 3rem;
+}
+
+/***** Media Queries *****/
+
+/* For screens smaller than 900px */
+
+/* For screens smaller than 700px */
+
+/* For screens smaller than 600px */
+
+/* For screens smaller than 400px */
+
+/* For screens smaller than 300px */
