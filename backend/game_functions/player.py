@@ -3,6 +3,7 @@ from backend.game_functions.tickets_table import insert_tickets
 from backend.game_functions.tickets import Tickets
 from backend.game_functions.database import Database
 
+
 class Player:
     def __init__(self, name, player_type, location, database, is_computer=0):
         self.name = name  # Player's name
