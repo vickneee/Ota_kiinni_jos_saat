@@ -1,5 +1,6 @@
 import random
 from backend.game_functions.tickets_table import insert_tickets
+from backend.game_functions.tickets import Tickets
 from backend.game_functions.database import Database
 
 class Player:
@@ -57,13 +58,13 @@ class Player:
     # Method to insert tickets for a player based on their type
     def insert_player_tickets(self):
         tickets = {
-            0: [("potkurikone", 10), ("matkustajakone", 6), ("yksityiskone", 4)],  # Criminal
-            1: [("potkurikone", 5), ("matkustajakone", 3), ("yksityiskone", 2)]  # Detective
+            0: [(1, 10), (2, 6), (3, 4)],  # Criminal
+            1: [(1, 5), (2, 3), (3, 2)]  # Detective
         }
 
         for ticket_type, count in tickets.get(self.type, []):
             for _ in range(count):
-                insert_tickets(self.id, ticket_type)
+                Tickets().insert_tickets(self.id, ticket_type)
 
     # Method for the criminal to choose a starting point
     def choose_criminal_starting_point(self, airports):
