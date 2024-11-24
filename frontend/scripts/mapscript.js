@@ -42,7 +42,9 @@ async function initMap() {
 
     // Fetch JSON data and add markers
   const data = await fetchJSONData();
-  for (const [code, coords] of Object.entries(data)) {
+  data.locations = data.locations || {};
+  const locations = data.locations;
+  for (const [code, coords] of Object.entries(locations)) {
     const marker = new AdvancedMarkerElement({
       map: map,
       position: { lat: coords[0], lng: coords[1] },
