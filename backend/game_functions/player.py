@@ -1,15 +1,15 @@
 import random
-from oldfiles.tickets_table import delete_ticket
+from backend.game_functions.database import Database
 from backend.game_functions.tickets import Tickets
 
 
 class Player:
-    def __init__(self, name, player_type, location, database, is_computer=0):
+    def __init__(self, name, player_type, location, is_computer=0):
         self.name = name  # Player's name
         self.type = player_type  # Player type: 0 for criminal, 1 for detective
         self.location = location  # Starting location
         self.is_computer = is_computer  # Whether the player is computer-controlled
-        self.database = database  # Database instance
+        self.database = Database()  # Database instance
         self.id = None  # Player ID, to be set once the player is inserted into the database
 
     # Method to insert a new player into the database
