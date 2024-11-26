@@ -66,11 +66,6 @@ class Player:
             for _ in range(count):
                 Tickets().insert_tickets(self.id, ticket_id)
 
-
-
-
-
-
     # Method for the criminal to choose a starting point
     def choose_criminal_starting_point(self, airports):
         if self.is_computer:
@@ -147,9 +142,8 @@ class Player:
         self.database.db_insert(sql)
 
         # After that delete the ticket from the tickets table
-        result = delete_ticket(ticket_id, player_id)
+        result = Tickets().delete_ticket(ticket_id, player_id)
         if not result:
             return False
-
 
 
