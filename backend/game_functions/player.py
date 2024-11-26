@@ -153,4 +153,9 @@ class Player:
             return False
 
 
+game_id = 10
+
+p = Player('paavo', 0, 'EFHK', is_computer=0)
+
+p.add_player_to_game(game_id)
 
