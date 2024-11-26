@@ -1,36 +1,25 @@
 from backend.game_functions.airport import Airport
 from backend.game_functions.player import Player
 from backend.game_functions.tickets import Tickets
+from backend.game_functions.database import Database
+
 
 class HumanPlayer(Player):
     def __init__(self, name, player_type, location, database):
         super().__init__(name, player_type, location, database, is_computer=0)
 
-    def player_move(self, name, round, player_ids, screen_names, selected_index):
-        # Fetch data
-        recommended_airports = get_recommended_airports(name)
-        player_info = get_players_info(name)
-        player_id = player_info.get('id')
-        player_type = player_info.get('type')
-        old_location = player_info.get('location')
+    def player_move(self, new_location, ticket_id):
 
-        # Validate selected_index
-        recommended_keys = list(recommended_airports.keys())
-        if not (1 <= selected_index <= len(recommended_keys)):
-            raise ValueError(f"Selected index {selected_index} is out of range. Valid range is 1 to {len(recommended_keys)}.")
 
-        # Determine selected airport and process movement
-        selected_key = recommended_keys[selected_index - 1]
-        selected_airport = recommended_airports[selected_key]
-        new_location = selected_key
-        ticket_type = selected_airport['ticket_type']
 
-        # Update location and manage tickets
-        update_location(new_location, name)
-        if player_type == 0:  # Human player
-            add_player_past_movement(player_id, old_location, ticket_type)
-        else:  # AI or detective
-            Tickets.delete_ticket(ticket_type, player_id)
+            if self.type == 0:
+               self.add_player_past_movement(self.id, self.location, ticket_id)
+               self.update_location(new_location)
 
-        # Return only the selected index
-        return selected_index
+            else:
+                self.update_location(new_location)
+                Tickets().delete_ticket(ticket_id, self.id)
+
+d=Database()
+t=HumanPlayer('petteri',1,'EFHK', d)
+t.insert_player()

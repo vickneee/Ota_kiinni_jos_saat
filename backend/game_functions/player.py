@@ -1,7 +1,6 @@
 import random
-from backend.game_functions.tickets_table import insert_tickets, delete_ticket
+from oldfiles.tickets_table import delete_ticket
 from backend.game_functions.tickets import Tickets
-from backend.game_functions.database import Database
 
 
 class Player:
