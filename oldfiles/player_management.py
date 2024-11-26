@@ -1,6 +1,6 @@
 from termcolor import colored
 from backend.game_functions.database import db_query, db_insert, db_update
-from backend.game_functions.tickets_table import insert_tickets
+from oldfiles.tickets_table import insert_tickets
 import random
 
 
@@ -142,8 +142,8 @@ def insert_player_tickets(player_id, player_type):
 # Function for the criminal to choose a starting point
 def criminal_choose_starting_point(name, is_computer=0):
     # Criminal chooses a starting point
-    from backend.game_functions.airport_table import print_airports, get_airports
-    from backend.game_functions.assisting_functions import clear
+    from oldfiles.airport_table import print_airports, get_airports
+    from oldfiles.assisting_functions import clear
     airports = get_airports()
     if is_computer:
         selected_icao = random.choice(list(airports.keys()))

@@ -1,4 +1,4 @@
-from backend.game_functions.assisting_functions import haversine
+from oldfiles.assisting_functions import haversine
 from geopy.distance import geodesic as GD
 from backend.game_functions.database import Database
 
