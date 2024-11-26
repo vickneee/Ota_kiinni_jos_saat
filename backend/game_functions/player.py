@@ -1,6 +1,6 @@
 import random
-from backend.game_functions.tickets import Tickets
 from backend.game_functions.database import Database
+from backend.game_functions.tickets import Tickets
 
 
 class Player:
