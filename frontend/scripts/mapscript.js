@@ -1,4 +1,5 @@
 'use strict';
+
 let map;
 
 async function fetchEnv() {
@@ -8,6 +9,7 @@ async function fetchEnv() {
 }
 
 async function loadGoogleMapsAPI(apiKey) {
+
   return new Promise((resolve, reject) => {
     const script = document.createElement('script');
     script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&callback=initMap`;
@@ -68,6 +70,8 @@ fetchEnv().then(env => {
     console.error(error);
   });
 });
+
+
 
 document.getElementById('menu').addEventListener('change', function() {
   const value = this.value;
