@@ -190,5 +190,5 @@ def show_detective_locations():
     detective2_name = detective_names[1]
     detective1_info = get_players_info(detective1_name)
     detective2_info = get_players_info(detective2_name)
-    print(f"Etsivän {detective1_name} sijainti: {detective1_info['country_name']}, {detective1_info['airport_name']}")
-    print(f"Etsivän {detective2_name} sijainti: {detective2_info['country_name']}, {detective2_info['airport_name']}")
+    #print(f"Etsivän {detective1_name} sijainti: {detective1_info['country_name']}, {detective1_info['airport_name']}")
+    #print(f"Etsivän {detective2_name} sijainti: {detective2_info['country_name']}, {detective2_info['airport_name']}")

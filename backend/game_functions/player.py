@@ -1,5 +1,5 @@
 import random
-from backend.game_functions.tickets_table import insert_tickets
+from backend.game_functions.tickets_table import insert_tickets, delete_ticket
 from backend.game_functions.tickets import Tickets
 from backend.game_functions.database import Database
 
@@ -63,9 +63,14 @@ class Player:
             1: [(1, 5), (2, 3), (3, 2)]  # Detective
         }
 
-        for ticket_type, count in tickets.get(self.type, []):
+        for ticket_id, count in tickets.get(self.type, []):
             for _ in range(count):
-                Tickets().insert_tickets(self.id, ticket_type)
+                Tickets().insert_tickets(self.id, ticket_id)
+
+
+
+
+
 
     # Method for the criminal to choose a starting point
     def choose_criminal_starting_point(self, airports):
@@ -134,3 +139,18 @@ class Player:
         """
         self.database.db_update(sql)
         self.location = location
+
+    def add_player_past_movement(self, location, ticket_id, player_id):
+
+        # Add the ticket and player information to the database
+        sql = f"""INSERT INTO past_movement (player_id, location, ticket_type) 
+                  VALUES ('{player_id}', '{location}','{ticket_id}' )"""
+        self.database.db_insert(sql)
+
+        # After that delete the ticket from the tickets table
+        result = delete_ticket(ticket_id, player_id)
+        if not result:
+            return False
+
+
+
