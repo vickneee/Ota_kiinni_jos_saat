@@ -19,23 +19,37 @@ class Game:
         sql = "INSERT INTO game (round, player_id) VALUES (0, null)"
         return self.database.db_insert(sql)  # Palauttaa uuden pelin ID:n
 
+    def insert_round(self):
+        sql = f"""
+            UPDATE game
+            SET round = round +1
+            WHERE id = {self.game_id}
+        """
+        Database().db_update(sql)
+
+    # Update the player_id column in the game table
+    def update_round_player(self,player_id):
+        sql = f"""
+            UPDATE game 
+            SET player_id={player_id}
+            WHERE id={self.game_id}
+        """
+        Database().db_update(sql)
+
     # Add players to the game based on the user input provided by frontend
     # Parameters:
     # payer_data: list of dict, where each dict contains: "name", "player_type"(0 = criminal, 1 = detective), "is_human"(boolean)
     def add_players(self, player_data):
 
         for pdata in player_data:
-
-            if pdata["is_human"]:
-                player = HumanPlayer(name=pdata["name"], player_type=pdata["player_type"], location=None,
-                                     database=self.database)
+            if pdata["is_computer"] == 0:
+                player = HumanPlayer(name=pdata["name"], player_type=pdata["player_type"], location=pdata["location"])
             else:
-                player = AIPlayer(name=pdata["name"], player_type=pdata["player_type"], location=None,
-                                  database=self.database)
-
+                player = AIPlayer(name=pdata["name"], player_type=pdata["player_type"], location=pdata["location"])
 
             player.insert_player()
+            player.insert_player_tickets()
             player.add_player_to_game(self.game_id)
+            self.screen_names.append(pdata["name"])
             self.players.append(player)
-
 
