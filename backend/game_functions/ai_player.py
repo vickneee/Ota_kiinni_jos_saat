@@ -1,25 +1,39 @@
 import os
+from azure.core.credentials import AzureKeyCredential
 from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
+
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
+
+
+
 from backend.game_functions.player import Player
 
-class AIPlayer(Player):
-    def __init__(self, name, player_type, location, database):
-        super().__init__(name, player_type, location, database, is_computer=1)
 
-    def move(self, location, det_locations):
-        endpoint = "<ENDPOINT_URL>"
-        model_name = "gpt-4o-mini"
-        api_key = "<YOUR_API_KEY>"
+class AIPlayer(Player):
+    def __init__(self, name, player_type, location):
+        super().__init__(name, player_type, location, is_computer=1)
+
+    def move(self):
+        endpoint = "https://gameopenai.openai.azure.com/"
+        model_name = "gpt-35-turbo"
+        api_key = os.getenv("AI_API_KEY")
+
+        if not api_key:
+            raise ValueError("API key not found. Please check your .env file.")
 
         client = ChatCompletionsClient(
             endpoint=endpoint,
-            credential=api_key
+            credential=AzureKeyCredential(api_key)
         )
 
         message = """
             Airports: BIKF, EBBR, EDDB, EFHK, EGLL, EIDW, ENGM, EPWA, ESSA, LBSF, LEMD, LFPG, LGAV, LHBP, LIRF, LKPR, LOWW, LPPT, LROP, LYBE, UKBB
-            You: 
+            You: LEMD
             Detectives: EGLL, EFHK
             Tickets: 10x Closest (C), 6x Near (N), 4x Farthest (F)
             Goal: Avoid being caught by the detectives
@@ -33,14 +47,16 @@ class AIPlayer(Player):
         """
 
         response = client.complete(
-        messages=[
-            SystemMessage(content="You are a helpful assistant."),
-            UserMessage(content="I am going to Paris, what should I see?"),
-        ],
-        temperature=1.0,
-        top_p=1.0,
-        max_tokens=1000,
-        model=model_name
+            messages=[
+                SystemMessage(content="You are a helpful assistant."),
+                UserMessage(content=message),
+            ],
+            temperature=1.0,
+            top_p=1.0,
+            max_tokens=1000,
+            model=model_name
         )
         return response
+
+
 

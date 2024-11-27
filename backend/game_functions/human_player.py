@@ -5,8 +5,8 @@ from backend.game_functions.database import Database
 
 
 class HumanPlayer(Player):
-    def __init__(self, name, player_type, location, database):
-        super().__init__(name, player_type, location, database)
+    def __init__(self, name, player_type, location):
+        super().__init__(name, player_type, location)
 
     def player_move(self, new_location, ticket_id):
 
@@ -20,6 +20,6 @@ class HumanPlayer(Player):
                 self.update_location(new_location)
                 Tickets().delete_ticket(ticket_id, self.id)
 
-d=Database()
-t=HumanPlayer('petteri',1,'EFHK', d)
+
+t=HumanPlayer('petteri',1,'EFHK')
 t.insert_player()

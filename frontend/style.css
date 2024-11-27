@@ -189,6 +189,13 @@ button:hover {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
+.back-to-main {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
 .new-game {
     margin-bottom: 2rem;
 }
@@ -360,12 +367,186 @@ audio {
 
 /***** Media Queries *****/
 
+/* For screens smaller than 1200px */
+@media (max-width: 1200px) {
+    .main-body {
+        height: 100vh;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .main-image {
+        width: 90%;
+    }
+}
+
 /* For screens smaller than 900px */
+@media (max-width: 900px) {
+    .template-body {
+        padding: 4rem 4rem;
+        margin: 0 auto;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    p {
+        font-size: 1rem;
+    }
+
+    /*.main-buttons {*/
+    /*    width: 14rem;*/
+    /*    font-size: 1.1rem;*/
+    /*    padding: 1rem 2rem;*/
+    /*}*/
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .map-th {
+        padding: 0.8rem;
+    }
+
+    .game-over-h1 {
+        font-size: 3rem;
+    }
+
+    .game-over-h2 {
+        font-size: 2.5rem;
+    }
+
+    .game-over-p {
+        font-size: 2rem;
+    }
+
+    input[type='text'] {
+        width: 8rem;
+        font-size: 1rem;
+    }
+
+    select {
+        width: 5rem;
+        font-size: 1rem;
+    }
+
+    /*button {*/
+    /*    width: 8rem;*/
+    /*    font-size: 1rem;*/
+    /*}*/
+    .card-container {
+        padding: 2rem;
+    }
+}
 
 /* For screens smaller than 700px */
+@media (max-width: 700px) {
+    body {
+        font-size: 0.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+    }
+
+    .main-buttons {
+        width: 13rem;
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+    }
+
+    .buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .map-th {
+        padding: 0.6rem;
+    }
+
+    .game-over-h1 {
+        font-size: 2.5rem;
+    }
+
+    .game-over-h2 {
+        font-size: 2rem;
+    }
+
+    .game-over-p {
+        font-size: 1.5rem;
+    }
+
+    input[type='text'] {
+        width: 7rem;
+        font-size: 0.9rem;
+    }
+
+    select {
+        width: 4rem;
+        font-size: 0.9rem;
+    }
+
+    /*button {*/
+    /*    width: 7rem;*/
+    /*    font-size: 0.9rem;*/
+    /*}*/
+    table {
+        display: flex;
+        flex-direction: column;
+    }
+
+    tr {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+    }
+
+    td, th {
+        width: 100%;
+    }
+
+    .checkbox-container {
+
+}
+}
 
 /* For screens smaller than 600px */
 
+@media (max-width: 600px) {
+    body {
+        font-size: 0.9rem;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+}
+
 /* For screens smaller than 400px */
+@media (max-width: 400px) {
+    body {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+}
 
 /* For screens smaller than 300px */
