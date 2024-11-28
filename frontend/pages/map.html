@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="icon" type="image/x-icon" href="../favicon_io/favicon.ico?">
     <script type="module" src="../scripts/mapscript.js" defer></script>
+    <script src="../scripts/exitconfirmation.js" defer></script>
     <title>Ota Kiinni Jos Saat</title>
 </head>
 <body>
@@ -28,9 +29,9 @@
                 <label class="align-container"><img src="../assets/settings.png" alt="icon" width="25">
                     <select class="dropdown-content" id ="menu">
                         <option value="#">---</option>
-                        <option value="#">Ohjeet</option>
+                        <option value="./instructions.html">Ohjeet</option>
                         <option value="#">Tallenna</option>
-                        <option value="../index.html">Poistu</option>
+                        <option value="#">Poistu</option>
                     </select>
                 </label>
             </div>
@@ -40,6 +41,14 @@
 <!--    <h3>My Google Maps Demo</h3>-->
 <!--The div element for the map -->
 <div id="map"></div>
+
+<div id="confirmModal" class="modal">
+    <div class="modal-content">
+        <p>Haluatko varmasti poistua?</p>
+        <button id="confirmYes">Kyllä</button>
+        <button id="confirmNo">Ei</button>
+    </div>
+</div>
 
 </body>
 </html>
