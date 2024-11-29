@@ -53,3 +53,21 @@ class Game:
             self.screen_names.append(pdata["name"])
             self.players.append(player)
 
+
+
+
+    #Method to fetch all games from DB
+    def fetch_saved_games(self):
+
+        sql = "SELECT id, round, player_id FROM game"
+        result = self.database.db_query(sql)
+        if result:
+            # Transform database results into a list of dictionaries
+            saved_games = [
+                {"game_id": row[0], "round": row[1], "player_id": row[2]}
+                for row in result
+            ]
+            return saved_games
+        return []  # Return an empty list if no games are found
+
+
