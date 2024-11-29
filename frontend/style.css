@@ -376,6 +376,20 @@ select:focus {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     border-radius: 2px; /* Rounded corners */
 }
+/***** Continua game *****/
+
+.game-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.game-row span {
+    margin-right: 30px; /* Space between columns */
+}
+
+
 
 /***** Map *****/
 

@@ -80,13 +80,13 @@ class Player:
         return self.id
 
     # Method to create a new player
-    def create_new_player(self, player_type, name, location):
-        max_char = 20
-        existing_names = self.get_screen_names()
+   # def create_new_player(self, player_type, name, location):
+   #     max_char = 20
+   #     existing_names = self.get_screen_names()
 
-        if name not in existing_names and len(name) <= max_char:
-            return Player(name, player_type, location, self.database)
-        return None
+#        if name not in existing_names and len(name) <= max_char:
+#            return Player(name, player_type, location, self.database)
+#        return None
 
     # Method to get the latest movement of a criminal
     def get_criminal_movements(self):
