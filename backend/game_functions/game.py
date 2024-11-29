@@ -1,9 +1,9 @@
 from backend.game_functions.ai_player import AIPlayer
-from player import Player
-from human_player import HumanPlayer
-from ai_player import AIPlayer
-from database import Database
-
+#from player import Player
+from backend.game_functions.human_player import HumanPlayer
+#from ai_player import AIPlayer
+from backend.game_functions.database import Database
+g= Game()
 
 class Game:
 
@@ -52,4 +52,12 @@ class Game:
             player.add_player_to_game(self.game_id)
             self.screen_names.append(pdata["name"])
             self.players.append(player)
+
+    def play_round(self,player_name,new_location, ticket_id):
+        name_index = self.screen_names[player_name]
+        player = self.players[name_index]
+        if isinstance(player, HumanPlayer):
+            player.player_move(new_location, ticket_id)
+        else:
+            pass
 

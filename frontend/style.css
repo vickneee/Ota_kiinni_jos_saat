@@ -325,6 +325,10 @@ select:focus {
     cursor: pointer;
 }
 
+.error{
+    border:2px solid red !important;
+}
+
 /***** Instructions *****/
 
 .instructions-container {

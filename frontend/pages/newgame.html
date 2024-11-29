@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="../style.css">
     <link rel="icon" type="image/x-icon" href="../favicon_io/favicon.ico?">
+    <script src="../scripts/checkboxscript.js" defer></script>
     <title>Ota Kiinni Jos Saat</title>
 </head>
 <body class="main-body">
@@ -15,59 +16,67 @@
 <div class="form-container">
     <form action="" method="post">
         <table>
-            <tr>
+            <tr id="1">
                 <th>Karkuri:</th>
                 <td>
                     <label for="player1"></label><input type="text" id="player1" name="player1" placeholder="Anna nimi" required>
                 </td>
                 <td class="checkbox-container">
                     <label>🤖
-                        <input type="checkbox" class="choice-checkbox">
+                        <input   type="checkbox" class="choice-checkbox" >
                     </label>
                     <label>👤
-                        <input type="checkbox" class="choice-checkbox">
+                        <input  type="checkbox" class="choice-checkbox" >
                     </label>
                 </td>
             </tr>
-            <tr>
+            <tr id="2">
                 <th>Etsivä 1:</th>
                 <td>
-                    <input type="text" id="player2" name="player2" placeholder="Anna nimi" required>
+                    <label for="player2"></label><input type="text" id="player2" name="player2" placeholder="Anna nimi" required>
                 </td>
-                <td>
+                <td class="checkbox-container">
                     <label>🤖
-                        <input type="checkbox" class="choice-checkbox">
+                        <input type="checkbox" class="choice-checkbox" >
                     </label>
                     <label>👤
-                        <input type="checkbox" class="choice-checkbox">
+                        <input  type="checkbox" class="choice-checkbox" >
                     </label>
                 </td>
             </tr>
-            <tr>
+            <tr id="3">
                 <th>Etsivä 2:</th>
                 <td>
                     <label for="player3"></label><input type="text" id="player3" name="player3" placeholder="Anna nimi" required>
                 </td>
-                <td>
+                <td class="checkbox-container">
                     <label>🤖
-                        <input type="checkbox" class="choice-checkbox">
+                        <input  type="checkbox" class="choice-checkbox" >
                     </label>
                     <label>👤
-                        <input type="checkbox" class="choice-checkbox">
+                        <input  type="checkbox" class="choice-checkbox" >
                     </label>
                 </td>
             </tr>
         </table>
         <!--    <input type="submit" value="Aloita peli">-->
+        <button type="submit" value="Aloita peli" class="main-buttons new-game">Aloita peli</button>
     </form>
 </div>
+<!--
 <a href="../pages/map.html">
     <button type="submit" value="Aloita peli" class="main-buttons new-game">Aloita peli</button>
 </a>
+ -->
+
+
+
+ required
+
 <a href="../index.html">
     <button>Palaa</button>
 </a>
 
-<script src="../scripts/checkboxscript.js"></script>
+
 </body>
 </html>
