@@ -197,7 +197,7 @@ button:hover {
 }
 
 .new-game {
-    margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 
 /***** List *****/
@@ -224,6 +224,7 @@ li {
 }
 
 /***** Exit confirmation *****/
+
 .modal {
     display: none;
     position: fixed;
@@ -253,7 +254,6 @@ li {
     text-align: center;
     overflow-y: auto;
     max-height: 70vh;
-
 }
 
 button {
@@ -337,8 +337,8 @@ select:focus {
     cursor: pointer;
 }
 
-.error{
-    border:2px solid red !important;
+.error {
+    outline: 2px solid red;
 }
 
 /***** Instructions *****/
@@ -388,8 +388,6 @@ select:focus {
 .game-row span {
     margin-right: 30px; /* Space between columns */
 }
-
-
 
 /***** Map *****/
 
@@ -476,11 +474,6 @@ audio {
         font-size: 1rem;
     }
 
-    /*.main-buttons {*/
-    /*    width: 14rem;*/
-    /*    font-size: 1.1rem;*/
-    /*    padding: 1rem 2rem;*/
-    /*}*/
     .buttons {
         flex-direction: column;
         align-items: center;

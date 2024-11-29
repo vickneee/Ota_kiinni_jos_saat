@@ -33,24 +33,31 @@ function checked(){
       if (!isChecked) {
         valid = false;
         rowCheckboxes.forEach(cb => cb.classList.add('error')); // Ad
-        //const input = row.querySelector('input[type=checkbox]')
-        //input.classList.add('error'); // Add error class to highlight the row
+        // const input = row.querySelector('input[type=checkbox]')
+        // input.classList.add('error'); // Add error class to highlight the row
       } else {
-        const input = row.querySelector('input[type=checkbox]')
-        input.classList.remove('error');
+        rowCheckboxes.forEach(cb => cb.classList.remove('error'));
       }
     });
 
     if (!valid) {
       event.preventDefault();
 
-      //alert('Sinun täytyy valita valita jokaiselle pelaajalle tyyppi');
+      // alert('Sinun täytyy valita valita jokaiselle pelaajalle tyyppi');
     }
     if(valid){
       window.location.href = '../pages/map.html'
     }
   });
-
+  const checkboxes = form.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+      const rowCheckboxes = this.closest('tr').querySelectorAll('input[type="checkbox"]');
+      if (this.checked) {
+         rowCheckboxes.forEach(cb => cb.classList.remove('error')); // Remove error class from all checkboxes in the same row
+      }
+    });
+  });
 }
 
 function start_game(){
