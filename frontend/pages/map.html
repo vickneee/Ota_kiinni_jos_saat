@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="icon" type="image/x-icon" href="../favicon_io/favicon.ico?">
     <script type="module" src="../scripts/mapscript.js" defer></script>
-    <script src="../scripts/exitconfirmation.js" defer></script>
+    <script src="../scripts/dropdownscript.js" defer></script>
     <title>Ota Kiinni Jos Saat</title>
 </head>
 <body>
@@ -28,10 +28,9 @@
             <div class="dropdown">
                 <label class="align-container"><img src="../assets/settings.png" alt="icon" width="25">
                     <select class="dropdown-content" id ="menu">
-                        <option value="#">---</option>
-                        <option value="./instructions.html">Ohjeet</option>
-                        <option value="#">Tallenna</option>
-                        <option value="#">Poistu</option>
+                        <option value="#" disabled selected>---</option>
+                        <option value="#instructions" >Ohjeet</option>
+                        <option value="#exit" >Poistu</option>
                     </select>
                 </label>
             </div>
@@ -42,11 +41,60 @@
 <!--The div element for the map -->
 <div id="map"></div>
 
+<!-- Instructions modal -->
+<div id="instructionsModal" class="modal">
+    <div class="modal-content instructionsmodal-content">
+        <h2>1. Roolit ja lentoliput:</h2>
+    <h3>Pelissä on kaksi etsivää. Heillä on per etsivä:</h3>
+    <ul>
+        <li>5 potkurikoneen lentolippua</li>
+        <li>3 matkustajakoneen lentolippua</li>
+        <li>2 yksityiskoneen lentolippua</li>
+    </ul>
+    <h3>Pelissä on yksi rikollinen. Hänellä on:</h3>
+    <ul>
+        <li>10 potkurikoneen lentolippua</li>
+        <li>6 matkustajakoneen lentolippua</li>
+        <li>4 yksityiskoneen lentolippua</li>
+    </ul>
+    <h2>2. Lentolippujen toiminta:</h2>
+    <ul>
+        <li>Potkurikoneella pääsee kahdelle lähimmälle lentokentälle.</li>
+        <li>Matkustajakoneella kahdelle siitä seuraavaksi lähimmille lentokentille.</li>
+        <li>Yksityiskoneella kahdelle kauimmaiselle lentokentälle.</li>
+    </ul>
+
+
+    <h2>3. Pelin kulku:</h2>
+    <ul>
+        <li>Pelissä on 21 ennalta määritettyä lentokenttää.</li>
+        <li>Etsivät eivät voi käyttää ensimmäisellä vuorolla yksityiskoneen lentolippua.</li>
+        <li>Rikollisen edellinen olinpaikka näytetään kierroksilla 1, 4, 7 ja 10.</li>
+        <li>Rikollinen näkee etsivien sijainnin joka vuorolla.</li>
+        <li>Peli alkaa rikollisen vuorolla.</li>
+        <li>Peli päättyy kymmenen kierroksen jälkeen tai kunnes toinen etsivistä saa rikollisen kiinni menemällä samalle lentokentälle, jossa rikollinen on, tai rikollinen lentää samalle lentokentälle, jossa etsivä sijaitsee.
+        </li>
+    </ul>
+    <h2>4. Voittaminen:</h2>
+    <ul>
+        <li>Rikollinen voittaa, jos hän onnistuu välttämään etsivät kymmenen kierroksen ajan.</li>
+        <li>Etisvät voittavat, jos he saavat rikollisen kiinni ennen kymmentä kierrosta.</li>
+    </ul>
+    <h2>5. Pelin lopetus:</h2>
+    <ul>
+        <li>Pelin voi lopettaa milloin tahansa valitsemalla "Poistu" valikosta.</li>
+        <li>Peliä voi jatkaa mikäli se jää kesken</li>
+    </ul>
+        <button id="return">Palaa</button>
+    </div>
+</div>
+
+<!-- Exit modal -->
 <div id="confirmModal" class="modal">
-    <div class="modal-content">
+    <div class="modal-content exitmodal-content">
         <p>Haluatko varmasti poistua?</p>
-        <button id="confirmYes">Kyllä</button>
-        <button id="confirmNo">Ei</button>
+        <button id="confirmYes">Tallenna ja poistu</button>
+        <button id="confirmNo">Palaa</button>
     </div>
 </div>
 
