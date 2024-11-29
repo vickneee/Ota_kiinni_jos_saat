@@ -268,7 +268,7 @@ button {
 button#confirmYes {
     background-color: green;
     color: white;
-    border-radius: 5px;
+    border-radius: 2px;
 }
 
 button#confirmYes:hover {
@@ -279,7 +279,7 @@ button#confirmYes:hover {
 button#confirmNo {
     background-color: red;
     color: white;
-    border-radius: 5px;
+    border-radius: 2px;
 }
 
 button#confirmNo:hover {
