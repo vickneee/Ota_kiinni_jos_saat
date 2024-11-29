@@ -34,7 +34,7 @@ async function initMap() {
   //@ts-ignore
   const {Map} = await google.maps.importLibrary('maps');
   const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
-
+  const {PinElement} = await await google.maps.importLibrary("marker");
   // The map, centered at Center of Europe
   map = new Map(document.getElementById('map'), {
     zoom: 4,
@@ -43,23 +43,34 @@ async function initMap() {
   });
 
     // Fetch JSON data and add markers
+  let selected;
   const data = await fetchJSONData();
   data.locations = data.locations || {};
   const locations = data.locations;
+  const pin = new PinElement({
+    background:'#ffffff' ,
+  });
   for (const [code, coords] of Object.entries(locations)) {
+    const pin = new PinElement({
+      background:'#ffffff',
+      glyphColor:'#23245c',
+      borderColor:'#C49339'
+    });
     const marker = new AdvancedMarkerElement({
       map: map,
       position: { lat: coords[0], lng: coords[1] },
+      content:pin.element,
       title: code,
     });
+    marker.addListener('click',()=>{
+      selected = marker.title
+      let players = playerData()
+      console.log(players, selected)
+    })
+
   }
 
-  // // The marker, positioned at Center of Europe
-  // const marker = new AdvancedMarkerElement({
-  //   map: map,
-  //   position: position,
-  //   title: 'Center of Europe',
-  // });
+
 }
 
 fetchEnv().then(env => {
@@ -91,10 +102,10 @@ async function sendPlayers(players) {
 
 }
 
-function data(){
+function playerData(){
   //document.addEventListener('DOMContentLoaded', async () => {
   const players = JSON.parse(localStorage.getItem('players'));
-  console.log(players)
+  return players
   //if (players) {
   //  await sendPlayers(players);
   //  localStorage.removeItem('players'); // Clear the stored data
@@ -108,4 +119,3 @@ document.getElementById('menu').addEventListener('change', function() {
     window.location.href = value;
   }
 });
-data()
