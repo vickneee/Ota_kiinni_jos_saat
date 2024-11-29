@@ -3,7 +3,7 @@ from backend.game_functions.ai_player import AIPlayer
 from backend.game_functions.human_player import HumanPlayer
 #from ai_player import AIPlayer
 from backend.game_functions.database import Database
-g= Game()
+
 
 class Game:
 

@@ -57,18 +57,31 @@ function start_game(){
   trs.forEach(tr=>{
       const input = tr.querySelector('input[name]');
       const boxes = tr.querySelectorAll('input[type=checkbox]')
-
+      let type;
+      if(tr.id === '1'){
+        type = 0
+      }else{
+        type = 1
+      }
       if (boxes[0].checked === true){
-        let player = {name:input.value, is_computer:1}
+        let player = {name:input.value,type:type, is_computer:1}
         players.push(player)
       }else if(boxes[1].checked === true){
-        let player = {name:input.value, is_computer:0}
+        let player = {name:input.value, type:type,is_computer:0}
         players.push(player)
       }
 
   });
   console.log(players)
+  return players
+
 }
+
+
+function storeFormData(players){
+  localStorage.setItem('players',JSON.stringify(players))
+}
+
 
 const formlistener =()=>{
   checkboxes()
@@ -77,8 +90,10 @@ const formlistener =()=>{
   checked()
   form.addEventListener('submit',function(evt){
     evt.preventDefault()
-    start_game()
+    let players = start_game()
+    storeFormData(players)
+    window.location.href = '../pages/map.html'
   })
 }
 
-formlistener()
+formlistener();

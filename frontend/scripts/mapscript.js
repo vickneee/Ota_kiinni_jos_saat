@@ -72,6 +72,35 @@ fetchEnv().then(env => {
 });
 
 
+async function sendPlayers(players) {
+  fetch('http://127.0.0.1:3000/api/start_game',
+      {
+        method: "POST",
+        body: JSON
+            .stringify
+            ({
+              players: players
+            }),
+        headers: {
+          "Content-type": "application/json",
+        },
+      })
+      .then((response) => response.json())
+      .then((json) => console.log(json))
+
+
+}
+
+function data(){
+  //document.addEventListener('DOMContentLoaded', async () => {
+  const players = JSON.parse(localStorage.getItem('players'));
+  console.log(players)
+  //if (players) {
+  //  await sendPlayers(players);
+  //  localStorage.removeItem('players'); // Clear the stored data
+  //}
+  //});
+}
 
 document.getElementById('menu').addEventListener('change', function() {
   const value = this.value;
@@ -79,3 +108,4 @@ document.getElementById('menu').addEventListener('change', function() {
     window.location.href = value;
   }
 });
+data()
