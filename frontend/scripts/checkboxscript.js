@@ -46,6 +46,9 @@ function checked(){
 
       //alert('Sinun täytyy valita valita jokaiselle pelaajalle tyyppi');
     }
+    if(valid){
+      window.location.href = '../pages/map.html'
+    }
   });
 
 }
@@ -92,7 +95,7 @@ const formlistener =()=>{
     evt.preventDefault()
     let players = start_game()
     storeFormData(players)
-    window.location.href = '../pages/map.html'
+
   })
 }
 
