@@ -20,6 +20,3 @@ class HumanPlayer(Player):
                 self.update_location(new_location)
                 Tickets().delete_ticket(ticket_id, self.id)
 
-
-t=HumanPlayer('petteri',1,'EFHK')
-t.insert_player()

@@ -1,15 +1,14 @@
-from flask import Flask, jsonify,Response
+from flask import Flask, jsonify,Response,request
 from flask_cors import CORS
-
 import os
 import json
 from backend.game_functions.airport import Airport
-
+from backend.game_functions.game import Game
 from dotenv import load_dotenv
 load_dotenv()
 app = Flask(__name__)
 CORS(app)
-
+g = Game()
 @app.route('/api/env')
 def get_env():
     return jsonify({
@@ -35,7 +34,33 @@ def airport_locations():
         }
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
-    #return jsonify(all)
+
+@app.route('/api/start_game',methods = ['POST'])
+def start_game():
+    try:
+        data = request.json
+        players = data.get('players')
+
+        for player in players:
+            g.add_players(player)
+
+        status = 200
+        ans = {
+            'status': status,
+            'message': 'Game started successfully',
+            'players': [player.name for player in g.players]
+        }
+    except Exception as e:
+        status = 500
+        ans = {
+            'status': status,
+            'message': 'Failed to start game',
+            'error': str(e)
+        }
+
+    jsonans = json.dumps(ans)
+    return Response(response=jsonans, status=status, mimetype="application/json")
+
 
 @app.errorhandler(404)
 def page_not_found(err):
