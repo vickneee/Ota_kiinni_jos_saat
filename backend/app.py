@@ -7,6 +7,9 @@ from backend.game_functions.database import Database
 from backend.game_functions.airport import Airport
 from backend.game_functions.game import Game
 from dotenv import load_dotenv
+
+from backend.game_functions.player import Player
+
 load_dotenv()
 app = Flask(__name__)
 CORS(app)
@@ -63,7 +66,6 @@ def start_game():
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
 
-
 @app.errorhandler(404)
 def page_not_found(err):
     ans = {
@@ -109,6 +111,29 @@ def fetch_saved_games():
         error_message = traceback.format_exc()
         print("Error in /api/saved-games:", error_message)
         return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route('/api/check_user', methods=['GET'])
+def check_player():
+    try:
+        screen_names = Player.get_screen_names()
+        status = 200
+        ans = {
+            'status': status,
+            'player_info': screen_names
+            }
+
+    except Exception as e:
+        status = 500
+
+        ans = {
+            'status': status,
+            'teksti': 'virheellinen pyyntö',
+            'error': str(e)
+               }
+    jsonans = json.dumps(ans)
+    return Response(response=jsonans, status=status, mimetype="application/json")
+
 
 
 if __name__ == '__main__':
