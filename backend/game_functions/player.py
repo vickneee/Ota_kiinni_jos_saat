@@ -50,9 +50,10 @@ class Player:
         return {}
 
     # Method to get all screen names of players
-    def get_screen_names(self):
+    @staticmethod
+    def get_screen_names():
         sql = "SELECT screen_name FROM player"
-        result = self.database.db_query(sql)
+        result = Database().db_query(sql)
         return [row[0] for row in result]
 
     # Method to insert tickets for a player based on their type
