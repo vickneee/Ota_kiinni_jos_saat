@@ -2,6 +2,8 @@ from flask import Flask, jsonify,Response,request
 from flask_cors import CORS
 import os
 import json
+
+from backend.game_functions.database import Database
 from backend.game_functions.airport import Airport
 from backend.game_functions.game import Game
 from dotenv import load_dotenv
@@ -71,24 +73,25 @@ def page_not_found(err):
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=404, mimetype="application/json")
 
+
 @app.route('/api/saved-games', methods=['GET'])
 def fetch_saved_games():
     try:
-        sql = """
-        SELECT 
-            game.id AS game_id,
-            game.round,
+        sql = """ SELECT game.id AS game_id, game.round,
             GROUP_CONCAT(player.screen_name) AS players
-        FROM 
+            FROM 
             game
-        LEFT JOIN 
+            LEFT JOIN 
             game_player ON game.id = game_player.game_id
-        LEFT JOIN 
+            LEFT JOIN 
             player ON game_player.player_id = player.id
-        GROUP BY 
+            GROUP BY 
             game.id, game.round;
         """
-        result = database.db_query(sql)
+
+        # Create an instance of the Database class
+        db_instance = Database()
+        result = db_instance.db_query(sql)  # Call db_query using the instance
 
         saved_games = []
         if result:
@@ -106,10 +109,6 @@ def fetch_saved_games():
         error_message = traceback.format_exc()
         print("Error in /api/saved-games:", error_message)
         return jsonify({"status": "error", "message": str(e)}), 500
-
-
-
-
 
 
 if __name__ == '__main__':

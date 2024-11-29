@@ -1,7 +1,6 @@
-from backend.game_functions.ai_player import AIPlayer
-#from player import Player
+from backend.game_functions.player import Player
 from backend.game_functions.human_player import HumanPlayer
-#from ai_player import AIPlayer
+from backend.game_functions.ai_player import AIPlayer
 from backend.game_functions.database import Database
 
 
