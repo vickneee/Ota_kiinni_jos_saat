@@ -239,7 +239,7 @@ li {
     padding-top: 10rem;
 }
 
-.exitmodal-content {
+.exit-modal-content {
     background-color: #fff;
     margin: auto;
     padding: 1.25rem;
@@ -249,7 +249,7 @@ li {
 
 /***** Instructions modal *****/
 
-.instructionsmodal-content {
+.instructions-modal-content {
     background-color: #fff;
     margin: auto;
     padding: 3rem 2rem;
@@ -521,7 +521,7 @@ audio {
         padding: 2rem;
     }
 
-    .instructionsmodal-content {
+    .instructions-modal-content {
     width: 60%;
     max-height: 60vh;
 }
