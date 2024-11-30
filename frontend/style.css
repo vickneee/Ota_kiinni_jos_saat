@@ -266,7 +266,7 @@ button {
 }
 
 button#confirmYes {
-    background-color: green;
+    background-color: #008000;
     color: white;
     border-radius: 2px;
 }
@@ -274,17 +274,20 @@ button#confirmYes {
 button#confirmYes:hover {
     box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
     transform: translateY(-1px);
+    background-color: #006800;
 }
 
 button#confirmNo {
-    background-color: red;
+    background-color: #ff0808;
     color: white;
     border-radius: 2px;
+    margin-bottom: 1.25rem;
 }
 
 button#confirmNo:hover {
     box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
     transform: translateY(-1px);
+    background-color: #dd0000;
 }
 
 /***** New Game *****/
