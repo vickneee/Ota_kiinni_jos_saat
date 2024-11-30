@@ -67,6 +67,7 @@ class Player:
                 Tickets().insert_tickets(self.id, ticket_id)
 
     # Method for the criminal to choose a starting point
+
     def choose_criminal_starting_point(self, airports):
         if self.is_computer:
             selected_icao = random.choice(list(airports.keys()))
