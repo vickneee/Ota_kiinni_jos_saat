@@ -242,6 +242,28 @@ li {
     padding: 1.25rem;
     width: 18.75rem;
     text-align: center;
+    border: 2px solid var(--gold);
+}
+/***** When choosing starting point measurements for dropdown *****/
+.align-container2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: right;
+    gap: 1rem;
+    padding-right: 3rem;
+    margin-left: -7.7rem;
+}
+
+.start {
+    border: 2px solid var(--gold);
+    text-align: center;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    font-size: 1.7rem;
+
+
 }
 
 /***** Instructions modal *****/
@@ -253,6 +275,7 @@ li {
     text-align: center;
     overflow-y: auto;
     max-height: 70vh;
+    border: 2px solid var(--gold);
 
 }
 
@@ -351,6 +374,7 @@ select:focus {
     justify-content: left;
     margin-bottom: 2rem;
     max-width: 52rem;
+
 }
 
 /***** Tekijät *****/
