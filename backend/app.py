@@ -121,7 +121,7 @@ def fetch_saved_games():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
-@app.route('/api/check_user', methods=['GET'])
+@app.route('/api/check-user', methods=['GET'])
 def check_player():
     try:
         screen_names = Player.get_screen_names()
