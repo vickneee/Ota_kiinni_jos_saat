@@ -188,6 +188,7 @@ button:hover {
     background-color: var(--main-blue-hover);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     color: var(--raisin-black);
+    transform: translateY(-1px);
 }
 
 .back-to-main {
