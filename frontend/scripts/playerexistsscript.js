@@ -7,7 +7,7 @@ async function fetchUserNames() {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
     const data = await response.json();
-    console.log('Fetched data:', data); // Debugging line
+    // console.log('Fetched data:', data); // Debugging line
     if (data.status === 200 && Array.isArray(data.player_info)) {
       // console.log('Fetched user names:', data.player_info); // Debugging line
       return data.player_info;
@@ -20,28 +20,34 @@ async function fetchUserNames() {
   }
 }
 
-async function checkUser() {
+async function checkUser(input) {
   const userNameInputs = document.querySelectorAll(
       'input[name="player1"], input[name="player2"], input[name="player3"]');
   const userNames = await fetchUserNames();
   // console.log('Fetched user names in checkUser:', userNames); // Debugging line
-  let resultMessage = '';
 
   if (userNames && Array.isArray(userNames)) {
     userNameInputs.forEach(input => {
           const userName = input.value.trim();
           // console.log('Checking user name:', userName); // Debugging line
           if (userNames.includes(userName)) {
-            alert(`${userName} exists!`)
-          // } else {
-          //   resultMessage += `${userName} does not exist.`;
-          // }
-        }
-      }
+            input.setCustomValidity('Username already exists');
+            input.reportValidity();
+          } else {
+            input.setCustomValidity('');
+          }
+        },
     );
-  // } else {
-  //   resultMessage = 'No user names fetched.';
-  // }
-    document.getElementById('result').innerHTML = resultMessage;
   }
 }
+
+document.addEventListener('DOMContentLoaded', async function() {
+  const userNameInputs = document.querySelectorAll(
+      'input[name="player1"], input[name="player2"], input[name="player3"]');
+  // const userNames = await fetchUserNames();
+  userNameInputs.forEach(input => {
+    input.addEventListener('input', function() {
+      checkUser(input);
+    });
+  });
+});
