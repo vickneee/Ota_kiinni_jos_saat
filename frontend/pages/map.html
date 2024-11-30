@@ -14,10 +14,13 @@
     <link rel="icon" type="image/x-icon" href="../favicon_io/favicon.ico?">
     <script type="module" src="../scripts/mapscript.js" defer></script>
     <script src="../scripts/dropdownscript.js" defer></script>
+    <script src="../scripts/choosestartscript.js" defer></script>
     <title>Ota Kiinni Jos Saat</title>
 </head>
 <body>
-<table class="map-table">
+
+<!-- banner that is displayed in the game -->
+<table class="play" id="play-banner">
     <tr>
         <th class="map-th">5/10</th>
         <th class="map-th">Karkuri: Pekka</th>
@@ -27,7 +30,7 @@
         <th class="map-th">
             <div class="dropdown">
                 <label class="align-container"><img src="../assets/settings.png" alt="icon" width="25">
-                    <select class="dropdown-content" id ="menu">
+                    <select class="dropdown-content" id ="play-menu">
                         <option value="#" disabled selected>---</option>
                         <option value="#instructions" >Ohjeet</option>
                         <option value="#exit" >Poistu</option>
@@ -37,9 +40,33 @@
         </th>
     </tr>
 </table>
+
+<!-- banner that prompts karkuri to select starting point -->
+<table class="start" id="start-banner">
+    <tr>
+        <th class="start"><span id="karkuri"></span></th>
+        <th class="map-th">
+            <div class="dropdown">
+                <label class="start-container"><img src="../assets/settings.png" alt="icon" width="25">
+                    <select class="dropdown-content" id ="start-menu">
+                        <option value="#" disabled selected>---</option>
+                        <option value="#instructions" >Ohjeet</option>
+                        <option value="#exit" >Poistu</option>
+                    </select>
+                </label>
+            </div>
+        </th>
+    </tr>
+</table>
+
 <!--    <h3>My Google Maps Demo</h3>-->
 <!--The div element for the map -->
 <div id="map"></div>
+
+
+<!-- Choose start point banner -->
+
+
 
 <!-- Instructions modal -->
 <div id="instructionsModal" class="modal">
