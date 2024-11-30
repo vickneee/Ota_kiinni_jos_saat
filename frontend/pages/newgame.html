@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../style.css">
     <link rel="icon" type="image/x-icon" href="../favicon_io/favicon.ico?">
     <script src="../scripts/checkboxscript.js" defer></script>
+    <script src="../scripts/playerexistsscript.js" defer></script>
     <title>Ota Kiinni Jos Saat</title>
 </head>
 <body class="main-body">
@@ -61,7 +62,7 @@
         </table>
         <!--    <input type="submit" value="Aloita peli">-->
         <a href="../pages/map.html">
-            <button type="submit" value="Aloita peli" class="main-buttons new-game">Aloita peli</button>
+            <button type="submit" value="Aloita peli" class="main-buttons new-game" onclick="checkUser()">Aloita peli</button>
         </a>
 
     </form>

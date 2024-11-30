@@ -62,10 +62,12 @@ async function initMap() {
       content:pin.element,
       title: code,
     });
-    marker.addListener('click',()=>{
-      selected = marker.title
+    marker.addListener('click',async()=>{
+      let coordinates= {'latitude':marker.position.lat, 'longitude':marker.position.lng}
+      let selected = marker.title
       let players = playerData()
-      console.log(players, selected)
+      console.log(players, selected,coordinates)
+      await sendPlayers(players,coordinates,selected)
     })
 
   }
@@ -83,14 +85,16 @@ fetchEnv().then(env => {
 });
 
 
-async function sendPlayers(players) {
+async function sendPlayers(players,coord, icao) {
   fetch('http://127.0.0.1:3000/api/start_game',
       {
         method: "POST",
         body: JSON
             .stringify
             ({
-              players: players
+              players: players,
+              criminal_location:coord,
+              criminal_icao:icao,
             }),
         headers: {
           "Content-type": "application/json",

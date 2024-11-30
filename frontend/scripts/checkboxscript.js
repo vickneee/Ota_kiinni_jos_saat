@@ -82,7 +82,7 @@ function start_game(){
       }
 
   });
-  console.log(players)
+  // console.log(players)
   return players
 
 }

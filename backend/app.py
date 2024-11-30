@@ -45,15 +45,23 @@ def start_game():
     try:
         data = request.json
         players = data.get('players')
+        criminal_data = data.get('criminal_location')
+        criminal_icao = data.get('criminal_icao')
+        criminal_loc = {'latitude':criminal_data['latitude'],'longitude':criminal_data['longitude']}
+        det_starts = Airport().two_farthest_airports(criminal_loc)
+        all_loc = [criminal_icao, det_starts[0][0], det_starts[1][0]]
+        player_list = []
+        for i in range(3):
+            player_list.append({'name':players[i]['name'], 'player_type':players[i]['type'],'location':all_loc[i],'is_computer':players[i]['is_computer']})
 
-        for player in players:
-            g.add_players(player)
+        g.add_players(player_list)
 
         status = 200
         ans = {
             'status': status,
             'message': 'Game started successfully',
-            'players': [player.name for player in g.players]
+            'players': player_list,
+
         }
     except Exception as e:
         status = 500
@@ -113,7 +121,7 @@ def fetch_saved_games():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
-@app.route('/api/check_user', methods=['GET'])
+@app.route('/api/check-user', methods=['GET'])
 def check_player():
     try:
         screen_names = Player.get_screen_names()
