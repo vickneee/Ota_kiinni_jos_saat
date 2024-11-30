@@ -1,7 +1,6 @@
-from backend.game_functions.ai_player import AIPlayer
-#from player import Player
+from backend.game_functions.player import Player
 from backend.game_functions.human_player import HumanPlayer
-#from ai_player import AIPlayer
+from backend.game_functions.ai_player import AIPlayer
 from backend.game_functions.database import Database
 
 
@@ -60,4 +59,22 @@ class Game:
             player.player_move(new_location, ticket_id)
         else:
             pass
+
+
+
+
+    #Method to fetch all games from DB
+    def fetch_saved_games(self):
+
+        sql = "SELECT id, round, player_id FROM game"
+        result = self.database.db_query(sql)
+        if result:
+            # Transform database results into a list of dictionaries
+            saved_games = [
+                {"game_id": row[0], "round": row[1], "player_id": row[2]}
+                for row in result
+            ]
+            return saved_games
+        return []  # Return an empty list if no games are found
+
 

@@ -1,6 +1,6 @@
 import random
-from backend.game_functions.database import Database
 from backend.game_functions.tickets import Tickets
+from backend.game_functions.database import Database
 
 
 class Player:
@@ -50,9 +50,10 @@ class Player:
         return {}
 
     # Method to get all screen names of players
-    def get_screen_names(self):
+    @staticmethod
+    def get_screen_names():
         sql = "SELECT screen_name FROM player"
-        result = self.database.db_query(sql)
+        result = Database().db_query(sql)
         return [row[0] for row in result]
 
     # Method to insert tickets for a player based on their type
@@ -80,13 +81,13 @@ class Player:
         return self.id
 
     # Method to create a new player
-    def create_new_player(self, player_type, name, location):
-        max_char = 20
-        existing_names = self.get_screen_names()
+   # def create_new_player(self, player_type, name, location):
+   #     max_char = 20
+   #     existing_names = self.get_screen_names()
 
-        if name not in existing_names and len(name) <= max_char:
-            return Player(name, player_type, location, self.database)
-        return None
+#        if name not in existing_names and len(name) <= max_char:
+#            return Player(name, player_type, location, self.database)
+#        return None
 
     # Method to get the latest movement of a criminal
     def get_criminal_movements(self):
