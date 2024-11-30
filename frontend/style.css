@@ -187,6 +187,8 @@ button {
 button:hover {
     background-color: var(--main-blue-hover);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    color: var(--raisin-black);
+    transform: translateY(-1px);
 }
 
 .back-to-main {
@@ -197,7 +199,7 @@ button:hover {
 }
 
 .new-game {
-    margin-bottom: 2rem;
+    margin-top: 2rem;
 }
 
 /***** List *****/
@@ -224,6 +226,7 @@ li {
 }
 
 /***** Exit confirmation *****/
+
 .modal {
     display: none;
     position: fixed;
@@ -236,47 +239,24 @@ li {
     padding-top: 10rem;
 }
 
-.exitmodal-content {
+.exit-modal-content {
     background-color: #fff;
     margin: auto;
     padding: 1.25rem;
     width: 18.75rem;
     text-align: center;
-    border: 2px solid var(--gold);
-}
-/***** When choosing starting point measurements for dropdown *****/
-.align-container2 {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: right;
-    gap: 1rem;
-    padding-right: 3rem;
-    margin-left: -7.7rem;
-}
-
-.start {
-    border: 2px solid var(--gold);
-    text-align: center;
-    background-color: red;
-    color: white;
-    font-weight: bold;
-    font-size: 1.7rem;
-
-
 }
 
 /***** Instructions modal *****/
 
-.instructionsmodal-content {
+.instructions-modal-content {
     background-color: #fff;
     margin: auto;
+    padding: 3rem 2rem;
     width: 45rem;
     text-align: center;
     overflow-y: auto;
-    max-height: 70vh;
-    border: 2px solid var(--gold);
-
+    max-height: 60vh;
 }
 
 button {
@@ -287,19 +267,28 @@ button {
 }
 
 button#confirmYes {
-    background-color: green;
+    background-color: #008000;
     color: white;
-    border: none;
+    border-radius: 2px;
+}
+
+button#confirmYes:hover {
+    box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+    background-color: #006800;
 }
 
 button#confirmNo {
-    background-color: red;
+    background-color: #ff0808;
     color: white;
-    border: none;
+    border-radius: 2px;
+    margin-bottom: 1.25rem;
 }
 
-button:hover {
-    opacity: 0.5;
+button#confirmNo:hover {
+    box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
+    transform: translateY(-1px);
+    background-color: #dd0000;
 }
 
 /***** New Game *****/
@@ -339,7 +328,7 @@ input[type='text'] {
 }
 
 input[type='text']:focus {
-    border-radius: 5px;
+    border-radius: 2px;
     outline: 2px solid var(--gold);
     cursor: pointer;
 }
@@ -360,8 +349,8 @@ select:focus {
     cursor: pointer;
 }
 
-.error{
-    border:2px solid red !important;
+.error {
+    outline: 2px solid red;
 }
 
 /***** Instructions *****/
@@ -374,7 +363,6 @@ select:focus {
     justify-content: left;
     margin-bottom: 2rem;
     max-width: 52rem;
-
 }
 
 /***** Tekijät *****/
@@ -399,6 +387,18 @@ select:focus {
     background-color: var(--seasalt);
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     border-radius: 2px; /* Rounded corners */
+}
+/***** Continua game *****/
+
+.game-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.game-row span {
+    margin-right: 30px; /* Space between columns */
 }
 
 /***** Map *****/
@@ -486,11 +486,6 @@ audio {
         font-size: 1rem;
     }
 
-    /*.main-buttons {*/
-    /*    width: 14rem;*/
-    /*    font-size: 1.1rem;*/
-    /*    padding: 1rem 2rem;*/
-    /*}*/
     .buttons {
         flex-direction: column;
         align-items: center;
@@ -522,13 +517,14 @@ audio {
         font-size: 1rem;
     }
 
-    /*button {*/
-    /*    width: 8rem;*/
-    /*    font-size: 1rem;*/
-    /*}*/
     .card-container {
         padding: 2rem;
     }
+
+    .instructions-modal-content {
+    width: 60%;
+    max-height: 60vh;
+}
 }
 
 /* For screens smaller than 700px */
