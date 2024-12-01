@@ -401,6 +401,7 @@ select:focus {
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
     border-radius: 2px; /* Rounded corners */
 }
+
 /***** Continue game *****/
 
 .game-row {
@@ -502,9 +503,13 @@ audio {
         width: 90%;
     }
 
-    .map-th {
+    .dropdown-th {
+        min-width: 4rem;
         padding: 0 2rem;
-        width: 100%;
+    }
+
+    .th-padding {
+        padding: 1rem;
     }
 
     .counter {
@@ -538,13 +543,13 @@ audio {
     }
 
     .map-th {
-        padding: 0.8rem;
         width: 100%;
     }
 
     .dropdown-th {
-    width: 100%;
-}
+        padding: 1rem;
+        width: 100%;
+    }
 
     .game-over-h1 {
         font-size: 3rem;
@@ -573,9 +578,9 @@ audio {
     }
 
     .instructions-modal-content {
-    width: 60%;
-    max-height: 60vh;
-}
+        width: 60%;
+        max-height: 60vh;
+    }
 }
 
 /* For screens smaller than 700px */
@@ -625,10 +630,6 @@ audio {
         font-size: 0.9rem;
     }
 
-    /*button {*/
-    /*    width: 7rem;*/
-    /*    font-size: 0.9rem;*/
-    /*}*/
     table {
         display: flex;
         flex-direction: column;
@@ -644,10 +645,6 @@ audio {
     td, th {
         width: 100%;
     }
-
-    .checkbox-container {
-
-}
 }
 
 /* For screens smaller than 600px */
