@@ -65,6 +65,17 @@ body::before {
     opacity: 0.2;
 }
 
+/***** Video *****/
+
+video {
+    width: 20%; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    position: absolute;
+    top: 6rem; /* Position the video */
+    left: 4rem; /* Position the video */
+    z-index: -1; /* Place the video behind other elements */
+}
+
 /***** General *****/
 
 body {
