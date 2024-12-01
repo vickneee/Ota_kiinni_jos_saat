@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (firstPlayer && firstPlayer.type === 0) {
         startGame.textContent = `${firstPlayer.name}`;
         // startBanner.textContent = `Rikollinen: ${firstPlayer.name} valitse aloituspaikka.`;
+
         startBanner.style.display = 'table';
         playBanner.style.display = 'none';
     } else {
