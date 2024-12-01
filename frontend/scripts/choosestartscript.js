@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstPlayer = players ? players[0] : null;
 
     if (firstPlayer && firstPlayer.type === 0) {
-        startBanner.textContent = `Rikollinen: ${firstPlayer.name} valitse aloituspaikka.`;
+        startBanner.textContent = `Rikollinen: ${firstPlayer.name} valitse aloituspaikka. ✈️`;
         startBanner.style.display = 'table';
         playBanner.style.display = 'none';
     } else {
