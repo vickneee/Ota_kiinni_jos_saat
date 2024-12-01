@@ -9,7 +9,7 @@
     --light-gray: #999999; /* Light gray color */
     --gray: #666666; /* Gray color */
     --light-main-blue: #ADD1F8FF; /* Light main blue */
-    --main-blue: #ADD1F8; /* Main blue */
+    --main-blue: #b0d6f8; /* Main blue */
     --main-blue-hover: rgb(141, 197, 246); /* Main blue */
     --darker-blue: #23245c; /* Secondary blue */
     --gold: #C49339; /* Luxury accent */
@@ -225,6 +225,11 @@ li {
     gap: 1rem;
 }
 
+select:focus {
+    outline: 2px solid var(--gold);
+    border: none;
+}
+
 /***** Exit confirmation *****/
 
 .modal {
@@ -338,24 +343,27 @@ input[type='text']:focus {
     cursor: pointer;
 }
 
+.error {
+    outline: 2px solid red;
+}
+
 select {
     width: 6rem;
     height: 2rem;
     background: var(--seasalt);
     color: var(--gray);
-    border-radius: 5px;
+    border-radius: 3px;
     border: 2px solid var(--main-blue);
+    outline: none;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
     cursor: pointer;
 }
 
 select:focus {
-    border-radius: 5px;
+    border-radius: 1px;
     outline: 2px solid var(--gold);
     cursor: pointer;
-}
-
-.error {
-    outline: 2px solid red;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
 /***** Instructions *****/
