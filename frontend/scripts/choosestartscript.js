@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const startBanner = document.getElementById('start-banner');
     const playBanner = document.getElementById('play-banner');
+    const startGame = document.getElementById('karkuri');
 
     function playerData() {
         const players = JSON.parse(localStorage.getItem('players'));
@@ -11,7 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const firstPlayer = players ? players[0] : null;
 
     if (firstPlayer && firstPlayer.type === 0) {
-        startBanner.textContent = `Rikollinen: ${firstPlayer.name} valitse aloituspaikka. ✈️`;
+        startGame.textContent = `${firstPlayer.name}`;
+        // startBanner.textContent = `Rikollinen: ${firstPlayer.name} valitse aloituspaikka.`;
+
         startBanner.style.display = 'table';
         playBanner.style.display = 'none';
     } else {
