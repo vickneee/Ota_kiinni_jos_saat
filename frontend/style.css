@@ -414,16 +414,6 @@ table {
     font-size: 1.2rem;
 }
 
-.map-table {
-    border: 2px solid var(--gold);
-    background-color: var(--seasalt);
-}
-
-.map-th {
-    border: 2px solid var(--gold);
-    padding: 1rem;
-}
-
 /***** Game Start *****/
 
 #start-banner {
@@ -432,12 +422,29 @@ table {
     padding: 1.2rem;
     font-size: 1.2rem;
     text-align: center;
-    border: 2px solid var(--gold);
-    border-collapse: revert;
+    /*border: 2px solid var(--gold);*/
+    /*border-collapse: revert;*/
 }
 
 #play-banner {
     background-color: var(--seasalt); /* Background color */
+}
+
+.map-th {
+    border: 2px solid var(--gold);
+    padding: 1rem 0;
+    border-collapse: revert;
+}
+
+.dropdown-th {
+    width: 4rem;
+    padding: 0 2rem;
+    overflow: hidden;
+}
+
+.counter {
+    padding: 1rem;
+    width: 3rem;
 }
 
 /***** Game Over *****/
@@ -481,6 +488,16 @@ audio {
     .main-image {
         width: 90%;
     }
+
+    .map-th {
+        padding: 0 2rem;
+        width: 100%;
+    }
+
+    .counter {
+        padding: 1rem;
+        width: 100%;
+    }
 }
 
 /* For screens smaller than 900px */
@@ -509,7 +526,12 @@ audio {
 
     .map-th {
         padding: 0.8rem;
+        width: 100%;
     }
+
+    .dropdown-th {
+    width: 100%;
+}
 
     .game-over-h1 {
         font-size: 3rem;
@@ -566,10 +588,6 @@ audio {
     .buttons {
         flex-direction: column;
         align-items: center;
-    }
-
-    .map-th {
-        padding: 0.6rem;
     }
 
     .game-over-h1 {

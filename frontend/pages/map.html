@@ -22,12 +22,12 @@
 <!-- banner that is displayed in the game -->
 <table class="play" id="play-banner">
     <tr>
-        <th class="map-th">5/10</th>
+        <th class="map-th counter">5/10</th>
         <th class="map-th">Karkuri: Pekka</th>
         <th class="map-th color-red">Potkurikone: 2</th>
         <th class="map-th color-blue">Matkustajakone: 2</th>
         <th style="color: green;" class="map-th">Yksityiskone: 1</th>
-        <th class="map-th">
+        <th class="map-th dropdown-th">
             <div class="dropdown">
                 <label class="align-container"><img src="../assets/settings.png" alt="icon" width="25">
                     <select class="dropdown-content" id ="play-menu">
@@ -41,13 +41,13 @@
     </tr>
 </table>
 
-<!-- banner that prompts karkuri to select starting point -->
-<table class="start" id="start-banner">
+<!-- Choose start point banner -->
+<table class="start-game" id="start-banner">
     <tr>
-        <th class="start"><span id="karkuri"></span></th>
-        <th class="map-th">
+        <th class="start map-th">Rikollinen <span id="karkuri"></span> valitse aloituspaikka.</th>
+        <th class="map-th dropdown-th">
             <div class="dropdown">
-                <label class="start-container"><img src="../assets/settings.png" alt="icon" width="25">
+                <label class="start-container align-container"><img src="../assets/settings.png" alt="icon" width="25">
                     <select class="dropdown-content" id ="start-menu">
                         <option value="#" disabled selected>---</option>
                         <option value="#instructions" >Ohjeet</option>
@@ -62,11 +62,6 @@
 <!--    <h3>My Google Maps Demo</h3>-->
 <!--The div element for the map -->
 <div id="map"></div>
-
-
-<!-- Choose start point banner -->
-
-
 
 <!-- Instructions modal -->
 <div id="instructionsModal" class="modal">
@@ -90,8 +85,6 @@
         <li>Matkustajakoneella kahdelle siitä seuraavaksi lähimmille lentokentille.</li>
         <li>Yksityiskoneella kahdelle kauimmaiselle lentokentälle.</li>
     </ul>
-
-
     <h2>3. Pelin kulku:</h2>
     <ul>
         <li>Pelissä on 21 ennalta määritettyä lentokenttää.</li>
