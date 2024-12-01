@@ -327,6 +327,11 @@ input[type='text'] {
     box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
 }
 
+input[type='checkbox']:focus {
+    border-radius: 2px;
+    outline: 2px solid var(--gold);
+}
+
 input[type='text']:focus {
     border-radius: 2px;
     outline: 2px solid var(--gold);
