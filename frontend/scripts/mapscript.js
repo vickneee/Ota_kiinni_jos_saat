@@ -34,8 +34,8 @@ async function initMap() {
   //@ts-ignore
   const {Map} = await google.maps.importLibrary('maps');
   const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
-  const {PinElement} = await google.maps.importLibrary('marker');
-  const {event} = await google.maps.importLibrary('core');
+  const {PinElement} =  await google.maps.importLibrary("marker");
+  const {event} = await google.maps.importLibrary("core");
   // The map, centered at Center of Europe
   map = new Map(document.getElementById('map'), {
     zoom: 4,
@@ -43,133 +43,48 @@ async function initMap() {
     mapId: 'DEMO_MAP_ID',
   });
 
-  // Fetch JSON data and add markers
+    // Fetch JSON data and add markers
   let selected;
   const data = await fetchJSONData();
   data.locations = data.locations || {};
   const locations = data.locations;
 
-
   const markers = []
-  
   for (const [code, coords] of Object.entries(locations)) {
-    const pin1 = new PinElement({
-      background: '#ffffff',
-      glyphColor: '#23245c',
-      borderColor: '#C49339',
+    const pin = new PinElement({
+      background:'#ffffff',
+      glyphColor:'#23245c',
+      borderColor:'#C49339'
     });
-    const pin2 = new PinElement({
-      background: 'green',
-      glyphColor: '#C49339',
-      borderColor: '#C49339',
-    });
-    const pin3 = new PinElement({
-      background: 'red',
-      glyphColor: '#C49339',
-      borderColor: '#C49339',
-    });
-    const pin4 = new PinElement({
-      background: 'blue',
-      glyphColor: '#C49339',
-      borderColor: '#C49339',
-    });
-
-    // Add a marker for each location
     const marker = new AdvancedMarkerElement({
       map: map,
-      position: {lat: coords[0], lng: coords[1]},
-      content: pin1.element,
+      position: { lat: coords[0], lng: coords[1] },
+      content:pin.element,
       title: code,
     });
+    markers.push(marker)
+    await startingPoint(marker,markers)
 
 
-    // Create a marker for the criminal
-    const glyphImg1 = document.createElement('img');
-    glyphImg1.src = '../assets/Karkuri.png';
-    glyphImg1.style.width = '30px';  // Set the desired width
-    glyphImg1.style.height = '30px';  // Set the desired height
-    glyphImg1.classList.add('highlighted-image');  // Add a class to the element
-    glyphImg1.title = 'Rikollinen';
+  }
+  return map
 
-    const glyphSvgPinElement1 = new PinElement({
-      background: '#ffffff',
-      glyph: glyphImg1,
-      borderColor: '#C49339',
-    });
+}
 
-    const glyphSvgMarkerView1 = new AdvancedMarkerElement({
-      map,
-      position: {lat: 58.5953, lng: 25.01136},
-      content: glyphSvgPinElement1.element,
-      title: 'Rikollinen',
-    });
-
-
-    // Create a marker for the Etsivä 1
-    const glyphImg2 = document.createElement('img');
-    glyphImg2.src = '../assets/Etsiva_1.png';
-    glyphImg2.style.width = '30px';  // Set the desired width
-    glyphImg2.style.height = '30px';  // Set the desired height
-    glyphImg2.classList.add('highlighted-image');  // Add a class to the element
-    glyphImg2.classList.add('hl-1');  // Add a class to the element
-    glyphImg2.title = 'Etsivä 1';
-
-    const glyphSvgPinElement2 = new PinElement({
-      background: '#ffffff',
-      glyph: glyphImg2,
-      borderColor: '#C49339',
-    });
-
-    const glyphSvgMarkerView2 = new AdvancedMarkerElement({
-      map,
-      position: {lat: 56.8796, lng: 24.6032},
-      content: glyphSvgPinElement2.element,
-      title: 'Etsivä 1',
-    });
-
-    // Create a marker for the Etsivä 2
-    const glyphImg3 = document.createElement('img');
-    glyphImg3.src = '../assets/Etsiva_2.png';
-    glyphImg3.style.width = '30px';  // Set the desired width
-    glyphImg3.style.height = '30px';  // Set the desired height
-    glyphImg3.classList.add('highlighted-image');  // Add a class to the element
-    glyphImg3.classList.add('hl-2');  // Add a class to the element
-    glyphImg3.title = 'Etsivä 2';
-
-    const glyphSvgPinElement3 = new PinElement({
-      background: '#ffffff',
-      glyph: glyphImg3,
-      borderColor: '#C49339',
-    });
-
-    const glyphSvgMarkerView3 = new AdvancedMarkerElement({
-      map,
-      position: {lat: 55.16994, lng: 23.8813},
-      content: glyphSvgPinElement3.element,
-      title: 'Etsivä 2',
-    });
-
-
-
-    markers.push(marker);
-    google.maps.event.addListener(marker, 'click', async () => {
-      let coordinates = {
-        'latitude': marker.position.lat,
-        'longitude': marker.position.lng,
-      };
-
+async function startingPoint(marker,markers){
+  const {event} = await google.maps.importLibrary("core");
+  google.maps.event.addListener(marker, 'click', async () => {
+      let coordinates = { 'latitude': marker.position.lat, 'longitude': marker.position.lng };
       let selected = marker.title;
       let players = playerData();
-      console.log('Sending data:', {players, coordinates, selected});
+      console.log('Sending data:', { players, coordinates, selected });
       await sendPlayers(players, coordinates, selected);
-
       markers.forEach((m)=>google.maps.event.clearListeners(m, 'click'));
 
       });
 }
 
 
-    });
 
 
 fetchEnv().then(env => {
@@ -181,17 +96,18 @@ fetchEnv().then(env => {
   });
 });
 
-async function sendPlayers(players, coord, icao) {
-  try {
+
+async function sendPlayers(players,coord, icao) {
+    try {
     const response = await fetch('http://127.0.0.1:3000/api/start_game', {
-      method: 'POST',
+      method: "POST",
       body: JSON.stringify({
         'players': players,
         'criminal_location': coord,
         'criminal_icao': icao,
       }),
       headers: {
-        'Content-type': 'application/json',
+        "Content-type": "application/json",
       },
     });
 
@@ -204,6 +120,7 @@ async function sendPlayers(players, coord, icao) {
   } catch (error) {
     console.error('Error sending players:', error);
   }
+
 
 }
 
@@ -260,7 +177,6 @@ async function game_rounds(map,players){
     p_list.push(p)
   }
   console.log(p_list)
-
 }
 
 document.getElementById('menu').addEventListener('change', function() {
