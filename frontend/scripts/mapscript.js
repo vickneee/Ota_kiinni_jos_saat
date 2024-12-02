@@ -63,7 +63,17 @@ async function initMap() {
       title: code,
     });
     markers.push(marker)
-    google.maps.event.addListener(marker, 'click', async () => {
+    await startingPoint(marker,markers)
+
+
+  }
+  return map
+
+}
+
+async function startingPoint(marker,markers){
+  const {event} = await google.maps.importLibrary("core");
+  google.maps.event.addListener(marker, 'click', async () => {
       let coordinates = { 'latitude': marker.position.lat, 'longitude': marker.position.lng };
       let selected = marker.title;
       let players = playerData();
@@ -72,12 +82,10 @@ async function initMap() {
       markers.forEach((m)=>google.maps.event.clearListeners(m, 'click'));
 
       });
-
-
-  }
-  return map
-
 }
+
+
+
 
 fetchEnv().then(env => {
   const mapKey = env.MAP_KEY;
@@ -123,7 +131,18 @@ function playerData(){
 
 }
 
-
+async function gameRounds(map,players){
+  let round = 1
+  const p_list = []
+  for(let p of players){
+    p_list.push(p.name)
+  }
+  for(let i = 1; i < 11; i++){
+    for(let i = 0; i<2; i++){
+      await send_move(player,new_location,ticket_id)
+    }
+  }
+}
 
 async function send_move(player,new_location,ticket_id){
   try {
