@@ -77,12 +77,12 @@ body::before {
 
 .hl-1 {
     border: 2px solid var(--darker-blue);
-    box-shadow: 0 0 10px 0 var(--darker-blue);
+    box-shadow: 0 0 10px 8px var(--darker-blue);
 }
 
 .hl-2 {
     border: 2px solid var(--darker-red);
-    box-shadow: 0 0 10px 0 var(--darker-red);
+    box-shadow: 0 0 10px 5px var(--darker-red);
 }
 
 /***** Video *****/
