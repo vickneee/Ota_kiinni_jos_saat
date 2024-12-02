@@ -68,8 +68,8 @@ body::before {
 
 .highlighted-image {
     border: 2px solid var(--gold);
-    box-shadow: 0 0 10px 0 var(--gold); /* Kultainen varjo */
-    border-radius: 50%; /* Pyöristetyt kulmat */
+    box-shadow: 0 0 10px 0 var(--gold);
+    border-radius: 50%; /* Rounded corners */
     position: relative;
     z-index: 1;
     pointer-events: auto;
@@ -77,12 +77,12 @@ body::before {
 
 .hl-1 {
     border: 2px solid var(--darker-blue);
-    box-shadow: 0 0 10px 0 var(--darker-blue); /* Kultainen varjo */
+    box-shadow: 0 0 10px 0 var(--darker-blue);
 }
 
 .hl-2 {
     border: 2px solid var(--darker-red);
-    box-shadow: 0 0 10px 0 var(--darker-red); /* Kultainen varjo */
+    box-shadow: 0 0 10px 0 var(--darker-red);
 }
 
 /***** Video *****/
