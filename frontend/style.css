@@ -12,6 +12,7 @@
     --main-blue: #b0d6f8; /* Main blue */
     --main-blue-hover: rgb(141, 197, 246); /* Main blue */
     --darker-blue: #23245c; /* Secondary blue */
+    --darker-red: #730000; /* Secondary blue */
     --gold: #C49339; /* Luxury accent */
     --raisin-black: #202231; /* Main black, text color */
     --red: red; /* Ticket text color */
@@ -63,6 +64,25 @@ body::before {
     object-fit: cover;
     object-position: center;
     opacity: 0.2;
+}
+
+.highlighted-image {
+    border: 2px solid var(--gold);
+    box-shadow: 0 0 10px 0 var(--gold);
+    border-radius: 50%; /* Rounded corners */
+    position: relative;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+.hl-1 {
+    border: 2px solid var(--darker-blue);
+    box-shadow: 0 0 10px 0 var(--darker-blue);
+}
+
+.hl-2 {
+    border: 2px solid var(--darker-red);
+    box-shadow: 0 0 10px 0 var(--darker-red);
 }
 
 /***** Video *****/
