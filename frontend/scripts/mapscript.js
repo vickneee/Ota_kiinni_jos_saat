@@ -48,10 +48,10 @@ async function initMap() {
   const data = await fetchJSONData();
   data.locations = data.locations || {};
   const locations = data.locations;
-  const pin = new PinElement({
-    background: '#ffffff',
-  });
-  const markers = [];
+
+
+  const markers = []
+  
   for (const [code, coords] of Object.entries(locations)) {
     const pin1 = new PinElement({
       background: '#ffffff',
@@ -81,6 +81,7 @@ async function initMap() {
       content: pin1.element,
       title: code,
     });
+
 
     // Create a marker for the criminal
     const glyphImg1 = document.createElement('img');
@@ -156,17 +157,20 @@ async function initMap() {
         'latitude': marker.position.lat,
         'longitude': marker.position.lng,
       };
+
       let selected = marker.title;
       let players = playerData();
       console.log('Sending data:', {players, coordinates, selected});
       await sendPlayers(players, coordinates, selected);
-      markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
+
+      markers.forEach((m)=>google.maps.event.clearListeners(m, 'click'));
+
+      });
+}
+
 
     });
 
-  }
-
-}
 
 fetchEnv().then(env => {
   const mapKey = env.MAP_KEY;
@@ -203,15 +207,60 @@ async function sendPlayers(players, coord, icao) {
 
 }
 
-function playerData() {
-  //document.addEventListener('DOMContentLoaded', async () => {
+function playerData(){
+
   const players = JSON.parse(localStorage.getItem('players'));
-  return players;
-  //if (players) {
-  //  await sendPlayers(players);
-  //  localStorage.removeItem('players'); // Clear the stored data
-  //}
-  //});
+  return players
+
+}
+
+async function gameRounds(map,players){
+  let round = 1
+  const p_list = []
+  for(let p of players){
+    p_list.push(p.name)
+  }
+  for(let i = 1; i < 11; i++){
+    for(let i = 0; i<2; i++){
+      await send_move(player,new_location,ticket_id)
+    }
+  }
+}
+
+async function send_move(player,new_location,ticket_id){
+  try {
+    const response = await fetch('http://127.0.0.1:3000/api/play_round', {
+      method: "POST",
+      body: JSON.stringify({
+        'player': player,
+        'new_location': new_location,
+        'ticket_id': ticket_id,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    console.log(json);
+  } catch (error) {
+    console.error('Error sending players:', error);
+  }
+
+}
+
+
+async function game_rounds(map,players){
+  const p_list = []
+  for (let p of players){
+    p_list.push(p)
+  }
+  console.log(p_list)
+
 }
 
 document.getElementById('menu').addEventListener('change', function() {
