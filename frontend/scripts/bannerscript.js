@@ -2,6 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const startBanner = document.getElementById('start-banner');
     const playBanner = document.getElementById('play-banner');
     const startGame = document.getElementById('karkuri');
+    const roundElement = document.getElementById('kierrokset')
+    const potkurikone = document.getElementById('potkurikone')
+    const matkustajakone = document.getElementById('matkustajakone')
+    const yksityiskone = document.getElementById('matkustajakone')
 
     // Get player data
     function playerData() {
