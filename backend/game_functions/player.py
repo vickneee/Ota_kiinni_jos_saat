@@ -137,10 +137,15 @@ class Player:
         self.location = location
 
     def add_player_past_movement(self, location, ticket_id, player_id):
-
+        if not self.database:
+            self.database = Database()
+        sql1 = f""" select type from ticket where id = '{ticket_id}'
+                """
+        result = self.database.db_query(sql1)
+        ticket_type = result[0][0]
         # Add the ticket and player information to the database
         sql = f"""INSERT INTO past_movement (player_id, location, ticket_type) 
-                  VALUES ('{player_id}', '{location}','{ticket_id}' )"""
+                  VALUES ('{player_id}', '{location}','{ticket_type}' )"""
         self.database.db_insert(sql)
 
         # After that delete the ticket from the tickets table

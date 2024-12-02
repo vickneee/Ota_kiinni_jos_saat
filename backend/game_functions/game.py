@@ -11,6 +11,7 @@ class Game:
         self.game_id = self.create_game()
         self.players = []
         self.screen_names = []
+        self.round = 0
 
     #Create a new game in the database and return the game ID
     def create_game(self):
@@ -51,12 +52,17 @@ class Game:
             player.add_player_to_game(self.game_id)
             self.screen_names.append(pdata["name"])
             self.players.append(player)
+        self.round = 1
 
     def play_round(self,player_name,new_location, ticket_id):
-        name_index = self.screen_names[player_name]
+        name_index = self.screen_names.index(player_name)
+        print(name_index)
         player = self.players[name_index]
-        if isinstance(player, HumanPlayer):
+        if player.is_computer == 0:
             player.player_move(new_location, ticket_id)
+            self.update_round_player(player.id)
+            if name_index == 2:
+                self.insert_round()
         else:
             pass
 

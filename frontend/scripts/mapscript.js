@@ -48,9 +48,7 @@ async function initMap() {
   const data = await fetchJSONData();
   data.locations = data.locations || {};
   const locations = data.locations;
-  const pin = new PinElement({
-    background:'#ffffff' ,
-  });
+
   const markers = []
   for (const [code, coords] of Object.entries(locations)) {
     const pin = new PinElement({
@@ -77,7 +75,7 @@ async function initMap() {
 
 
   }
-
+  return map
 
 }
 
@@ -119,14 +117,47 @@ async function sendPlayers(players,coord, icao) {
 }
 
 function playerData(){
-  //document.addEventListener('DOMContentLoaded', async () => {
+
   const players = JSON.parse(localStorage.getItem('players'));
   return players
-  //if (players) {
-  //  await sendPlayers(players);
-  //  localStorage.removeItem('players'); // Clear the stored data
-  //}
-  //});
+
+}
+
+
+
+async function send_move(player,new_location,ticket_id){
+  try {
+    const response = await fetch('http://127.0.0.1:3000/api/play_round', {
+      method: "POST",
+      body: JSON.stringify({
+        'player': player,
+        'new_location': new_location,
+        'ticket_id': ticket_id,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    console.log(json);
+  } catch (error) {
+    console.error('Error sending players:', error);
+  }
+
+}
+
+
+async function game_rounds(map,players){
+  const p_list = []
+  for (let p of players){
+    p_list.push(p)
+  }
+  console.log(p_list)
 }
 
 document.getElementById('menu').addEventListener('change', function() {
