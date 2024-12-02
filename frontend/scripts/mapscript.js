@@ -34,7 +34,8 @@ async function initMap() {
   //@ts-ignore
   const {Map} = await google.maps.importLibrary('maps');
   const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
-  const {PinElement} = await await google.maps.importLibrary("marker");
+  const {PinElement} =  await google.maps.importLibrary("marker");
+  const {event} = await google.maps.importLibrary("core");
   // The map, centered at Center of Europe
   map = new Map(document.getElementById('map'), {
     zoom: 4,
@@ -50,6 +51,7 @@ async function initMap() {
   const pin = new PinElement({
     background:'#ffffff' ,
   });
+  const markers = []
   for (const [code, coords] of Object.entries(locations)) {
     const pin = new PinElement({
       background:'#ffffff',
@@ -62,13 +64,17 @@ async function initMap() {
       content:pin.element,
       title: code,
     });
-    marker.addListener('click',async()=>{
-      let coordinates= {'latitude':marker.position.lat, 'longitude':marker.position.lng}
-      let selected = marker.title
-      let players = playerData()
-      console.log(players, selected,coordinates)
-      await sendPlayers(players,coordinates,selected)
-    })
+    markers.push(marker)
+    google.maps.event.addListener(marker, 'click', async () => {
+      let coordinates = { 'latitude': marker.position.lat, 'longitude': marker.position.lng };
+      let selected = marker.title;
+      let players = playerData();
+      console.log('Sending data:', { players, coordinates, selected });
+      await sendPlayers(players, coordinates, selected);
+      markers.forEach((m)=>google.maps.event.clearListeners(m, 'click'));
+
+      });
+
 
   }
 
@@ -86,22 +92,28 @@ fetchEnv().then(env => {
 
 
 async function sendPlayers(players,coord, icao) {
-  fetch('http://127.0.0.1:3000/api/start_game',
-      {
-        method: "POST",
-        body: JSON
-            .stringify
-            ({
-              players: players,
-              criminal_location:coord,
-              criminal_icao:icao,
-            }),
-        headers: {
-          "Content-type": "application/json",
-        },
-      })
-      .then((response) => response.json())
-      .then((json) => console.log(json))
+    try {
+    const response = await fetch('http://127.0.0.1:3000/api/start_game', {
+      method: "POST",
+      body: JSON.stringify({
+        'players': players,
+        'criminal_location': coord,
+        'criminal_icao': icao,
+      }),
+      headers: {
+        "Content-type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    console.log(json);
+  } catch (error) {
+    console.error('Error sending players:', error);
+  }
 
 
 }

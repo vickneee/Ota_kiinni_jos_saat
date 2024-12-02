@@ -61,10 +61,8 @@ def start_game():
             'status': status,
             'message': 'Game started successfully',
             'players': player_list,
-            'icao':criminal_icao,
-            'loc':criminal_data,
-            'det':det_starts,
             'all':all_loc
+
 
         }
     except Exception as e:
