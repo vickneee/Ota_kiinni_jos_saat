@@ -73,12 +73,12 @@ class Game:
     #Method to fetch all games from DB
     def fetch_saved_games(self):
 
-        sql = "SELECT id, round, player_id FROM game"
+        sql = "SELECT id, round, player_id, date FROM game"
         result = self.database.db_query(sql)
         if result:
             # Transform database results into a list of dictionaries
             saved_games = [
-                {"game_id": row[0], "round": row[1], "player_id": row[2]}
+                {"game_id": row[0], "round": row[1], "player_id": row[2], "date": row[3]}
                 for row in result
             ]
             return saved_games
