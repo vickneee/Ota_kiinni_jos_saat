@@ -31,7 +31,8 @@ class Game:
     def update_round_player(self,player_id):
         sql = f"""
             UPDATE game 
-            SET player_id={player_id}
+            SET player_id={player_id},
+            date = NOW()
             WHERE id={self.game_id}
         """
         Database().db_update(sql)
