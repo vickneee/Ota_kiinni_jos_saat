@@ -151,3 +151,24 @@ class Player:
                   WHERE game.id = '{game_id}'"""
         result = Database().db_query(sql)
         return [row[0] for row in result]
+
+    @staticmethod
+    def get_game_players(game_id):
+        sql = f"""SELECT player.screen_name,player.id,player.location FROM player
+                    left join game_player on game_player.player_id = player.id
+                    left join game on game.id = game_player.game_id
+                    where game.id = '{game_id}'
+                    """
+        result = Database().db_query(sql)
+
+        players = [
+            {
+                "id": row[0],
+                "screen_name": row[1],
+                "type": row[2],
+                "is_computer": row[3],
+                "location": row[4]
+            }
+            for row in result
+        ]
+        return players

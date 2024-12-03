@@ -127,9 +127,9 @@ def player_tickets(player_id):
         return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route('/api/round/<int:game_id>', methods=['GET'])
-def get_round(game_id):
+def get_round():
     try:
-        round = Player.get_round(game_id)
+        round = Player.get_round(g.game_id)
         return jsonify({"status": "success", "round": round}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
@@ -141,6 +141,31 @@ def game_screen_names(game_id):
         return jsonify({"status": "success", "screen_names": screen_names}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/api/game_players', methods=['GET'])
+def game_data():
+    try:
+        game_id = g.game_id
+        players = Player.get_game_players(game_id)
+
+        status = 200
+        ans = {
+            'status': status,
+            'players': players,
+            'game_id' : game_id
+        }
+    except Exception as e:
+        status = 500
+        ans = {
+            'status': status,
+            'teksti': 'virheellinen pyyntö',
+            'error': str(e)
+        }
+    jsonans = json.dumps(ans)
+    return Response(response=jsonans, status=status, mimetype="application/json")
+
+
+
 
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)

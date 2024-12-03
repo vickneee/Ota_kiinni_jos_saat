@@ -215,6 +215,8 @@ async function startingPoint(marker, markers) {
     };
     let selected = marker.title;
     let players = playerData();
+    const data = game_data()
+    console.log(data)
     console.log('Sending data:', {players, coordinates, selected});
     await sendPlayers(players, coordinates, selected);
     markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
@@ -269,7 +271,8 @@ async function gameRounds(map, players) {
     p_list.push(p.name);
   }
   for (let i = 1; i < 11; i++) {
-    for (let i = 0; i < 2; i++) {
+
+    for (let i = 0; i < 3; i++) {
       await send_move(player, new_location, ticket_id);
     }
   }
@@ -307,6 +310,13 @@ async function game_rounds(map, players) {
     p_list.push(p);
   }
   console.log(p_list);
+}
+
+async function game_data() {
+  const response = await fetch('http://127.0.0.1:3000/api/game_players');
+  const data = await response.json();
+  return data;
+
 }
 
 const menuElement = document.getElementById('menu');
