@@ -28,7 +28,7 @@ async function fetchJSONData() {
 }
 
 // Create and add the criminal marker
-function createCriminalMarker(map) {
+function createCriminalMarker(map, lat, lng) {
   const {AdvancedMarkerElement} = google.maps.importLibrary('marker');
   const {PinElement} = google.maps.importLibrary('marker');
   const glyphImg1 = document.createElement('img');
@@ -46,7 +46,7 @@ function createCriminalMarker(map) {
 
   const glyphMarkerView1 = new AdvancedMarkerElement({
     map,
-    position: {lat: 55.5953, lng: 35.01136},
+    position: {lat: lat, lng: lng},
     content: glyphSvgPinElement1.element,
     title: 'Rikollinen',
   });
@@ -55,7 +55,7 @@ function createCriminalMarker(map) {
 }
 
 // Create and add the etsiva 1 marker
-function createEtsijaMarker(map) {
+function createEtsijaMarker(map, lat, lng) {
   const {AdvancedMarkerElement} = google.maps.importLibrary('marker');
   const {PinElement} = google.maps.importLibrary('marker');
   const glyphImg2 = document.createElement('img');
@@ -74,7 +74,7 @@ function createEtsijaMarker(map) {
 
   const glyphMarkerView2 = new AdvancedMarkerElement({
     map,
-    position: {lat: 54.8796, lng: 24.6032},
+    position: {lat: lat , lng: lng},
     content: glyphSvgPinElement2.element,
     title: 'Etsivä 1',
   });
@@ -82,7 +82,7 @@ function createEtsijaMarker(map) {
 }
 
 // Create and add the etsiva 1 marker
-function createEtsija2Marker(map) {
+function createEtsija2Marker(map, lat, lng) {
   const {AdvancedMarkerElement} = google.maps.importLibrary('marker');
   const {PinElement} = google.maps.importLibrary('marker');
   const glyphImg2 = document.createElement('img');
@@ -101,7 +101,7 @@ function createEtsija2Marker(map) {
 
   const glyphMarkerView3 = new AdvancedMarkerElement({
     map,
-    position: {lat: 50.8796, lng: 24.6032},
+    position: {lat: lat, lng: lng},
     content: glyphPinElement3.element,
     title: 'Etsivä 2',
   });
