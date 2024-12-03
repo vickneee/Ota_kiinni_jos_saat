@@ -94,30 +94,8 @@ def page_not_found(err):
 @app.route('/api/saved-games', methods=['GET'])
 def fetch_saved_games():
     try:
-        sql = """ SELECT game.id AS game_id, game.round,
-            GROUP_CONCAT(player.screen_name) AS players
-            FROM 
-            game
-            LEFT JOIN 
-            game_player ON game.id = game_player.game_id
-            LEFT JOIN 
-            player ON game_player.player_id = player.id
-            GROUP BY 
-            game.id, game.round;
-        """
-
-        # Create an instance of the Database class
-        db_instance = Database()
-        result = db_instance.db_query(sql)  # Call db_query using the instance
-
-        saved_games = []
-        if result:
-            for row in result:
-                saved_games.append({
-                    "game_id": row[0],
-                    "round": row[1],
-                    "players": row[2].split(",") if row[2] else []
-                })
+        # Fetch saved games using the method in game.py
+        saved_games = g.fetch_saved_games()
 
         return jsonify({"status": "success", "saved_games": saved_games}), 200
 

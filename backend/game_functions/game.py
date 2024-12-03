@@ -72,16 +72,38 @@ class Game:
 
     #Method to fetch all games from DB
     def fetch_saved_games(self):
+        try:
+            sql = """
+                SELECT 
+                    game.id AS game_id, 
+                    game.round,
+                    GROUP_CONCAT(player.screen_name) AS players,
+                    game.date
+                FROM 
+                    game
+                LEFT JOIN 
+                    game_player ON game.id = game_player.game_id
+                LEFT JOIN 
+                    player ON game_player.player_id = player.id
+                GROUP BY 
+                    game.id, game.round, game.date;
+            """
+            result = self.database.db_query(sql)
 
-        sql = "SELECT id, round, player_id, date FROM game"
-        result = self.database.db_query(sql)
-        if result:
-            # Transform database results into a list of dictionaries
-            saved_games = [
-                {"game_id": row[0], "round": row[1], "player_id": row[2], "date": row[3]}
-                for row in result
-            ]
-            return saved_games
-        return []  # Return an empty list if no games are found
+            if result:
+                # Transform database results into a list of dictionaries
+                saved_games = [
+                    {
+                        "game_id": row[0],
+                        "round": row[1],
+                        "players": row[2].split(",") if row[2] else [],
+                        "date": row[3]  # Include the date field
+                    }
+                    for row in result
+                ]
+                return saved_games
+            return []
 
+        except Exception as e:
+            raise Exception(f"Error fetching saved games: {str(e)}")
 
