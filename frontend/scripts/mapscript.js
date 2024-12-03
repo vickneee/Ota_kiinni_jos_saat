@@ -27,6 +27,87 @@ async function fetchJSONData() {
   return data;
 }
 
+// Create and add the criminal marker
+function createCriminalMarker(map) {
+  const {AdvancedMarkerElement} = google.maps.importLibrary('marker');
+  const {PinElement} = google.maps.importLibrary('marker');
+  const glyphImg1 = document.createElement('img');
+  glyphImg1.src = '../assets/Karkuri.png';
+  glyphImg1.style.width = '30px';
+  glyphImg1.style.height = '30px';
+  glyphImg1.classList.add('highlighted-image');
+  glyphImg1.title = 'Rikollinen';
+
+  const glyphSvgPinElement1 = new PinElement({
+    background: '#ffffff',
+    glyph: glyphImg1,
+    borderColor: '#C49339',
+  });
+
+  const glyphMarkerView1 = new AdvancedMarkerElement({
+    map,
+    position: {lat: 55.5953, lng: 35.01136},
+    content: glyphSvgPinElement1.element,
+    title: 'Rikollinen',
+  });
+
+  return glyphMarkerView1;
+}
+
+// Create and add the etsiva 1 marker
+function createEtsijaMarker(map) {
+  const {AdvancedMarkerElement} = google.maps.importLibrary('marker');
+  const {PinElement} = google.maps.importLibrary('marker');
+  const glyphImg2 = document.createElement('img');
+  glyphImg2.src = '../assets/Etsiva_1.png';
+  glyphImg2.style.width = '30px';  // Set the desired width
+  glyphImg2.style.height = '30px';  // Set the desired height
+  glyphImg2.classList.add('highlighted-image');  // Add a class to the element
+  glyphImg2.classList.add('hl-1');  // Add a class to the element
+  glyphImg2.title = 'Etsivä 1';
+
+  const glyphSvgPinElement2 = new PinElement({
+    background: '#ffffff',
+    glyph: glyphImg2,
+    borderColor: '#C49339',
+  });
+
+  const glyphMarkerView2 = new AdvancedMarkerElement({
+    map,
+    position: {lat: 54.8796, lng: 24.6032},
+    content: glyphSvgPinElement2.element,
+    title: 'Etsivä 1',
+  });
+  return glyphMarkerView2;
+}
+
+// Create and add the etsiva 1 marker
+function createEtsija2Marker(map) {
+  const {AdvancedMarkerElement} = google.maps.importLibrary('marker');
+  const {PinElement} = google.maps.importLibrary('marker');
+  const glyphImg2 = document.createElement('img');
+  glyphImg2.src = '../assets/Etsiva_2.png';
+  glyphImg2.style.width = '30px';  // Set the desired width
+  glyphImg2.style.height = '30px';  // Set the desired height
+  glyphImg2.classList.add('highlighted-image');  // Add a class to the element
+  glyphImg2.classList.add('hl-2');  // Add a class to the element
+  glyphImg2.title = 'Etsivä 2';
+
+  const glyphPinElement3 = new PinElement({
+    background: '#ffffff',
+    glyph: glyphImg2,
+    borderColor: '#C49339',
+  });
+
+  const glyphMarkerView3 = new AdvancedMarkerElement({
+    map,
+    position: {lat: 50.8796, lng: 24.6032},
+    content: glyphPinElement3.element,
+    title: 'Etsivä 2',
+  });
+  return glyphMarkerView3;
+}
+
 async function initMap() {
   // The location of Center of Europe
   const position = {lat: 54.5260, lng: 15.2551};
@@ -66,94 +147,16 @@ async function initMap() {
   }
 
   // Create and add the criminal marker
-  function createCriminalMarker(map) {
-    const glyphImg1 = document.createElement('img');
-    glyphImg1.src = '../assets/Karkuri.png';
-    glyphImg1.style.width = '30px';
-    glyphImg1.style.height = '30px';
-    glyphImg1.classList.add('highlighted-image');
-    glyphImg1.title = 'Rikollinen';
-
-    const glyphSvgPinElement1 = new PinElement({
-      background: '#ffffff',
-      glyph: glyphImg1,
-      borderColor: '#C49339',
-    });
-
-    const glyphMarkerView1 = new AdvancedMarkerElement({
-      map,
-      position: {lat: 55.5953, lng: 35.01136},
-      content: glyphSvgPinElement1.element,
-      title: 'Rikollinen',
-    });
-
-    return glyphMarkerView1;
-  }
-
-  // Create and add the etsiva 1 marker
-  function createEtsijaMarker(map) {
-    const glyphImg2 = document.createElement('img');
-    glyphImg2.src = '../assets/Etsiva_1.png';
-    glyphImg2.style.width = '30px';  // Set the desired width
-    glyphImg2.style.height = '30px';  // Set the desired height
-    glyphImg2.classList.add('highlighted-image');  // Add a class to the element
-    glyphImg2.classList.add('hl-1');  // Add a class to the element
-    glyphImg2.title = 'Etsivä 1';
-
-    const glyphSvgPinElement2 = new PinElement({
-      background: '#ffffff',
-      glyph: glyphImg2,
-      borderColor: '#C49339',
-    });
-
-    const glyphMarkerView2 = new AdvancedMarkerElement({
-      map,
-      position: {lat: 54.8796, lng: 24.6032},
-      content: glyphSvgPinElement2.element,
-      title: 'Etsivä 1',
-    });
-    return glyphMarkerView2;
-  }
-
-  // Create and add the etsiva 1 marker
-  function createEtsija2Marker(map) {
-    const glyphImg2 = document.createElement('img');
-    glyphImg2.src = '../assets/Etsiva_2.png';
-    glyphImg2.style.width = '30px';  // Set the desired width
-    glyphImg2.style.height = '30px';  // Set the desired height
-    glyphImg2.classList.add('highlighted-image');  // Add a class to the element
-    glyphImg2.classList.add('hl-2');  // Add a class to the element
-    glyphImg2.title = 'Etsivä 2';
-
-    const glyphPinElement3 = new PinElement({
-      background: '#ffffff',
-      glyph: glyphImg2,
-      borderColor: '#C49339',
-    });
-
-    const glyphMarkerView3 = new AdvancedMarkerElement({
-      map,
-      position: {lat: 50.8796, lng: 24.6032},
-      content: glyphPinElement3.element,
-      title: 'Etsivä 2',
-    });
-    return glyphMarkerView3;
-  }
-
-  // Create and add the criminal marker
   const criminalMarker = createCriminalMarker(map);
   markers.push(criminalMarker);
-  await startingPoint(criminalMarker, markers);
 
   // Create and add the etsiva 1 marker
   const etsivaMarker = createEtsijaMarker(map);
   markers.push(etsivaMarker);
-  await startingPoint(etsivaMarker, markers);
 
   // Create and add the etsiva 1 marker
   const etsiva2Marker = createEtsija2Marker(map);
-  markers.push(etsivaMarker);
-  await startingPoint(etsiva2Marker, markers);
+  markers.push(etsiva2Marker);
 
   return map;
 }
