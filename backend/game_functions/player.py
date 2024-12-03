@@ -144,9 +144,10 @@ class Player:
 
     @staticmethod
     def get_game_screen_names(game_id):
-        sql = f"""SELECT screen_name
-                  FROM player
-                  LEFT JOIN game_player ON player.id = game_player.player_id
-                  WHERE game_player.game_id = '{game_id}'"""
+        sql = f"""SELECT distinct player.screen_name
+                  FROM game
+                  LEFT JOIN game_player ON game.id = game_player.game_id
+                  LEFT JOIN player ON game.player_id = player.id
+                  WHERE game.id = '{game_id}'"""
         result = Database().db_query(sql)
         return [row[0] for row in result]
