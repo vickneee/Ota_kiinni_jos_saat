@@ -56,15 +56,29 @@ class Game:
 
     def play_round(self,player_name,new_location, ticket_id):
         name_index = self.screen_names.index(player_name)
-        print(name_index)
+        other_loc = []
         player = self.players[name_index]
+        criminal = ""
+
+        for p in self.players:
+            if p.type == 0:
+                criminal = p.location
+            if p != player:
+                other_loc.append(p.location)
+
+        if name_index == 2:
+            self.insert_round()
         if player.is_computer == 0:
             player.player_move(new_location, ticket_id)
             self.update_round_player(player.id)
-            if name_index == 2:
-                self.insert_round()
-        else:
-            pass
+        elif player.is_computer == 1:
+           if player.type == 0:
+               player.criminal_move(player.location,other_loc)
+               self.update_round_player(player.id)
+           else:
+               player.detective_move(player.location, criminal, self.round)
+               self.update_round_player(player.id)
+        return
 
 
 
