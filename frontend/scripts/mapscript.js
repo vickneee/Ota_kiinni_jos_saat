@@ -28,296 +28,319 @@ async function fetchJSONData() {
 }
 
 // Create and add the criminal marker
-function createCriminalMarker(map, lat, lng) {
-  const {AdvancedMarkerElement} = google.maps.importLibrary('marker');
-  const {PinElement} = google.maps.importLibrary('marker');
-  const glyphImg1 = document.createElement('img');
-  glyphImg1.src = '../assets/Karkuri.png';
-  glyphImg1.style.width = '30px';
-  glyphImg1.style.height = '30px';
-  glyphImg1.classList.add('highlighted-image');
-  glyphImg1.title = 'Rikollinen';
+async function createCriminalMarker(map, lat, lng) {
+  try {
+    const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
+    const {PinElement} = await google.maps.importLibrary('marker');
 
-  const glyphSvgPinElement1 = new PinElement({
-    background: '#ffffff',
-    glyph: glyphImg1,
-    borderColor: '#C49339',
-  });
+    if (!PinElement) {
+      throw new Error('PinElement is not available.');
+    }
 
-  const glyphMarkerView1 = new AdvancedMarkerElement({
-    map,
-    position: {lat: lat, lng: lng},
-    content: glyphSvgPinElement1.element,
-    title: 'Rikollinen',
-  });
+    const glyphImg1 = document.createElement('img');
+    glyphImg1.src = '../assets/Karkuri.png';
+    glyphImg1.style.width = '30px';
+    glyphImg1.style.height = '30px';
+    glyphImg1.classList.add('highlighted-image');
+    glyphImg1.title = 'Rikollinen';
 
-  return glyphMarkerView1;
+    const glyphSvgPinElement1 = new PinElement({
+      background: '#ffffff',
+      glyph: glyphImg1,
+      borderColor: '#C49339',
+    });
+
+    const glyphMarkerView1 = new AdvancedMarkerElement({
+      map,
+      position: {lat: lat, lng: lng},
+      content: glyphSvgPinElement1.element,
+      title: 'Rikollinen',
+    });
+
+    return glyphMarkerView1;
+  } catch (error) {
+    // console.error('Error creating criminal marker:', error);
+  }
 }
 
 // Create and add the etsiva 1 marker
-function createEtsijaMarker(map, lat, lng) {
-  const {AdvancedMarkerElement} = google.maps.importLibrary('marker');
-  const {PinElement} = google.maps.importLibrary('marker');
-  const glyphImg2 = document.createElement('img');
-  glyphImg2.src = '../assets/Etsiva_1.png';
-  glyphImg2.style.width = '30px';  // Set the desired width
-  glyphImg2.style.height = '30px';  // Set the desired height
-  glyphImg2.classList.add('highlighted-image');  // Add a class to the element
-  glyphImg2.classList.add('hl-1');  // Add a class to the element
-  glyphImg2.title = 'Etsivä 1';
+async function createEtsijaMarker(map, lat, lng) {
+  try {
+    const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
+    const {PinElement} = await google.maps.importLibrary('marker');
+    const glyphImg2 = document.createElement('img');
+    glyphImg2.src = '../assets/Etsiva_1.png';
+    glyphImg2.style.width = '30px';  // Set the desired width
+    glyphImg2.style.height = '30px';  // Set the desired height
+    glyphImg2.classList.add('highlighted-image');  // Add a class to the element
+    glyphImg2.classList.add('hl-1');  // Add a class to the element
+    glyphImg2.title = 'Etsivä 1';
 
-  const glyphSvgPinElement2 = new PinElement({
-    background: '#ffffff',
-    glyph: glyphImg2,
-    borderColor: '#C49339',
-  });
+    const glyphSvgPinElement2 = new PinElement({
+      background: '#ffffff',
+      glyph: glyphImg2,
+      borderColor: '#C49339',
+    });
 
-  const glyphMarkerView2 = new AdvancedMarkerElement({
-    map,
-    position: {lat: lat , lng: lng},
-    content: glyphSvgPinElement2.element,
-    title: 'Etsivä 1',
-  });
-  return glyphMarkerView2;
+    const glyphMarkerView2 = new AdvancedMarkerElement({
+      map,
+      position: {lat: lat, lng: lng},
+      content: glyphSvgPinElement2.element,
+      title: 'Etsivä 1',
+    });
+    return glyphMarkerView2;
+  } catch (error) {
+    // console.error('Error creating etsiva 2 marker:', error);
+  }
 }
 
 // Create and add the etsiva 1 marker
-function createEtsija2Marker(map, lat, lng) {
-  const {AdvancedMarkerElement} = google.maps.importLibrary('marker');
-  const {PinElement} = google.maps.importLibrary('marker');
-  const glyphImg2 = document.createElement('img');
-  glyphImg2.src = '../assets/Etsiva_2.png';
-  glyphImg2.style.width = '30px';  // Set the desired width
-  glyphImg2.style.height = '30px';  // Set the desired height
-  glyphImg2.classList.add('highlighted-image');  // Add a class to the element
-  glyphImg2.classList.add('hl-2');  // Add a class to the element
-  glyphImg2.title = 'Etsivä 2';
-
-  const glyphPinElement3 = new PinElement({
-    background: '#ffffff',
-    glyph: glyphImg2,
-    borderColor: '#C49339',
-  });
-
-  const glyphMarkerView3 = new AdvancedMarkerElement({
-    map,
-    position: {lat: lat, lng: lng},
-    content: glyphPinElement3.element,
-    title: 'Etsivä 2',
-  });
-  return glyphMarkerView3;
-}
-
-async function initMap() {
-  // The location of Center of Europe
-  const position = {lat: 54.5260, lng: 15.2551};
-  // Request needed libraries.
-  //@ts-ignore
-  const {Map} = await google.maps.importLibrary('maps');
-  const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
-  const {PinElement} = await google.maps.importLibrary('marker');
-  const {event} = await google.maps.importLibrary('core');
-  // The map, centered at Center of Europe
-
-  map = new Map(document.getElementById('map'), {
-    zoom: 4,
-    center: position,
-    mapId: 'DEMO_MAP_ID',
-  });
-
-  // Fetch JSON data and add markers
-  const data = await fetchJSONData();
-  data.locations = data.locations || {};
-  const locations = data.locations;
-
-  const markers = [];
-
-  for (const [code, coords] of Object.entries(locations)) {
-    const pinType = determinePinType(code); // Determine the pin type based on the airport code
-    const pinElement = getPinElement(PinElement, pinType);
-
-    const marker = new AdvancedMarkerElement({
-      map: map,
-      position: {lat: coords[0], lng: coords[1]},
-      content: pinElement.element,
-      title: code,
-    });
-    markers.push(marker);
-    await startingPoint(marker, markers);
-  }
-
-  // Create and add the criminal marker
-  const criminalMarker = createCriminalMarker(map);
-  markers.push(criminalMarker);
-
-  // Create and add the etsiva 1 marker
-  const etsivaMarker = createEtsijaMarker(map);
-  markers.push(etsivaMarker);
-
-  // Create and add the etsiva 1 marker
-  const etsiva2Marker = createEtsija2Marker(map);
-  markers.push(etsiva2Marker);
-
-  return map;
-}
-
-function determinePinType(code) {
-  // Define your criteria to determine the pin type based on the airport code
-  if (code.startsWith('L')) {
-    return 'green';
-  } else if (code.startsWith('E')) {
-    return 'blue';
-  } else if (code.startsWith('B')) {
-    return 'red';
-  } else {
-    return 'white';
-  }
-}
-
-function getPinElement(PinElement, type) {
-  switch (type) {
-    case 'green':
-      return new PinElement({
-        background: 'green',
-        glyphColor: '#C49339',
-        borderColor: '#C49339',
-      });
-    case 'red':
-      return new PinElement({
-        background: 'red',
-        glyphColor: '#C49339',
-        borderColor: '#C49339',
-      });
-    case 'blue':
-      return new PinElement({
-        background: 'blue',
-        glyphColor: '#C49339',
-        borderColor: '#C49339',
-      });
-    case 'white':
-      return new PinElement({
-        background: '#ffffff',
-        glyphColor: '#23245c',
-        borderColor: '#C49339',
-      });
-    default:
-      return new PinElement({
-        background: '#ffffff',
-        glyphColor: '#23245c',
-        borderColor: '#C49339',
-      });
-  }
-}
-
-async function startingPoint(marker, markers) {
-  const {event} = await google.maps.importLibrary('core');
-  google.maps.event.addListener(marker, 'click', async () => {
-    let coordinates = {
-      'latitude': marker.position.lat,
-      'longitude': marker.position.lng,
-    };
-    let selected = marker.title;
-    let players = playerData();
-    console.log('Sending data:', {players, coordinates, selected});
-    await sendPlayers(players, coordinates, selected);
-    markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
-
-  });
-}
-
-fetchEnv().then(env => {
-  const mapKey = env.MAP_KEY;
-  loadGoogleMapsAPI(mapKey).then(() => {
-    initMap();
-  }).catch(error => {
-    console.error(error);
-  });
-});
-
-async function sendPlayers(players, coord, icao) {
+async function createEtsija2Marker(map, lat, lng) {
   try {
-    const response = await fetch('http://127.0.0.1:3000/api/start_game', {
-      method: 'POST',
-      body: JSON.stringify({
-        'players': players,
-        'criminal_location': coord,
-        'criminal_icao': icao,
-      }),
-      headers: {
-        'Content-type': 'application/json',
-      },
+
+    const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
+    const {PinElement} = await google.maps.importLibrary('marker');
+    const glyphImg2 = document.createElement('img');
+    glyphImg2.src = '../assets/Etsiva_2.png';
+    glyphImg2.style.width = '30px';  // Set the desired width
+    glyphImg2.style.height = '30px';  // Set the desired height
+    glyphImg2.classList.add('highlighted-image');  // Add a class to the element
+    glyphImg2.classList.add('hl-2');  // Add a class to the element
+    glyphImg2.title = 'Etsivä 2';
+
+    const glyphPinElement3 = new PinElement({
+      background: '#ffffff',
+      glyph: glyphImg2,
+      borderColor: '#C49339',
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const json = await response.json();
-    console.log(json);
+    const glyphMarkerView3 = new AdvancedMarkerElement({
+      map,
+      position: {lat: lat, lng: lng},
+      content: glyphPinElement3.element,
+      title: 'Etsivä 2',
+    });
+    return glyphMarkerView3;
   } catch (error) {
-    console.error('Error sending players:', error);
+    // console.error('Error creating etsiva 2 marker:', error);
   }
 }
 
-function playerData() {
+  async function initMap() {
+    // The location of Center of Europe
+    const position = {lat: 54.5260, lng: 15.2551};
+    // Request needed libraries.
+    //@ts-ignore
+    const {Map} = await google.maps.importLibrary('maps');
+    const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
+    const {PinElement} = await google.maps.importLibrary('marker');
+    const {event} = await google.maps.importLibrary('core');
+    // The map, centered at Center of Europe
 
-  const players = JSON.parse(localStorage.getItem('players'));
-  return players;
-}
-
-async function gameRounds(map, players) {
-  let round = 1;
-  const p_list = [];
-  for (let p of players) {
-    p_list.push(p.name);
-  }
-  for (let i = 1; i < 11; i++) {
-    for (let i = 0; i < 2; i++) {
-      await send_move(player, new_location, ticket_id);
-    }
-  }
-}
-
-async function send_move(player, new_location, ticket_id) {
-  try {
-    const response = await fetch('http://127.0.0.1:3000/api/play_round', {
-      method: 'POST',
-      body: JSON.stringify({
-        'player': player,
-        'new_location': new_location,
-        'ticket_id': ticket_id,
-      }),
-      headers: {
-        'Content-type': 'application/json',
-      },
+    map = new Map(document.getElementById('map'), {
+      zoom: 4,
+      center: position,
+      mapId: 'DEMO_MAP_ID',
     });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    // Fetch JSON data and add markers
+    const data = await fetchJSONData();
+    data.locations = data.locations || {};
+    const locations = data.locations;
+
+    const markers = [];
+
+    for (const [code, coords] of Object.entries(locations)) {
+      const pinType = determinePinType(code); // Determine the pin type based on the airport code
+      const pinElement = getPinElement(PinElement, pinType);
+
+      const marker = new AdvancedMarkerElement({
+        map: map,
+        position: {lat: coords[0], lng: coords[1]},
+        content: pinElement.element,
+        title: code,
+      });
+      markers.push(marker);
+      await startingPoint(marker, markers);
     }
 
-    const json = await response.json();
-    console.log(json);
-  } catch (error) {
-    console.error('Error sending players:', error);
+    // Create and add the criminal marker
+    const criminalMarker = createCriminalMarker(map);
+    markers.push(criminalMarker);
+
+    // Create and add the etsiva 1 marker
+    const etsivaMarker = createEtsijaMarker(map);
+    markers.push(etsivaMarker);
+
+    // Create and add the etsiva 1 marker
+    const etsiva2Marker = createEtsija2Marker(map);
+    markers.push(etsiva2Marker);
+
+    return map;
   }
 
-}
-
-async function game_rounds(map, players) {
-  const p_list = [];
-  for (let p of players) {
-    p_list.push(p);
-  }
-  console.log(p_list);
-}
-
-const menuElement = document.getElementById('menu');
-if (menuElement) {
-  menuElement.addEventListener('change', function() {
-    const value = this.value;
-    if (value) {
-      window.location.href = value;
+  function determinePinType(code) {
+    // Define your criteria to determine the pin type based on the airport code
+    if (code.startsWith('L')) {
+      return 'green';
+    } else if (code.startsWith('E')) {
+      return 'blue';
+    } else if (code.startsWith('B')) {
+      return 'red';
+    } else {
+      return 'white';
     }
+  }
+
+  function getPinElement(PinElement, type) {
+    switch (type) {
+      case 'green':
+        return new PinElement({
+          background: 'green',
+          glyphColor: '#C49339',
+          borderColor: '#C49339',
+        });
+      case 'red':
+        return new PinElement({
+          background: 'red',
+          glyphColor: '#C49339',
+          borderColor: '#C49339',
+        });
+      case 'blue':
+        return new PinElement({
+          background: 'blue',
+          glyphColor: '#C49339',
+          borderColor: '#C49339',
+        });
+      case 'white':
+        return new PinElement({
+          background: '#ffffff',
+          glyphColor: '#23245c',
+          borderColor: '#C49339',
+        });
+      default:
+        return new PinElement({
+          background: '#ffffff',
+          glyphColor: '#23245c',
+          borderColor: '#C49339',
+        });
+    }
+  }
+
+  async function startingPoint(marker, markers) {
+    const {event} = await google.maps.importLibrary('core');
+    google.maps.event.addListener(marker, 'click', async () => {
+      let coordinates = {
+        'latitude': marker.position.lat,
+        'longitude': marker.position.lng,
+      };
+      let selected = marker.title;
+      let players = playerData();
+      console.log('Sending data:', {players, coordinates, selected});
+      const res = await sendPlayers(players, coordinates, selected);
+      // console.log('Response:', res);
+      // createCriminalMarker(map, res['criminal_location'].latitude, res['criminal_location'].longitude);
+      await createCriminalMarker(map, marker.position.lat, marker.position.lng);
+      // console.log('Criminal location:', res['criminal_location']);
+
+      markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
+
+    });
+  }
+
+  fetchEnv().then(env => {
+    const mapKey = env.MAP_KEY;
+    loadGoogleMapsAPI(mapKey).then(() => {
+      initMap();
+    }).catch(error => {
+      console.error(error);
+    });
   });
-}
+
+  async function sendPlayers(players, coord, icao) {
+    try {
+      const response = await fetch('http://127.0.0.1:3000/api/start_game', {
+        method: 'POST',
+        body: JSON.stringify({
+          'players': players,
+          'criminal_location': coord,
+          'criminal_icao': icao,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error('Error sending players:', error);
+    }
+  }
+
+  function playerData() {
+
+    const players = JSON.parse(localStorage.getItem('players'));
+    return players;
+  }
+
+  async function gameRounds(map, players) {
+    let round = 1;
+    const p_list = [];
+    for (let p of players) {
+      p_list.push(p.name);
+    }
+    for (let i = 1; i < 11; i++) {
+      for (let i = 0; i < 2; i++) {
+        await send_move(player, new_location, ticket_id);
+      }
+    }
+  }
+
+  async function send_move(player, new_location, ticket_id) {
+    try {
+      const response = await fetch('http://127.0.0.1:3000/api/play_round', {
+        method: 'POST',
+        body: JSON.stringify({
+          'player': player,
+          'new_location': new_location,
+          'ticket_id': ticket_id,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error('Error sending players:', error);
+    }
+
+  }
+
+  async function game_rounds(map, players) {
+    const p_list = [];
+    for (let p of players) {
+      p_list.push(p);
+    }
+    console.log(p_list);
+  }
+
+  const menuElement = document.getElementById('menu');
+  if (menuElement) {
+    menuElement.addEventListener('change', function() {
+      const value = this.value;
+      if (value) {
+        window.location.href = value;
+      }
+    });
+  }
