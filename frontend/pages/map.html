@@ -14,7 +14,7 @@
     <link rel="icon" type="image/x-icon" href="../favicon_io/favicon.ico?">
     <script type="module" src="../scripts/mapscript.js" defer></script>
     <script src="../scripts/dropdownscript.js" defer></script>
-    <script src="../scripts/choosestartscript.js" defer></script>
+    <script src="../scripts/bannerscript.js" defer></script>
     <title>Ota Kiinni Jos Saat</title>
 </head>
 <body>
@@ -22,11 +22,11 @@
 <!-- banner that is displayed in the game -->
 <table class="play" id="play-banner">
     <tr>
-        <th class="map-th counter th-padding">5/10</th>
-        <th class="map-th th-padding">Karkuri: Pekka</th>
-        <th class="map-th color-red th-padding">Potkurikone: 2</th>
-        <th class="map-th color-blue th-padding">Matkustajakone: 2</th>
-        <th style="color: green;" class="map-th th-padding">Yksityiskone: 1</th>
+        <th class="map-th counter th-padding"><span id="kierrokset"></span></th>
+        <th class="map-th th-padding"><span id="pelaaja"></span></th>
+        <th class="map-th color-red th-padding"><span id="potkurikone"></span></th>
+        <th class="map-th color-blue th-padding"><span id="matkustajakone"></span></th>
+        <th style="color: green;" class="map-th th-padding"><span id="yksityiskone"></span></th>
         <th class="map-th dropdown-th">
             <div class="dropdown">
                 <label class="align-container"><img src="../assets/settings_25.png" alt="icon" width="25">

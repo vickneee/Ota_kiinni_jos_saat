@@ -13,28 +13,46 @@ document.addEventListener("DOMContentLoaded", async () => {
         container.innerHTML = ""; // Clear placeholder text
 
         if (data.saved_games && data.saved_games.length > 0) {
-            // Display saved games
-            data.saved_games.forEach((game) => {
-                const gameDiv = document.createElement("div");
-                gameDiv.classList.add("game-row"); // Use CSS for styling
+            // Create a table to display saved games
+            const table = document.createElement("table");
+            table.classList.add("saved-games-table");
 
-                gameDiv.innerHTML = `
-                    <span><strong>Round:</strong> ${game.round}</span>
-                    <span><strong>Players:</strong> ${
-                        game.players.length > 0 ? game.players.join(", ") : "None"
-                    }</span>
+            // Create table header
+            const headerRow = document.createElement("tr");
+            headerRow.innerHTML = `
+                <th>Round</th>
+                <th>Players</th>
+                <th>Date</th>
+                <th>Actions</th>
+            `;
+            table.appendChild(headerRow);
+
+            // Populate table rows with saved games
+            data.saved_games.forEach((game) => {
+                const gameRow = document.createElement("tr");
+
+                const formattedDate = new Date(game.date).toLocaleDateString("fi-FI"); // Finnish date format (Nordic style)
+
+                gameRow.innerHTML = `
+                    <td>${game.round}</td>
+                    <td>${game.players.length > 0 ? game.players.join(", ") : "None"}</td>
+                    <td>${formattedDate}</td>
                 `;
 
                 // Add Resume button
+                const actionCell = document.createElement("td");
                 const resumeButton = document.createElement("button");
                 resumeButton.textContent = "Jatka peliä";
                 resumeButton.addEventListener("click", () => {
                     window.location.href = `./game.html?game_id=${game.game_id}`;
                 });
 
-                gameDiv.appendChild(resumeButton);
-                container.appendChild(gameDiv);
+                actionCell.appendChild(resumeButton);
+                gameRow.appendChild(actionCell);
+                table.appendChild(gameRow);
             });
+
+            container.appendChild(table);
         } else {
             container.innerHTML = "<p>Tallennettuja pelejä ei ole.</p>";
         }
