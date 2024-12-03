@@ -309,9 +309,12 @@ async function game_rounds(map, players) {
   console.log(p_list);
 }
 
-document.getElementById('menu').addEventListener('change', function() {
-  const value = this.value;
-  if (value) {
-    window.location.href = value;
-  }
-});
+const menuElement = document.getElementById('menu');
+if (menuElement) {
+  menuElement.addEventListener('change', function() {
+    const value = this.value;
+    if (value) {
+      window.location.href = value;
+    }
+  });
+}
