@@ -13,9 +13,11 @@ class HumanPlayer(Player):
         if self.type == 0:
             self.add_player_past_movement(self.location, ticket_id,self.id )
             self.update_location(new_location)
+            self.location = new_location
 
         else:
             self.update_location(new_location)
+            self.location = new_location
             Tickets().delete_ticket(ticket_id, self.id)
 
 

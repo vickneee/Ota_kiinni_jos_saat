@@ -1,4 +1,6 @@
-from flask import Flask, jsonify, Response, request
+import traceback
+
+from flask import Flask, jsonify,Response,request
 from flask_cors import CORS
 import os
 import json
@@ -61,8 +63,10 @@ def start_game():
         ans = {
             'status': status,
             'message': 'Game started successfully',
-            'players': player_list,
-            'all': all_loc
+            'players': players,
+            'detective_location':det_starts,
+            'criminal_location':criminal_data
+
         }
     except Exception as e:
         status = 500
@@ -141,6 +145,35 @@ def game_screen_names(game_id):
         return jsonify({"status": "success", "screen_names": screen_names}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
+
+@app.route('/api/play-round',methods=['POST'])
+def play_round():
+    try:
+        data = request.json
+        player = data.get('player')
+        new_location = data.get('new_location')
+        ticket_id = data.get('ticket_id')
+        g.play_round(player,new_location,ticket_id)
+
+
+        status = 200
+        ans = {
+            'status': status,
+            'message': 'move made succesfully',
+
+
+
+        }
+    except Exception as e:
+        status = 500
+        ans = {
+            'status': status,
+            'message': 'Failed to make move',
+            'error': str(e)
+        }
+
+    jsonans = json.dumps(ans)
+    return Response(response=jsonans, status=status, mimetype="application/json")
 
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)
