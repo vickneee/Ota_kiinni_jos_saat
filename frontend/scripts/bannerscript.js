@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Fetch round
     function fetchRound(gameId) {
+
         fetch(`http://127.0.0.1:3000/api/round/${gameId}`)
             .then(response => response.json())
             .then(data => {
@@ -91,3 +92,6 @@ function fetchGameScreenNames(gameId) {
         fetchGameScreenNames(firstPlayer.game_id); // Assuming game_id is available in player data
     }
 });
+
+
+

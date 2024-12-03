@@ -53,6 +53,8 @@ def start_game():
         criminal_loc = {'latitude': criminal_data['latitude'], 'longitude': criminal_data['longitude']}
         det_starts = Airport().two_farthest_airports(criminal_loc)
         all_loc = [criminal_icao, det_starts[0][0], det_starts[1][0]]
+        det1_coord = [{'latitude':det_starts[0][3],'longitude':det_starts[0][4]}]
+        det2_coord = [{'latitude':det_starts[1][3], 'longitude':det_starts[1][4]}]
         player_list = []
         for i in range(3):
             player_list.append({'name': players[i]['name'], 'player_type': players[i]['type'], 'location': all_loc[i], 'is_computer': players[i]['is_computer']})
@@ -64,7 +66,8 @@ def start_game():
             'status': status,
             'message': 'Game started successfully',
             'players': players,
-            'detective_location':det_starts,
+            'detective1_location':det1_coord,
+            'detective2_location': det2_coord,
             'criminal_location':criminal_data
 
         }
