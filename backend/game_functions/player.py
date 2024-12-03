@@ -2,7 +2,6 @@ import random
 from backend.game_functions.tickets import Tickets
 from backend.game_functions.database import Database
 
-
 class Player:
     def __init__(self, name, player_type, location, is_computer=0):
         self.name = name  # Player's name
@@ -12,26 +11,23 @@ class Player:
         self.database = Database()  # Database instance
         self.id = None  # Player ID, to be set once the player is inserted into the database
 
-    # Method to insert a new player into the database
     def insert_player(self):
         sql = f"""INSERT INTO player (screen_name, type, location, is_computer)
                   VALUES ('{self.name}', '{self.type}', '{self.location}', {self.is_computer})"""
         self.id = self.database.db_insert(sql)
         return self.id
 
-    # Method to add a player to a game
     def add_player_to_game(self, game_id):
-        sql = f"""INSERT INTO game_player (game_id, player_id) 
+        sql = f"""INSERT INTO game_player (game_id, player_id)
                   VALUES ('{game_id}', '{self.id}')"""
         self.database.db_insert(sql)
 
-    # Method to get player information by screen name
     def get_player_info(self):
         sql = f"""
-            SELECT player.id, player.screen_name, player.type, player.is_computer, player.location, airport.name, country.name, airport.latitude_deg, airport.longitude_deg 
-            FROM player 
-            LEFT JOIN airport ON player.location = airport.ident 
-            LEFT JOIN country ON airport.iso_country = country.iso_country 
+            SELECT player.id, player.screen_name, player.type, player.is_computer, player.location, airport.name, country.name, airport.latitude_deg, airport.longitude_deg
+            FROM player
+            LEFT JOIN airport ON player.location = airport.ident
+            LEFT JOIN country ON airport.iso_country = country.iso_country
             WHERE screen_name = '{self.name}'
         """
         result = self.database.db_query(sql)
@@ -49,14 +45,12 @@ class Player:
             }
         return {}
 
-    # Method to get all screen names of players
     @staticmethod
     def get_screen_names():
         sql = "SELECT screen_name FROM player"
         result = Database().db_query(sql)
         return [row[0] for row in result]
 
-    # Method to insert tickets for a player based on their type
     def insert_player_tickets(self):
         tickets = {
             0: [(1, 10), (2, 6), (3, 4)],  # Criminal
@@ -66,8 +60,6 @@ class Player:
         for ticket_id, count in tickets.get(self.type, []):
             for _ in range(count):
                 Tickets().insert_tickets(self.id, ticket_id)
-
-    # Method for the criminal to choose a starting point
 
     def choose_criminal_starting_point(self, airports):
         if self.is_computer:
@@ -81,16 +73,6 @@ class Player:
 
         return self.id
 
-    # Method to create a new player
-   # def create_new_player(self, player_type, name, location):
-   #     max_char = 20
-   #     existing_names = self.get_screen_names()
-
-#        if name not in existing_names and len(name) <= max_char:
-#            return Player(name, player_type, location, self.database)
-#        return None
-
-    # Method to get the latest movement of a criminal
     def get_criminal_movements(self):
         sql = f"""
         SELECT player.screen_name, airport.name, country.name, past_movement.ticket_type
@@ -112,12 +94,11 @@ class Player:
             }
         return {}
 
-    # Method to show the locations of detectives
     def show_detective_locations(self, game_id):
-        sql = f"""SELECT screen_name 
-                  FROM player 
-                  LEFT JOIN game_player ON player.id = game_player.player_id 
-                  LEFT JOIN game on game_player.game_id = game.id 
+        sql = f"""SELECT screen_name
+                  FROM player
+                  LEFT JOIN game_player ON player.id = game_player.player_id
+                  LEFT JOIN game on game_player.game_id = game.id
                   WHERE game.id = '{game_id}'"""
         result = self.database.db_query(sql)
         if result:
@@ -126,7 +107,6 @@ class Player:
             return detective_infos
         return []
 
-    # Method to update the location of the player
     def update_location(self, location):
         sql = f"""
         UPDATE player
@@ -137,20 +117,37 @@ class Player:
         self.location = location
 
     def add_player_past_movement(self, location, ticket_id, player_id):
-        if not self.database:
-            self.database = Database()
-        sql1 = f""" select type from ticket where id = '{ticket_id}'
-                """
-        result = self.database.db_query(sql1)
-        ticket_type = result[0][0]
-        # Add the ticket and player information to the database
-        sql = f"""INSERT INTO past_movement (player_id, location, ticket_type) 
-                  VALUES ('{player_id}', '{location}','{ticket_type}' )"""
+        sql = f"""INSERT INTO past_movement (player_id, location, ticket_type)
+                  VALUES ('{player_id}', '{location}','{ticket_id}' )"""
         self.database.db_insert(sql)
+        Tickets().delete_ticket(ticket_id, player_id)
 
-        # After that delete the ticket from the tickets table
-        result = Tickets().delete_ticket(ticket_id, player_id)
-        if not result:
-            return False
+    @staticmethod
+    def get_player_tickets(player_id):
+        sql = f"""SELECT ticket_type, count(*)
+                  FROM ticket
+                  WHERE player_id = '{player_id}'
+                  GROUP BY ticket_type"""
+        result = Database().db_query(sql)
+        tickets = {row[0]: row[1] for row in result}
+        return tickets
 
+    @staticmethod
+    def get_round(game_id):
+        sql = f"""
+            SELECT round
+            FROM game
+            WHERE id = '{game_id}'
+        """
+        result = Database().db_query(sql)
+        return result[0][0] if result else None
 
+    @staticmethod
+    def get_game_screen_names(game_id):
+        sql = f"""SELECT distinct player.screen_name
+                  FROM game
+                  LEFT JOIN game_player ON game.id = game_player.game_id
+                  LEFT JOIN player ON game.player_id = player.id
+                  WHERE game.id = '{game_id}'"""
+        result = Database().db_query(sql)
+        return [row[0] for row in result]
