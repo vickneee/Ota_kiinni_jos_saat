@@ -32,7 +32,6 @@ class Tickets:
         return tickets
 
 
-
-
+print(Tickets().player_tickets(15))
 
 

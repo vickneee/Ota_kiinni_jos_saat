@@ -1,4 +1,6 @@
-from flask import Flask, jsonify, Response, request
+import traceback
+
+from flask import Flask, jsonify,Response,request
 from flask_cors import CORS
 import os
 import json
@@ -51,6 +53,8 @@ def start_game():
         criminal_loc = {'latitude': criminal_data['latitude'], 'longitude': criminal_data['longitude']}
         det_starts = Airport().two_farthest_airports(criminal_loc)
         all_loc = [criminal_icao, det_starts[0][0], det_starts[1][0]]
+        det1_coord = [{'latitude':det_starts[0][3],'longitude':det_starts[0][4]}]
+        det2_coord = [{'latitude':det_starts[1][3], 'longitude':det_starts[1][4]}]
         player_list = []
         for i in range(3):
             player_list.append({'name': players[i]['name'], 'player_type': players[i]['type'], 'location': all_loc[i], 'is_computer': players[i]['is_computer']})
@@ -61,8 +65,11 @@ def start_game():
         ans = {
             'status': status,
             'message': 'Game started successfully',
-            'players': player_list,
-            'all': all_loc
+            'players': players,
+            'detective1_location':det1_coord,
+            'detective2_location': det2_coord,
+            'criminal_location':criminal_data
+
         }
     except Exception as e:
         status = 500
@@ -127,9 +134,9 @@ def player_tickets(player_id):
         return jsonify({"status": "error", "message": str(e)}), 500
 
 @app.route('/api/round/<int:game_id>', methods=['GET'])
-def get_round():
+def get_round(game_id):
     try:
-        round = Player.get_round(g.game_id)
+        round = Player.get_round(game_id)
         return jsonify({"status": "success", "round": round}), 200
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
@@ -142,30 +149,34 @@ def game_screen_names(game_id):
     except Exception as e:
         return jsonify({"status": "error", "message": str(e)}), 500
 
-@app.route('/api/game_players', methods=['GET'])
-def game_data():
+@app.route('/api/play-round',methods=['POST'])
+def play_round():
     try:
-        game_id = g.game_id
-        players = Player.get_game_players(game_id)
+        data = request.json
+        player = data.get('player')
+        new_location = data.get('new_location')
+        ticket_id = data.get('ticket_id')
+        g.play_round(player,new_location,ticket_id)
+
 
         status = 200
         ans = {
             'status': status,
-            'players': players,
-            'game_id' : game_id
+            'message': 'move made succesfully',
+
+
+
         }
     except Exception as e:
         status = 500
         ans = {
             'status': status,
-            'teksti': 'virheellinen pyyntö',
+            'message': 'Failed to make move',
             'error': str(e)
         }
+
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
-
-
-
 
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)
