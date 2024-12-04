@@ -6,9 +6,9 @@ from backend.game_functions.database import Database
 
 class Game:
 
-    def __init__(self):
+    def __init__(self, game_id=None):
         self.database = Database()
-        self.game_id = self.create_game()
+        self.game_id = game_id if game_id else self.create_game()
         self.players = []
         self.screen_names = []
         self.round = 0
@@ -18,6 +18,9 @@ class Game:
 
         sql = "INSERT INTO game (round, player_id) VALUES (0, null)"
         return self.database.db_insert(sql)  # Palauttaa uuden pelin ID:n
+
+    def set_game_id(self, game_id):
+        self.game_id = game_id
 
     def insert_round(self):
         sql = f"""
@@ -55,7 +58,12 @@ class Game:
             self.players.append(player)
         self.round = 1
 
-
+    def resume_game(self,data):
+        self.set_game_id(data['game_id'])
+        player_ids = data['playerids']
+        self.players = Player.get_players_by_ids(player_ids)
+        self.screen_names = [player['screen_name'] for player in self.players]
+        self.round = data['round']
 
 
     def play_round(self,player_name,new_location, ticket_id):
@@ -125,4 +133,7 @@ class Game:
 
         except Exception as e:
             raise Exception(f"Error fetching saved games: {str(e)}")
+
+
+
 
