@@ -81,9 +81,9 @@ class Airport:
                 second_max_distance = max_distance
                 max_distance = distance
                 farthest_airports[1] = farthest_airports[0]
-                farthest_airports[0] = (icao, location['name'], location['country'], f"{distance:.2f} km")
+                farthest_airports[0] = (icao, location['name'], location['country'], location['latitude'], location['longitude'], f"{distance:.2f} km")
             elif distance > second_max_distance:
                 second_max_distance = distance
-                farthest_airports[1] = (icao, location['name'], location['country'], f"{distance:.2f} km")
+                farthest_airports[1] = (icao, location['name'], location['country'], location['latitude'], location['longitude'], f"{distance:.2f} km")
 
         return farthest_airports

@@ -1,4 +1,6 @@
 import random
+
+from backend.game_functions.airport import Airport
 from backend.game_functions.tickets import Tickets
 from backend.game_functions.database import Database
 
@@ -45,6 +47,7 @@ class Player:
             }
         return {}
 
+
     @staticmethod
     def get_screen_names():
         sql = "SELECT screen_name FROM player"
@@ -61,17 +64,15 @@ class Player:
             for _ in range(count):
                 Tickets().insert_tickets(self.id, ticket_id)
 
-    def choose_criminal_starting_point(self, airports):
-        if self.is_computer:
-            selected_icao = random.choice(list(airports.keys()))
-        else:
-            selected_icao = list(airports.keys())[0]  # Placeholder for actual front-end selection logic
 
-        self.location = selected_icao
-        self.insert_player()  # Insert the player after determining the starting point
-        self.insert_player_tickets()
+    @staticmethod
+    def criminal_starting_point():
+        airports = Airport().get_airports()
+        icao = random.choice(list(airports.items()))
+        return icao
 
-        return self.id
+
+
 
     def get_criminal_movements(self):
         sql = f"""
@@ -151,3 +152,22 @@ class Player:
                   WHERE game.id = '{game_id}'"""
         result = Database().db_query(sql)
         return [row[0] for row in result]
+##s
+    @staticmethod
+    def get_game_players(game_id):
+        sql = f"""SELECT player.screen_name,player.id,player.location FROM player
+                    left join game_player on game_player.player_id = player.id
+                    left join game on game.id = game_player.game_id
+                    where game.id = '{game_id}'
+                    """
+        result = Database().db_query(sql)
+
+        players = [
+            {
+                "screen_name": row[0],
+                "id": row[1],
+                "location": row[2]
+            }
+            for row in result
+        ]
+        return players
