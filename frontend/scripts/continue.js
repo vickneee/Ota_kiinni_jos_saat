@@ -45,6 +45,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 resumeButton.textContent = "Jatka peliä";
                 resumeButton.addEventListener("click", async () => {
                   await resumeGame(game);
+                  localStorage.setItem('gameData', JSON.stringify(game));
+
                   window.location.href = '../pages/map.html';
                   console.log(game);
                 });

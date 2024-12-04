@@ -57,13 +57,15 @@ class Game:
             self.screen_names.append(pdata["name"])
             self.players.append(player)
         self.round = 1
+        self.insert_round()
 
     def resume_game(self,data):
-        self.set_game_id(data['game_id'])
-        player_ids = data['playerids']
+        gamedata = data['gamedata'][0]
+        self.set_game_id(gamedata['game_id'])
+        player_ids = gamedata['playerids']
         self.players = Player.get_players_by_ids(player_ids)
         self.screen_names = [player['screen_name'] for player in self.players]
-        self.round = data['round']
+        self.round = gamedata['round']
 
 
     def play_round(self,player_name,new_location, ticket_id):
@@ -137,3 +139,6 @@ class Game:
 
 
 
+g = Game()
+data = {"gamedata":[{"game_id": 1, "round": 0, "players": ["sepi", "sipi","supi", "susu", "sipii", "moki"], "playerids":"2,3,4,5,6,7","date": "none"}]}
+g.resume_game(data)

@@ -262,6 +262,7 @@ async function createEtsija2Marker(map, lat, lng) {
     });
   }
 
+
   fetchEnv().then(env => {
     const mapKey = env.MAP_KEY;
     loadGoogleMapsAPI(mapKey).then(() => {
@@ -298,6 +299,23 @@ async function createEtsija2Marker(map, lat, lng) {
 
 
 }
+
+function resumeData(){
+    document.addEventListener("DOMContentLoaded", () => {
+    const gameData = JSON.parse(localStorage.getItem('gameData'));
+
+    if (gameData) {
+        console.log('Game Data:', gameData);
+        // Use the game data to initialize the map or players
+        // For example:
+        // initializeMap(gameData);
+    } else {
+        console.error('No game data found in localStorage');
+    }
+});
+}
+
+
 
 async function sendIfComp(players){
   try {

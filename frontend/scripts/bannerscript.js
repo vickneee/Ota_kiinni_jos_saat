@@ -31,8 +31,8 @@ function displayBanner(firstPlayer, startBanner, playBanner, startGame) {
         startBanner.style.display = 'table';
         playBanner.style.display = 'none';
     } else {
-        startBanner.style.display = 'none';
-        playBanner.style.display = 'table';
+        startBanner.style.display = 'table';
+        playBanner.style.display = 'none';
     }
 }
 

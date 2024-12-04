@@ -173,14 +173,14 @@ class Player:
         return players
 
     @staticmethod
-    def get_players_by_ids(self, player_ids):
-        placeholders = ','.join(['%s'] * len(player_ids))
+    def get_players_by_ids(player_ids):
+        player_ids_str = ','.join(map(str, player_ids))
         sql = f"""
             SELECT id, screen_name, type, location, is_computer
             FROM player
-            WHERE id IN ({placeholders})
+            WHERE id IN ({player_ids})
         """
-        result = self.database.db_query(sql, tuple(player_ids))
+        result = Database().db_query(sql)
         players = [
             {
                 "id": row[0],
