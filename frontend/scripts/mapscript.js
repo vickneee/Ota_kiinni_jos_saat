@@ -164,7 +164,7 @@ async function initMap() {
   const markers = [];
 
   for (const [ticketType, coords] of Object.entries(locations)) {
-    const pinType = determinePinType(ticketType);// Determine the pin type based on the airport code
+    const pinType = determinePinType(ticketType);// Determine the pin type based on the ticket type
     const pinElement = getPinElement(PinElement, pinType);
 
     const marker = new AdvancedMarkerElement({
