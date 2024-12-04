@@ -1,38 +1,39 @@
 function bannerFunc() {
-        const startBanner = document.getElementById('start-banner');
-        const playBanner = document.getElementById('play-banner');
-        const startGame = document.getElementById('karkuri');
+    const startBanner = document.getElementById('start-banner');
+    const playBanner = document.getElementById('play-banner');
+    const startGame = document.getElementById('karkuri');
 
-        const players = playerData();
-        const firstPlayer = players ? players[0] : null;
+    const players = playerData();
+    const firstPlayer = players ? players[0] : null;
 
+    console.log('Players fetched:', players); // Debugging
+    console.log('First player:', firstPlayer); // Debugging
+
+    if (firstPlayer) {
         displayBanner(firstPlayer, startBanner, playBanner, startGame);
-
-        // Example usage
-       // if (firstPlayer) {
-          //  fetchPlayerTickets(firstPlayer.id);
-        //    fetchRound(firstPlayer.game_id); // Assuming game_id is available in player data
-         //   fetchGameScreenNames(firstPlayer.game_id); // Assuming game_id is available in player data
-       // }
-
+    } else {
+        console.error('No player data available. Ensure localStorage is populated.');
+    }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
-    bannerFunc()
-})
+    bannerFunc();
+});
+
 
 function playerData() {
     const players = JSON.parse(localStorage.getItem('players'));
     return players;
 }
 //h
-function displayBanner(firstPlayer, startBanner, playBanner, startGame) {
+export function displayBanner(firstPlayer, startBanner, playBanner, startGame) {
     if (firstPlayer && firstPlayer.type === 0 && firstPlayer.is_computer === 0) {
         startGame.textContent = `${firstPlayer.name}`;
-        startBanner.style.display = 'table';
-        playBanner.style.display = 'none';
-    } else {
         startBanner.style.display = 'none';
         playBanner.style.display = 'table';
+    } else {
+        startBanner.style.display = 'table';
+        playBanner.style.display = 'none';
     }
 }
 
@@ -77,23 +78,24 @@ export function fetchRound(gameId) {
 }
 
 // Fetch game screen names
-export function fetchGameScreenNames(gameId) {
+export function fetchGameScreenNames(screen_name) {
     const playerInfoElement = document.getElementById('pelaaja');
+    playerInfoElement.textContent = screen_name
 
+
+    /*
     fetch(`http://127.0.0.1:3000/api/game-screen-names/${gameId}`)
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                const players = playerData(); // Retrieve players from localStorage
                 const screenNames = data.screen_names.map(name => {
-                    const player = players.find(p => p.name === name);
+                    const player = data.players.find(p => p.name === name);
                     if (!player) {
                         console.error(`Player with name ${name} not found`);
                         return `Unknown player ${name}`;
                     }
                     return player.type === 0 ? `Rikollisen ${name} vuoro` : `Etsivän ${name} vuoro`;
                 });
-                playerInfoElement.textContent = screenNames.join(', ');
             } else {
                 console.error('Error fetching game screen names:', data.message);
             }
@@ -101,6 +103,8 @@ export function fetchGameScreenNames(gameId) {
         .catch(error => {
             console.error('Error:', error);
         });
+        */
+
 }
 
 bannerFunc();
