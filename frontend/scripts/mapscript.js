@@ -209,10 +209,9 @@ function getPinElement(PinElement, type) {
 async function startingPoint(marker, markers) {
     const {event} = await google.maps.importLibrary('core');
     google.maps.event.addListener(marker, 'click', async () => {
-
         let coordinates = {
-            latitude: marker.position.lat(),
-            longitude: marker.position.lng(),
+          'latitude': marker.position.lat,
+          'longitude': marker.position.lng,
         };
         let selected = marker.title;
         let players = playerData();
