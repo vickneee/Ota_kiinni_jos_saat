@@ -121,4 +121,4 @@ export function fetchGameScreenNames(screen_name) {
         });
         */
 
-}
+}}
