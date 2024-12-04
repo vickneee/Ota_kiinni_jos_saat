@@ -285,12 +285,8 @@ async function createEtsija2Marker(map, lat, lng) {
     } catch (error) {
       console.error('Error sending players:', error);
     }
-  }
-    const json = await response.json();
-    console.log(json);
-  } catch (error) {
-    console.error('Error sending players:', error);
-  }
+
+
 }
 
 async function sendIfComp(players){
