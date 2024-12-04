@@ -151,7 +151,7 @@ class Player:
                   WHERE game.id = '{game_id}'"""
         result = Database().db_query(sql)
         return [row[0] for row in result]
-
+##s
     @staticmethod
     def get_game_players(game_id):
         sql = f"""SELECT player.screen_name,player.id,player.location FROM player

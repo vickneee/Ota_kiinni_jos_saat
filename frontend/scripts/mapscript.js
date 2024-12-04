@@ -344,7 +344,7 @@ async function createEtsija2Marker(map, lat, lng) {
   const response = await fetch('http://127.0.0.1:3000/api/getdata');
   const data = await response.json();
   return data;
-}
+}//j
 
   const menuElement = document.getElementById('menu');
   if (menuElement) {

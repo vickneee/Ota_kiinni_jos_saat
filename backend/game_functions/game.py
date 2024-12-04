@@ -26,7 +26,7 @@ class Game:
             WHERE id = {self.game_id}
         """
         Database().db_update(sql)
-
+##j
     # Update the player_id column in the game table
     def update_round_player(self,player_id):
         sql = f"""

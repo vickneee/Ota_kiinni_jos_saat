@@ -24,7 +24,7 @@ function playerData() {
     const players = JSON.parse(localStorage.getItem('players'));
     return players;
 }
-
+//h
 function displayBanner(firstPlayer, startBanner, playBanner, startGame) {
     if (firstPlayer && firstPlayer.type === 0 && firstPlayer.is_computer === 0) {
         startGame.textContent = `${firstPlayer.name}`;
