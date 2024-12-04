@@ -31,6 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
         playBanner.style.display = 'table';
     }
 
+    LOPPUUUUUU
+
     // Fetch player tickets
     function fetchPlayerTickets(playerId) {
         fetch(`http://127.0.0.1:3000/api/player-tickets/${gameId}`)
@@ -92,6 +94,8 @@ function fetchGameScreenNames(gameId) {
         fetchGameScreenNames(firstPlayer.game_id); // Assuming game_id is available in player data
     }
 });
+
+
 
 
 

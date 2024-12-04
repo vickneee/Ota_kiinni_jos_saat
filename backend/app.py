@@ -12,6 +12,7 @@ from dotenv import load_dotenv
 from backend.game_functions.tickets import Tickets
 from backend.game_functions.player import Player
 
+
 load_dotenv()
 app = Flask(__name__)
 CORS(app)
@@ -68,7 +69,7 @@ def start_game():
             'players': players,
             'detective1_location':det1_coord,
             'detective2_location': det2_coord,
-            'criminal_location':criminal_data
+            'criminal_location':criminal_data,
 
         }
     except Exception as e:
@@ -81,6 +82,48 @@ def start_game():
 
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
+
+@app.route('/api/start_game_ai',methods=['POST'])
+def start_game_ai():
+    try:
+        data = request.json
+        players = data.get('players')
+        criminal_start = Player.criminal_starting_point()
+        criminal_icao = criminal_start[0]
+        criminal_coord = {'latitude': criminal_start[1]['latitude'], 'longitude': criminal_start[1]['longitude']}
+        det_starts = Airport().two_farthest_airports(criminal_coord)
+        all_loc = [criminal_icao, det_starts[0][0], det_starts[1][0]]
+        det1_coord = [{'latitude': det_starts[0][3], 'longitude': det_starts[0][4]}]
+        det2_coord = [{'latitude': det_starts[1][3], 'longitude': det_starts[1][4]}]
+        player_list = []
+        for i in range(3):
+            player_list.append({'name': players[i]['name'], 'player_type': players[i]['type'], 'location': all_loc[i],
+                                'is_computer': players[i]['is_computer']})
+
+        #g.add_players(player_list)
+        status = 200
+        ans = {
+            'status': status,
+            'message': 'Game started successfully',
+            'players': player_list,
+            'detective1_location': det1_coord,
+            'detective2_location': det2_coord,
+            'criminal_location': criminal_icao,
+
+        }
+
+    except Exception as e:
+        status = 500
+        ans = {
+            'status': status,
+            'message': 'Failed to start game',
+            'error': str(e)
+        }
+
+    jsonans = json.dumps(ans)
+    return Response(response=jsonans, status=status, mimetype="application/json")
+
+
 
 @app.errorhandler(404)
 def page_not_found(err):
@@ -177,6 +220,9 @@ def play_round():
 
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
+
+
+
 
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)

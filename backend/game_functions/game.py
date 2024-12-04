@@ -55,6 +55,9 @@ class Game:
             self.players.append(player)
         self.round = 1
 
+
+
+
     def play_round(self,player_name,new_location, ticket_id):
         name_index = self.screen_names.index(player_name)
         other_loc = []

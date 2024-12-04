@@ -143,6 +143,11 @@ async function initMap() {
       title: code,
     });
     markers.push(marker);
+    let players = playerData()
+    if(players[0].is_computer === 1){
+      await sendPlayers()
+    }
+
     await startingPoint(marker, markers);
   }
 
@@ -219,7 +224,9 @@ async function startingPoint(marker, markers) {
     let selected = marker.title;
     let players = playerData();
     console.log('Sending data:', {players, coordinates, selected});
-    await sendPlayers(players, coordinates, selected);
+    const res = await sendPlayers(players, coordinates, selected);
+    //createCriminalMarker(map,res['criminal_location'].latitude)
+    console.log(res['criminal_location'].latitude  )
     markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
 
   });
@@ -258,6 +265,32 @@ async function sendPlayers(players, coord, icao) {
     console.error('Error sending players:', error);
   }
 }
+
+async function sendIfComp(players){
+  try {
+    const response = await fetch('http://127.0.0.1:3000/api/start_game_ai', {
+      method: 'POST',
+      body: JSON.stringify({
+        'players': players
+      }),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    console.log(json);
+  } catch (error) {
+    console.error('Error sending players:', error);
+  }
+
+}
+
+
 
 function playerData() {
 
