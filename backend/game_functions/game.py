@@ -8,19 +8,29 @@ class Game:
 
     def __init__(self, game_id=None):
         self.database = Database()
-        self.game_id = game_id if game_id else self.create_game()
+        self.game_id = None
         self.players = []
         self.screen_names = []
         self.round = 0
 
     #Create a new game in the database and return the game ID
-    def create_game(self):
+    def create_game_id(self):
 
-        sql = "INSERT INTO game (round, player_id) VALUES (0, null)"
-        return self.database.db_insert(sql)  # Palauttaa uuden pelin ID:n
+        sql_insert = "INSERT INTO game (round, player_id) VALUES (0, null)"
+        id = self.database.db_insert(sql_insert)  # Palauttaa uuden pelin ID:n
+        print(id)
+        self.game_id = id
+
 
     def set_game_id(self, game_id):
         self.game_id = game_id
+
+    def reset_game(self):
+        self.game_id = None
+        self.players = []
+        self.round = 0
+
+
 
     def insert_round(self):
         sql = f"""
@@ -135,7 +145,6 @@ class Game:
 
         except Exception as e:
             raise Exception(f"Error fetching saved games: {str(e)}")
-
 
 
 

@@ -101,7 +101,7 @@ async function createEtsijaMarker(map, lat, lng) {
   }
 }
 
-// Create and add the etsiva 1 marker
+// Create and add the etsiva 2 marker
 async function createEtsija2Marker(map, lat, lng) {
   try {
 
@@ -304,36 +304,6 @@ function getPinElement(PinElement, type) {
   }
 }
 
-// async function fetchRecommendedTickets(playerId) {
-//   const response = await fetch(
-//       `http://127.0.0.1:3000/api/get_recommended_airports?player_id=${playerId}`);
-//   const recommendedTickets = await response.json();
-//   console.log(`Recommended airports ${recommendedTickets}`);
-//   return recommendedTickets;
-// }
-
-// async function displayRecommendedTickets(map, playerId) {
-//   const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
-//   const {PinElement} = await google.maps.importLibrary('marker');
-//
-//   const recommendedTickets = await fetchRecommendedTickets(playerId);
-//
-//   for (const [code, details] of Object.entries(recommendedTickets)) {
-//     const pinType = determinePinType(details.ticket_type);
-//     const pinElement = getPinElement(PinElement, pinType);
-//
-//     const marker = new AdvancedMarkerElement({
-//       map: map,
-//       position: {lat: details.latitude, lng: details.longitude},
-//       content: pinElement.element,
-//       title: `${details.name} - ${details.ticket_type}`,
-//     });
-//
-//     console.log(`Marker created:`, marker); // Log the created marker
-//
-//   }
-// }
-
 async function startingPoint(marker, markers) {
   const {event} = await google.maps.importLibrary('core');
   google.maps.event.addListener(marker, 'click', async () => {
@@ -358,6 +328,7 @@ async function startingPoint(marker, markers) {
 
   });
 }
+
 
 fetchEnv().then(env => {
   const mapKey = env.MAP_KEY;
@@ -431,14 +402,11 @@ async function sendIfComp(players) {
   } catch (error) {
     console.error('Error sending players:', error);
   }
-
 }
 
 function playerData() {
-  const players = JSON.parse(localStorage.getItem('players'));
-  if (!players) {
-    console.error('Player data not found');
-    return null;
+    const players = JSON.parse(localStorage.getItem('players'));
+    return players;
   }
   return players;
 }

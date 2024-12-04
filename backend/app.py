@@ -51,9 +51,10 @@ def start_game():
         det2_coord = [{'latitude': det_starts[1][3], 'longitude': det_starts[1][4]}]
         player_list = []
         for i in range(3):
-            player_list.append({'name': players[i]['name'], 'player_type': players[i]['type'], 'location': all_loc[i],
-                                'is_computer': players[i]['is_computer']})
 
+            player_list.append({'name': players[i]['name'], 'player_type': players[i]['type'], 'location': all_loc[i], 'is_computer': players[i]['is_computer']})
+        g.reset_game()
+        g.create_game_id()
         g.add_players(player_list)
 
         status = 200
@@ -62,8 +63,10 @@ def start_game():
 
         }
     except Exception as e:
-        status = 500
-        ans = {'status': status, 'message': 'Failed to start game', 'error': str(e)}
+        import traceback
+        error_message = traceback.format_exc()
+        print("Error in /api/saved-games:", error_message)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
@@ -82,20 +85,24 @@ def start_game_ai():
         det1_coord = [{'latitude': det_starts[0][3], 'longitude': det_starts[0][4]}]
         det2_coord = [{'latitude': det_starts[1][3], 'longitude': det_starts[1][4]}]
         player_list = []
+
         for i in range(3):
             player_list.append({'name': players[i]['name'], 'player_type': players[i]['type'], 'location': all_loc[i],
                                 'is_computer': players[i]['is_computer']})
+        g.reset_game()
+        g.create_game_id()
+        g.add_players(player_list)
 
-        #g.add_players(player_list)
         status = 200
         ans = {'status': status, 'message': 'Game started successfully', 'players': player_list,
             'detective1_location': det1_coord, 'detective2_location': det2_coord, 'criminal_location': criminal_icao,
 
         }
-
     except Exception as e:
-        status = 500
-        ans = {'status': status, 'message': 'Failed to start game', 'error': str(e)}
+        import traceback
+        error_message = traceback.format_exc()
+        print("Error in /api/start:", error_message)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
