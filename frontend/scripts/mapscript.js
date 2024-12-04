@@ -154,15 +154,20 @@ async function createEtsija2Marker(map, lat, lng) {
       const pinType = determinePinType(code); // Determine the pin type based on the airport code
       const pinElement = getPinElement(PinElement, pinType);
 
-      const marker = new AdvancedMarkerElement({
-        map: map,
-        position: {lat: coords[0], lng: coords[1]},
-        content: pinElement.element,
-        title: code,
-      });
-      markers.push(marker);
-      await startingPoint(marker, markers);
+    const marker = new AdvancedMarkerElement({
+      map: map,
+      position: {lat: coords[0], lng: coords[1]},
+      content: pinElement.element,
+      title: code,
+    });
+    markers.push(marker);
+    let players = playerData()
+    if(players[0].is_computer === 1){
+      await sendPlayers()
     }
+
+    await startingPoint(marker, markers);
+  }
 
     // Create and add the criminal marker
     const criminalMarker = createCriminalMarker(map);
@@ -284,7 +289,35 @@ async function createEtsija2Marker(map, lat, lng) {
     } catch (error) {
       console.error('Error sending players:', error);
     }
+
+
+}
+
+async function sendIfComp(players){
+  try {
+    const response = await fetch('http://127.0.0.1:3000/api/start_game_ai', {
+      method: 'POST',
+      body: JSON.stringify({
+        'players': players
+      }),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    console.log(json);
+  } catch (error) {
+    console.error('Error sending players:', error);
   }
+
+}
+
+
 
   function playerData() {
 
