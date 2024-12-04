@@ -407,8 +407,6 @@ async function sendIfComp(players) {
 function playerData() {
     const players = JSON.parse(localStorage.getItem('players'));
     return players;
-  }
-  return players;
 }
 
 async function gamedata() {
