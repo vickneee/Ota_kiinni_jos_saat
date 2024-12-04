@@ -163,10 +163,12 @@ async function createEtsija2Marker(map, lat, lng) {
     markers.push(marker);
     let players = playerData()
     if(players[0].is_computer === 1){
-      await sendPlayers()
+      await sendIfComp(players)
+    }else{
+      await startingPoint(marker, markers);
     }
 
-    await startingPoint(marker, markers);
+
   }
 
     // Create and add the criminal marker
@@ -243,14 +245,11 @@ async function createEtsija2Marker(map, lat, lng) {
       let players = playerData();
       console.log('Sending data:', {players, coordinates, selected});
       const res = await sendPlayers(players, coordinates, selected);
+      console.log(res.detective1_location[0].latitude)
 
-      // To test gamedata
-      const data = await gamedata()
-      console.log(data)
-      // console.log('Response:', res);
-      // createCriminalMarker(map, res['criminal_location'].latitude, res['criminal_location'].longitude);
       await createCriminalMarker(map, marker.position.lat, marker.position.lng);
-      // console.log('Criminal location:', res['criminal_location']);
+      await createEtsijaMarker(map,res.detective1_location[0].latitude,res.detective1_location[0].longitude)
+      await createEtsijaMarker(map,res.detective2_location[0].latitude,res.detective2_location[0].longitude)
 
       markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
 
@@ -286,6 +285,7 @@ async function createEtsija2Marker(map, lat, lng) {
 
       const json = await response.json();
       console.log(json);
+      return json
     } catch (error) {
       console.error('Error sending players:', error);
     }
