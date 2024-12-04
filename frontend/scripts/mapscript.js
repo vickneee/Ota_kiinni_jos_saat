@@ -209,7 +209,7 @@ function getPinElement(PinElement, type) {
 async function startingPoint(marker, markers) {
     const {event} = await google.maps.importLibrary('core');
     google.maps.event.addListener(marker, 'click', async () => {
-        await playVideoWithAnimation()
+
         let coordinates = {
             latitude: marker.position.lat(),
             longitude: marker.position.lng(),
