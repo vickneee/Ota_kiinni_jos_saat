@@ -95,6 +95,7 @@ class Game:
                     game.id AS game_id, 
                     game.round,
                     GROUP_CONCAT(player.screen_name) AS players,
+                    GROUP_CONCAT(player.id) AS playerids,
                     game.date
                 FROM 
                     game
@@ -114,7 +115,8 @@ class Game:
                         "game_id": row[0],
                         "round": row[1],
                         "players": row[2].split(",") if row[2] else [],
-                        "date": row[3]  # Include the date field
+                        "playerids": row[3].split(",") if row[3] else [],
+                        "date": row[4]
                     }
                     for row in result
                 ]

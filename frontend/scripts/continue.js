@@ -43,8 +43,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const actionCell = document.createElement("td");
                 const resumeButton = document.createElement("button");
                 resumeButton.textContent = "Jatka peliä";
-                resumeButton.addEventListener("click", () => {
-                    window.location.href = `./game.html?game_id=${game.game_id}`;
+                resumeButton.addEventListener("click", async () => {
+                  await resumeGame(game);
+                  window.location.href = '../pages/map.html';
+                  console.log(game);
                 });
 
                 actionCell.appendChild(resumeButton);
@@ -61,3 +63,29 @@ document.addEventListener("DOMContentLoaded", async () => {
         container.innerHTML = "<p>Error fetching saved games. Please try again later.</p>";
     }
 });
+
+  async function resumeGame(gameData) {
+    try {
+      const response = await fetch('http://127.0.0.1:3000/api/resume_game', {
+        method: 'POST',
+        body: JSON.stringify({
+          'gameData': gameData,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      console.log(json);
+      return json
+    } catch (error) {
+      console.error('Error resuming game', error);
+    }
+
+
+}

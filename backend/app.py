@@ -248,6 +248,32 @@ def get_data():
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
 
+@app.route('/api/resume_game', methods=['POST'])
+def resume_game():
+    try:
+        data = request.json
+        game_id = data.get('game_id')
+        if game_id:
+            g.set_game_id(game_id)
+            status = 200
+            ans = {
+                'status': status,
+                'message': 'Game resumed successfully',
+                'game_id': game_id
+            }
+        else:
+            raise ValueError("Game ID is required to resume a game")
+    except Exception as e:
+        status = 500
+        ans = {
+            'status': status,
+            'message': 'Failed to resume game',
+            'error': str(e)
+        }
+
+    jsonans = json.dumps(ans)
+    return Response(response=jsonans, status=status, mimetype="application/json")
+
 ##k
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)
