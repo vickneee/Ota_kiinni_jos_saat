@@ -1,7 +1,7 @@
 'use strict';
 
 
-import {fetchPlayerTickets, fetchRound, fetchGameScreenNames, displayBanner} from './bannerscript.js';
+import {fetchPlayerTickets, fetchRound, fetchGameScreenNames, playbanner} from './bannerscript.js';
 
 let map;
 
@@ -346,7 +346,7 @@ async function gameRounds() {
     const startBanner = document.getElementById('start-banner');
     const playBanner = document.getElementById('play-banner');
     const startGame = document.getElementById('karkuri');
-    displayBanner(startBanner, playBanner, startGame)
+    playbanner()
     const gameData = await gamedata();
     await fetchPlayerTickets(gameData.players[0].id);
     await fetchRound(gameData.game_id);

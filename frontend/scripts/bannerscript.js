@@ -9,8 +9,8 @@ function bannerFunc() {
     console.log('Players fetched:', players); // Debugging
     console.log('First player:', firstPlayer); // Debugging
 
-    if (firstPlayer) {
-        displayBanner(firstPlayer, startBanner, playBanner, startGame);
+    if (firstPlayer && firstPlayer.type === 0 && firstPlayer.is_computer === 0) {
+        displayBanner(firstPlayer);
     } else {
         console.error('No player data available. Ensure localStorage is populated.');
     }
@@ -25,16 +25,22 @@ function playerData() {
     const players = JSON.parse(localStorage.getItem('players'));
     return players;
 }
-//h
-export function displayBanner(firstPlayer, startBanner, playBanner, startGame) {
-    if (firstPlayer && firstPlayer.type === 0 && firstPlayer.is_computer === 0) {
-        startGame.textContent = `${firstPlayer.name}`;
-        startBanner.style.display = 'none';
-        playBanner.style.display = 'table';
-    } else {
-        startBanner.style.display = 'table';
-        playBanner.style.display = 'none';
-    }
+
+export function playbanner() {
+    const startBanner = document.getElementById('start-banner');
+    const playBanner = document.getElementById('play-banner');
+    playBanner.style.display = 'table';
+    startBanner.style.display = 'none'
+}
+
+
+export function displayBanner(firstPlayer) {
+    const startBanner = document.getElementById('start-banner');
+    const playBanner = document.getElementById('play-banner');
+    const startGame = document.getElementById('karkuri');
+    startGame.textContent = `${firstPlayer.name}`;
+    startBanner.style.display = 'table';
+    playBanner.style.display = 'none'
 }
 
 // Fetch player tickets
@@ -106,5 +112,3 @@ export function fetchGameScreenNames(screen_name) {
         */
 
 }
-
-bannerFunc();
