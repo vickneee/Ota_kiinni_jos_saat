@@ -87,14 +87,14 @@ body::before {
 
 /***** Video *****/
 
-/*video {
+.animation-video {
     width: 20%;
-    height: auto; Maintain aspect ratio
+    height: auto; /* Maintain aspect ratio */
     position: absolute;
-    top: 6rem; Position the video
-    left: 4rem;  Position the video
-    z-index: -1;  Place the video behind other elements */
-
+    top: 6rem; /* Position from the top */
+    left: 4rem; /* Position from the left */
+    z-index: -1; /* Behind other elements */
+}
 
 /***** General *****/
 
