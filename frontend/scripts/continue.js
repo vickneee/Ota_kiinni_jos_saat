@@ -64,12 +64,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 });
 
-  async function resumeGame(gameData) {
+  async function resumeGame(gamedata) {
     try {
       const response = await fetch('http://127.0.0.1:3000/api/resume_game', {
         method: 'POST',
         body: JSON.stringify({
-          'gameData': gameData,
+          'gamedata': gamedata,
         }),
         headers: {
           'Content-type': 'application/json',

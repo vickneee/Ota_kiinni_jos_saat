@@ -252,22 +252,19 @@ def get_data():
 def resume_game():
     try:
         data = request.json
-        game_id = data.get('game_id')
-        if game_id:
-            g.set_game_id(game_id)
-            status = 200
-            ans = {
-                'status': status,
-                'message': 'Game resumed successfully',
-                'game_id': game_id
-            }
-        else:
-            raise ValueError("Game ID is required to resume a game")
+        gamedata = data.get('gamedata')
+        g.resume_game(data)
+        status = 200
+        ans = {'status': status, 'gamedata': gamedata, 'id': g.game_id
+        }
     except Exception as e:
+        import traceback
+        error_message = traceback.format_exc()
+        print("Error in /api/getdata:", error_message)
         status = 500
         ans = {
             'status': status,
-            'message': 'Failed to resume game',
+            'message': 'Failed to retrieve data',
             'error': str(e)
         }
 
