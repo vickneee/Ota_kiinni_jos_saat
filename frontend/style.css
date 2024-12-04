@@ -538,11 +538,13 @@ table {
     padding: 1.2rem;
     font-size: 1.2rem;
     text-align: center;
+    /* display: none */
     /*border: 2px solid var(--gold);*/
     /*border-collapse: revert;*/
 }
 
 #play-banner {
+    /* display: none; */
     background-color: var(--seasalt); /* Background color */
 }
 
