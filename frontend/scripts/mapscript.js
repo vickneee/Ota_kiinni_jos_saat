@@ -277,7 +277,7 @@ async function createEtsija2Marker(map, lat, lng) {
     });
   });
 
-  async function sendPlayers(players, coord, icao) {
+async function sendPlayers(players, coord, icao) {
     try {
       const response = await fetch('http://127.0.0.1:3000/api/start_game', {
         method: 'POST',
@@ -348,7 +348,7 @@ async function sendIfComp(players){
 
 
 
-  function playerData() {
+function playerData() {
 
     const players = JSON.parse(localStorage.getItem('players'));
     return players;
