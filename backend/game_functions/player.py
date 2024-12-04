@@ -163,11 +163,9 @@ class Player:
 
         players = [
             {
-                "id": row[0],
-                "screen_name": row[1],
-                "type": row[2],
-                "is_computer": row[3],
-                "location": row[4]
+                "screen_name": row[0],
+                "id": row[1],
+                "location": row[2]
             }
             for row in result
         ]

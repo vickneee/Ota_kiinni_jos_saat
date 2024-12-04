@@ -178,5 +178,32 @@ def play_round():
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
 
+
+@app.route('/api/getdata', methods=['GET'])
+def get_data():
+    try:
+        game_id = g.game_id
+        players = Player.get_game_players(game_id)
+
+        status = 200
+        ans = {
+            'status': status,
+            'game_id': game_id,
+            'players': players
+        }
+    except Exception as e:
+        import traceback
+        error_message = traceback.format_exc()
+        print("Error in /api/getdata:", error_message)
+        status = 500
+        ans = {
+            'status': status,
+            'message': 'Failed to retrieve data',
+            'error': str(e)
+        }
+
+    jsonans = json.dumps(ans)
+    return Response(response=jsonans, status=status, mimetype="application/json")
+
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)

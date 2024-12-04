@@ -238,6 +238,10 @@ async function createEtsija2Marker(map, lat, lng) {
       let players = playerData();
       console.log('Sending data:', {players, coordinates, selected});
       const res = await sendPlayers(players, coordinates, selected);
+
+      // To test gamedata
+      const data = await gamedata()
+      console.log(data)
       // console.log('Response:', res);
       // createCriminalMarker(map, res['criminal_location'].latitude, res['criminal_location'].longitude);
       await createCriminalMarker(map, marker.position.lat, marker.position.lng);
@@ -334,6 +338,13 @@ async function createEtsija2Marker(map, lat, lng) {
     }
     console.log(p_list);
   }
+
+  // To test gamedata
+  async function gamedata() {
+  const response = await fetch('http://127.0.0.1:3000/api/getdata');
+  const data = await response.json();
+  return data;
+}
 
   const menuElement = document.getElementById('menu');
   if (menuElement) {
