@@ -177,17 +177,17 @@ async function createEtsija2Marker(map, lat, lng) {
 
   }
 
-    // Create and add the criminal marker
-    const criminalMarker = createCriminalMarker(map);
-    markers.push(criminalMarker);
-
-    // Create and add the etsiva 1 marker
-    const etsivaMarker = createEtsijaMarker(map);
-    markers.push(etsivaMarker);
-
-    // Create and add the etsiva 1 marker
-    const etsiva2Marker = createEtsija2Marker(map);
-    markers.push(etsiva2Marker);
+    // // Create and add the criminal marker
+    // const criminalMarker = createCriminalMarker(map);
+    // markers.push(criminalMarker);
+    //
+    // // Create and add the etsiva 1 marker
+    // const etsivaMarker = createEtsijaMarker(map);
+    // markers.push(etsivaMarker);
+    //
+    // // Create and add the etsiva 1 marker
+    // const etsiva2Marker = createEtsija2Marker(map);
+    // markers.push(etsiva2Marker);
 
     return map;
   }
@@ -255,7 +255,7 @@ async function createEtsija2Marker(map, lat, lng) {
 
       await createCriminalMarker(map, marker.position.lat, marker.position.lng);
       await createEtsijaMarker(map,res.detective1_location[0].latitude,res.detective1_location[0].longitude)
-      await createEtsijaMarker(map,res.detective2_location[0].latitude,res.detective2_location[0].longitude)
+      await createEtsija2Marker(map,res.detective2_location[0].latitude,res.detective2_location[0].longitude)
 
       markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
 
