@@ -379,15 +379,6 @@ async function sendIfComp(players){
   return data;
 }//j
 
-  const menuElement = document.getElementById('menu');
-  if (menuElement) {
-    menuElement.addEventListener('change', function() {
-      const value = this.value;
-      if (value) {
-        window.location.href = value;
-      }
-    });
-  }
 const menuElement = document.getElementById('menu');
 if (menuElement) {
   menuElement.addEventListener('change', function() {
