@@ -59,11 +59,12 @@ class Game:
         self.round = 1
 
     def resume_game(self,data):
-        self.set_game_id(data['game_id'])
-        player_ids = data['playerids']
+        gamedata = data['gamedata']
+        self.set_game_id(gamedata[0]['game_id'])
+        player_ids = gamedata[0]['playerids']
         self.players = Player.get_players_by_ids(player_ids)
         self.screen_names = [player['screen_name'] for player in self.players]
-        self.round = data['round']
+        self.round = gamedata[0]['round']
 
 
     def play_round(self,player_name,new_location, ticket_id):
@@ -123,7 +124,7 @@ class Game:
                         "game_id": row[0],
                         "round": row[1],
                         "players": row[2].split(",") if row[2] else [],
-                        "playerids": row[3].split(",") if row[3] else [],
+                        "playerids": row[3],
                         "date": row[4]
                     }
                     for row in result
