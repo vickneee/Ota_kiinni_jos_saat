@@ -1,5 +1,8 @@
 'use strict';
 
+
+import {fetchPlayerTickets, fetchRound, fetchGameScreenNames, displayBanner} from './bannerscript.js';
+
 let map;
 
 async function fetchEnv() {
@@ -253,11 +256,13 @@ async function createEtsija2Marker(map, lat, lng) {
       const res = await sendPlayers(players, coordinates, selected);
       console.log(res.detective1_location[0].latitude)
 
+
       await createCriminalMarker(map, marker.position.lat, marker.position.lng);
       await createEtsijaMarker(map,res.detective1_location[0].latitude,res.detective1_location[0].longitude)
       await createEtsija2Marker(map,res.detective2_location[0].latitude,res.detective2_location[0].longitude)
 
       markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
+      await gameRounds()
 
     });
   }
@@ -349,18 +354,41 @@ async function sendIfComp(players){
     return players;
   }
 
-  async function gameRounds(map, players) {
-    let round = 1;
-    const p_list = [];
-    for (let p of players) {
-      p_list.push(p.name);
-    }
-    for (let i = 1; i < 11; i++) {
-      for (let i = 0; i < 2; i++) {
-        await send_move(player, new_location, ticket_id);
-      }
-    }
+async function gamedata() {
+    const response = await fetch('http://127.0.0.1:3000/api/getdata');
+    const data = await response.json();
+    return data;
+}
+
+async function gameRounds() {
+    const startBanner = document.getElementById('start-banner');
+    const playBanner = document.getElementById('play-banner');
+    const startGame = document.getElementById('karkuri');
+    displayBanner(startBanner, playBanner, startGame)
+    const gameData = await gamedata();
+    await fetchPlayerTickets(gameData.players[0].id);
+    await fetchRound(gameData.game_id);
+    await fetchGameScreenNames(gameData.players[0].screen_name);
+    console.log(gameData.players[0].id)
+    console.log(gameData.game_id)
+    console.log(gameData.players[0].screen_name)
+}
+/*
+  players.sort((a, b) => a.id - b.id);
+  console.log(players);
+
+  let round = 1;
+  const p_list = [];
+  for (let p of players) {
+    p_list.push(p.name);
   }
+  for (let i = 1; i < 11; i++) {
+    for (let i = 0; i < 2; i++) {
+      await send_move(player, new_location, ticket_id);
+    }
+}
+*/
+
 
   async function send_move(player, new_location, ticket_id) {
     try {
@@ -397,21 +425,8 @@ async function sendIfComp(players){
   }
 
   // To test gamedata
-  async function gamedata() {
-  const response = await fetch('http://127.0.0.1:3000/api/getdata');
-  const data = await response.json();
-  return data;
-}//j
 
-const menuElement = document.getElementById('menu');
-if (menuElement) {
-  menuElement.addEventListener('change', function() {
-    const value = this.value;
-    if (value) {
-      window.location.href = value;
-    }
-  });
-}
+
 
 /* // Call the animation function
         await playVideoWithAnimation();

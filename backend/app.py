@@ -254,7 +254,7 @@ def resume_game():
         gamedata = data.get('gamedata')
         g.resume_game(data)
         status = 200
-        ans = {'status': status, 'gamedata': gamedata[0]['playerids'], 'id': g.game_id
+        ans = {'status': status, 'gamedata': gamedata, 'id': g.game_id
         }
     except Exception as e:
         import traceback

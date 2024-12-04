@@ -125,7 +125,7 @@ class Game:
                         "game_id": row[0],
                         "round": row[1],
                         "players": row[2].split(",") if row[2] else [],
-                        "playerids": row[3].split(",") if row[3] else [],
+                        "playerids": row[3],
                         "date": row[4]
                     }
                     for row in result
@@ -139,6 +139,3 @@ class Game:
 
 
 
-g = Game()
-data = {"gamedata":[{"game_id": 1, "round": 0, "players": ["sepi", "sipi","supi", "susu", "sipii", "moki"], "playerids":"2,3,4,5,6,7","date": "none"}]}
-g.resume_game(data)
