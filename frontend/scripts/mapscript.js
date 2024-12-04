@@ -141,6 +141,12 @@ async function createEtsija2Marker(map, lat, lng) {
       zoom: 4,
       center: position,
       mapId: 'DEMO_MAP_ID',
+      mapTypeId: "roadmap", // Set the initial map type
+      disableDefaultUI: true, // Disable all default UI controls (optional)
+      mapTypeControl: false, // Disable the map/satellite switcher
+      streetViewControl: false, // Disable the Street View Pegman
+      fullscreenControl: false, // Disable fullscreen control
+      zoomControl: true, // Enable zoom control (optional)
     });
 
     // Fetch JSON data and add markers
