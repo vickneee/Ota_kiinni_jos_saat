@@ -32,21 +32,15 @@ class Airport:
         return airports_location_dict
 
     # Get recommended airports based on the players location and ticket types
-    def get_recommended_airports(self, name):
-        from backend.game_functions.tickets import Tickets
-        from backend.game_functions.player import Player
-        all_airports = self.get_airports()
-        all_airports_location = self.airports_location()
-        player = Player.get_player_info(name)
-        player_id = player.get('id')
-        player_type = player.get('type')
-        player_lat_lon = all_airports_location[player['location']]
-        tickets = Tickets().player_tickets(player_id)
+    def get_recommended_airports(self, player_location, tickets, player_type):
+        airport_locations = self.airports_location()
+        player_lat_lon = (player_location['latitude'], player_location['longitude'])
+
         airport_distances = {}
 
-        for key, value in all_airports_location.items():
-            if key != player['location']:
-                airport_distances[key] = GD(player_lat_lon, value).kilometers
+        for icao, location in airport_locations.items():
+            if icao != player_location['location']:
+                airport_distances[icao] = GD(player_lat_lon, location).kilometers
 
         sorted_distances = sorted(airport_distances.items(), key=lambda x: x[1])
 
@@ -55,22 +49,18 @@ class Airport:
         # Add recommended airports for each ticket type
         if 'potkurikone' in tickets:
             for key, value in sorted_distances[:2]:  # Limit to first 2
-                recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
-                                    "distance": value, "ticket_type": 'potkurikone', "latitude": all_airports[key][
-                        'latitude'], "longitude": all_airports[key]['longitude']}
+                recommended[key] = {"name": airport_locations[key]['name'], "country": airport_locations[key]['country'],
+                                    "distance": value, "ticket_type": 'potkurikone'}
 
         if 'matkustajakone' in tickets:
             for key, value in sorted_distances[2:4]:  # Next 2
-                recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
-                                    "distance": value, "ticket_type": 'matkustajakone', "latitude": all_airports[key][
-                        'latitude'], "longitude": all_airports[key]['longitude']}
+                recommended[key] = {"name": airport_locations[key]['name'], "country": airport_locations[key]['country'],
+                                    "distance": value, "ticket_type": 'matkustajakone'}
 
-
-        if 'yksityiskone' in tickets:
+        if player_type == 0 and 'yksityiskone' in tickets:
             for key, value in sorted_distances[-2:]:  # Last 2 airports
-                recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
-                                    "distance": value, "ticket_type": 'yksityiskone', "latitude": all_airports[key][
-                        'latitude'], "longitude": all_airports[key]['longitude']}
+                recommended[key] = {"name": airport_locations[key]['name'], "country": airport_locations[key]['country'],
+                                    "distance": value, "ticket_type": 'yksityiskone'}
 
         return recommended
 

@@ -17,14 +17,7 @@ class Game:
     def create_game_id(self):
 
         sql_insert = "INSERT INTO game (round, player_id) VALUES (0, null)"
-        id = self.database.db_insert(sql_insert) # Palauttaa uuden pelin ID:n
-        sql = f"""
-                    UPDATE game 
-                    SET 
-                    date = NOW()
-                    WHERE id={id}
-                """
-        Database().db_update(sql)
+        id = self.database.db_insert(sql_insert)  # Palauttaa uuden pelin ID:n
         print(id)
         self.game_id = id
 
