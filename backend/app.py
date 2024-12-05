@@ -1,5 +1,4 @@
 import traceback
-from crypt import methods
 
 from flask import Flask, jsonify, Response, request
 from flask_cors import CORS
@@ -235,6 +234,18 @@ def resume_game():
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
 
+# Get recommended airports based on the players location and ticket types
+@app.route('/api/get-recommended-airports/<name>', methods=['GET'])
+def get_recommended_airports(name):
+    try:
+        recommended_airports = Airport().get_recommended_airports(name)
+        return jsonify({"status": "success", "recommended_airports": recommended_airports}), 200
+    except Exception as e:
+        import traceback
+        error_message = traceback.format_exc()
+        print("Error in /api/getdata:", error_message)
+        status = 500
+        ans = {'status': status, 'message': 'Failed to retrieve data', 'error': str(e)}
 @app.route('/api/current-turn/<int:game_id>', methods=['GET'])
 def get_current_turn(game_id):
     try:

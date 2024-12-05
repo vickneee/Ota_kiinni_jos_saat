@@ -183,33 +183,9 @@ async function initMap() {
     }
   }
 
-  // Add a hardcoded marker to test addMarkersToMap
-  const hardcodedAirports = [
-    {
-      latitude: 42.7128,
-      longitude: 34.0060,
-      name: 'Test Airport Potkurikone',
-      ticketType: 'potkurikone',
-    },
-    {
-      latitude: 34.0522,
-      longitude: 18.2437,
-      name: 'Test Airport Matkustajakone',
-      ticketType: 'matkustajakone',
-    },
-    {
-      latitude: 60.5074,
-      longitude: -0.1278,
-      name: 'Test Airport Yksityiskone',
-      ticketType: 'yksityiskone',
-    },
-    {
-      latitude: 55.8566,
-      longitude: 20.3522,
-      name: 'Test Airport Default Unknown',
-      ticketType: 'unknown',
-    },
-  ];
+
+  const recommendedAirports = await fetchRecommendedAirports('Kökkö');
+  addMarkersToMap(recommendedAirports);  // Change back to recommendedAirports
 
   const gameData = await gamedata(); // Fetch game data here
   //const playerId = gameData.players[0].id;
@@ -220,15 +196,16 @@ async function initMap() {
   return map;
 }
 
-async function fetchRecommendedAirports(playerId) {
+async function fetchRecommendedAirports(name) {
   try {
     const response = await fetch(
-        `http://127.0.0.1:3000/api/get-recommended-airports/${playerId}`);
+        `http://127.0.0.1:3000/api/get-recommended-airports/${name}`,);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
     return data.recommended_airports;
+
   } catch (error) {
     console.error('Error fetching recommended airports:', error);
     return [];
@@ -236,15 +213,15 @@ async function fetchRecommendedAirports(playerId) {
 }
 
 function addMarkersToMap(recommendedAirports) {
-  recommendedAirports.forEach(async (airport) => {
+  Object.values(recommendedAirports).forEach(async (airport) => {
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
     const {PinElement} = await google.maps.importLibrary('marker');
 
-    const pinType = determinePinType(airport.ticketType);
+    const pinType = determinePinType(airport.ticket_type);
 
     const pinElement = new PinElement({
       background: pinType, // Customize the pin color as needed
-      glyphColor: airport.ticketType === 'unknown' ? '#23245c' : '#C49339',
+      glyphColor: airport.ticket_type === 'unknown' ? '#23245c' : '#C49339',
       borderColor: '#C49339',
     });
 
@@ -256,6 +233,7 @@ function addMarkersToMap(recommendedAirports) {
     });
   });
 }
+
 
 function determinePinType(ticketType) {
   // Define your criteria to determine the pin type based on the ticket type
@@ -434,9 +412,9 @@ async function gameRounds() {
   //await fetchPlayerTickets(gameData.players[0].id);
   //await fetchRound(gameData.game_id);
   //await fetchGameScreenNames(gameData.players[0].screen_name);
-  console.log(`Player id ${gameData.players[0].id}`);
-  console.log(`Game id ${gameData.game_id}`);
-  console.log(`Player screen name ${gameData.players[0].screen_name}`);
+  // console.log(`Player id ${gameData.players[0].id}`);
+  // console.log(`Game id ${gameData.game_id}`);
+  // console.log(`Player screen name ${gameData.players[0].screen_name}`);
 }
 
 
