@@ -24,6 +24,7 @@ class Player:
                   VALUES ('{game_id}', '{self.id}')"""
         self.database.db_insert(sql)
 
+
     def get_player_info(self):
         sql = f"""
             SELECT player.id, player.screen_name, player.type, player.is_computer, player.location, airport.name, country.name, airport.latitude_deg, airport.longitude_deg

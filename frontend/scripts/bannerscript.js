@@ -101,6 +101,11 @@ export function fetchGameScreenNames(screen_name) {
     playerInfoElement.textContent = screen_name
 }
 
+export async function showPlayerInfo(playerId, gameId,screen_name){
+      await fetchPlayerTickets(playerId);
+      await fetchRound(gameId);
+      await fetchGameScreenNames(screen_name);
+}
 
     /*
     fetch(`http://127.0.0.1:3000/api/game-screen-names/${gameId}`)

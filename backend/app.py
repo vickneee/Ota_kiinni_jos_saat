@@ -56,10 +56,15 @@ def start_game():
         g.reset_game()
         g.create_game_id()
         g.add_players(player_list)
-
+        pl = g.players()
         status = 200
-        ans = {'status': status, 'message': 'Game started successfully', 'players': players,
-            'detective1_location': det1_coord, 'detective2_location': det2_coord, 'criminal_location': criminal_data,
+        ans = {'status': status,
+               'message': 'Game started successfully',
+               'players': pl,
+            'detective1_location': det1_coord,
+               'detective2_location': det2_coord,
+               'criminal_location': criminal_data,
+
 
         }
     except Exception as e:

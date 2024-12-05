@@ -5,6 +5,7 @@ import {
   fetchRound,
   fetchGameScreenNames,
   playbanner,
+  showPlayerInfo
 } from './bannerscript.js';
 
 let map;
@@ -416,14 +417,22 @@ async function gamedata() {
 }
 
 async function gameRounds() {
-  const startBanner = document.getElementById('start-banner');
-  const playBanner = document.getElementById('play-banner');
-  const startGame = document.getElementById('karkuri');
+
   playbanner();
-  const gameData = await gamedata();
-  await fetchPlayerTickets(gameData.players[0].id);
-  await fetchRound(gameData.game_id);
-  await fetchGameScreenNames(gameData.players[0].screen_name);
+
+  for (let i = 1; i < 11; i++) {
+    const gameData = await gamedata();
+    const players = gameData.players
+    for (let i = 0; i < 2; i++) {
+      if(players[i].type === 1){
+        await showPlayerInfo(players[i].id, gameData.game_id, players[i].screen_name)
+
+      }
+    }
+    }
+  //await fetchPlayerTickets(gameData.players[0].id);
+  //await fetchRound(gameData.game_id);
+  //await fetchGameScreenNames(gameData.players[0].screen_name);
   console.log(`Player id ${gameData.players[0].id}`);
   console.log(`Game id ${gameData.game_id}`);
   console.log(`Player screen name ${gameData.players[0].screen_name}`);
