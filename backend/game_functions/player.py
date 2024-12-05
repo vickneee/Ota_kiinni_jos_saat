@@ -24,16 +24,16 @@ class Player:
                   VALUES ('{game_id}', '{self.id}')"""
         self.database.db_insert(sql)
 
-
-    def get_player_info(self):
+    @staticmethod
+    def get_player_info(name):
         sql = f"""
             SELECT player.id, player.screen_name, player.type, player.is_computer, player.location, airport.name, country.name, airport.latitude_deg, airport.longitude_deg
             FROM player
             LEFT JOIN airport ON player.location = airport.ident
             LEFT JOIN country ON airport.iso_country = country.iso_country
-            WHERE screen_name = '{self.name}'
+            WHERE screen_name = '{name}'
         """
-        result = self.database.db_query(sql)
+        result = Database().db_query(sql)
         if result:
             return {
                 "id": result[0][0],
@@ -96,18 +96,6 @@ class Player:
             }
         return {}
 
-    def show_detective_locations(self, game_id):
-        sql = f"""SELECT screen_name
-                  FROM player
-                  LEFT JOIN game_player ON player.id = game_player.player_id
-                  LEFT JOIN game on game_player.game_id = game.id
-                  WHERE game.id = '{game_id}'"""
-        result = self.database.db_query(sql)
-        if result:
-            detective_names = [row[0] for row in result[-2:]]  # Get the last two detective names
-            detective_infos = [Player(name, None, None, self.database).get_player_info() for name in detective_names]
-            return detective_infos
-        return []
 
     def update_location(self, location):
         sql = f"""

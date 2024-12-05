@@ -216,19 +216,15 @@ async function initMap() {
     },
   ];
 
-  //const gameData = await gamedata(); // Fetch game data here
-  //const playerId = gameData.players[0].id;
-  //console.log(`Player id in line 187 ${playerId}`);
-  //const recommendedAirports = await fetchRecommendedAirports(playerId);
-  addMarkersToMap(hardcodedAirports);  // Change back to recommendedAirports
+
 
   return map;
 }
 
-async function fetchRecommendedAirports(playerId) {
+async function fetchRecommendedAirports(name) {
   try {
     const response = await fetch(
-        `http://127.0.0.1:3000/api/get-recommended-airports/${playerId}`);
+        `http://127.0.0.1:3000/api/get-recommended-airports/${name}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -451,85 +447,82 @@ async function gameRounds(marker,markers) {
       }
     }
   */
-    // Add other function calls here that need to be executed in the loop
+  // Add other function calls here that need to be executed in the loop
 
 
 // Get the players id thats turn it is
-async function fetchCurrentTurn(game_id) {
-  const response = await fetch(`http://127.0.0.1:3000/api/current-turn/${game_id}`);
-  const data = await response.json();
-  return data.current_player_id;
-}
-
-// Loop when continue game is selected
-async function continueGameLoop() {
-  const gameData = JSON.parse(localStorage.getItem('gameData'));
-
-
-
-  playbanner()
-
-
-
-}
-
-
-
-
-async function send_move(player, new_location, ticket_id) {
-  try {
-    const response = await fetch('http://127.0.0.1:3000/api/play_round', {
-      method: 'POST',
-      body: JSON.stringify({
-        'player': player,
-        'new_location': new_location,
-        'ticket_id': ticket_id,
-      }),
-      headers: {
-        'Content-type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const json = await response.json();
-    console.log(json);
-  } catch (error) {
-    console.error('Error sending players:', error);
+  async function fetchCurrentTurn(game_id) {
+    const response = await fetch(`http://127.0.0.1:3000/api/current-turn/${game_id}`);
+    const data = await response.json();
+    return data.current_player_id;
   }
 
-}
+// Loop when continue game is selected
+  async function continueGameLoop() {
+    const gameData = JSON.parse(localStorage.getItem('gameData'));
+
+
+    playbanner()
+
+
+  }
+
+
+  async function send_move(player, new_location, ticket_id) {
+    try {
+      const response = await fetch('http://127.0.0.1:3000/api/play_round', {
+        method: 'POST',
+        body: JSON.stringify({
+          'player': player,
+          'new_location': new_location,
+          'ticket_id': ticket_id,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      console.log(json);
+    } catch (error) {
+      console.error('Error sending players:', error);
+    }
+
+  }
 
 
 // To test gamedata
 
-/* // Call the animation function
-        await playVideoWithAnimation();
-*/
-async function playVideoWithAnimation() {
-  const videoContainer = document.getElementById('video-container');
-  const video = document.getElementById('animation-video');
+  /* // Call the animation function
+          await playVideoWithAnimation();
+  */
+  async function playVideoWithAnimation() {
+    const videoContainer = document.getElementById('video-container');
+    const video = document.getElementById('animation-video');
 
-  // Show and animate the video container (rising up)
-  videoContainer.style.display = 'block';
-  videoContainer.classList.add('active'); // Add rising animation
-  video.play();
+    // Show and animate the video container (rising up)
+    videoContainer.style.display = 'block';
+    videoContainer.classList.add('active'); // Add rising animation
+    video.play();
 
-  // Wait for the video to finish
-  await new Promise((resolve) => {
-    video.onended = () => {
-      // Add the exit animation
-      videoContainer.classList.remove('active');
-      videoContainer.classList.add('exit'); // Start falling animation
+    // Wait for the video to finish
+    await new Promise((resolve) => {
+      video.onended = () => {
+        // Add the exit animation
+        videoContainer.classList.remove('active');
+        videoContainer.classList.add('exit'); // Start falling animation
 
-      // Wait for the animation to complete
-      setTimeout(() => {
-        videoContainer.classList.remove('exit'); // Clean up the exit class
-        videoContainer.style.display = 'none'; // Hide the video
-        resolve(); // Resolve the promise after animation
-      }, 1500); // Match this duration to the CSS transition time (1.5s)
-    };
-  });
+        // Wait for the animation to complete
+        setTimeout(() => {
+          videoContainer.classList.remove('exit'); // Clean up the exit class
+          videoContainer.style.display = 'none'; // Hide the video
+          resolve(); // Resolve the promise after animation
+        }, 1500); // Match this duration to the CSS transition time (1.5s)
+      };
+    });
+  }
 }

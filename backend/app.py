@@ -251,14 +251,19 @@ def get_current_turn(game_id):
         print("Error in /api/current-turn:", error_message)
         return jsonify({"status": "error", "message": str(e)}), 500
 
-# EIII TOIMIIII KORJAA TÄMÄ
-# @app.route('/api/get-recommended-airports/<int:player_id>', methods=['GET'])
-# def get_recommended_airports(player_id):
-#     try:
-#         recommended_airports = Airport().get_recommended_airports(player_location, tickets, player_type)
-#         return jsonify({"status": "success", "recommended_airports": recommended_airports}), 200
-#     except Exception as e:
-#         return jsonify({"status": "error", "message": str(e)}), 500
+# Get recommended airports based on the players location and ticket types
+@app.route('/api/get-recommended-airports/<name>', methods=['GET'])
+def get_recommended_airports(name):
+    try:
+        recommended_airports = Airport().get_recommended_airports(name)
+        return jsonify({"status": "success", "recommended_airports": recommended_airports}), 200
+    except Exception as e:
+        import traceback
+        error_message = traceback.format_exc()
+        print("Error in /api/getdata:", error_message)
+        status = 500
+        ans = {'status': status, 'message': 'Failed to retrieve data', 'error': str(e)}
+
 
 
 if __name__ == '__main__':

@@ -33,9 +33,11 @@ class Airport:
 
     # Get recommended airports based on the players location and ticket types
     def get_recommended_airports(self, name):
+        from backend.game_functions.tickets import Tickets
+        from backend.game_functions.player import Player
         all_airports = self.get_airports()
         all_airports_location = self.airports_location()
-        player = Player.get_players_info(name)
+        player = Player.get_player_info(name)
         player_id = player.get('id')
         player_type = player.get('type')
         player_lat_lon = all_airports_location[player['location']]
