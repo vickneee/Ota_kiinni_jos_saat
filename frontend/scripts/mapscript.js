@@ -211,19 +211,19 @@ async function initMap() {
     },
   ];
 
-  const gameData = await gamedata(); // Fetch game data here
-  const playerId = gameData.players[0].id;
-  console.log(`Player id in line 187 ${playerId}`);
-  const recommendedAirports = await fetchRecommendedAirports(playerId);
-  addMarkersToMap(hardcodedAirports);  // Change back to recommendedAirports
+  // const gameData = await gamedata(); // Fetch game data here
+  // const playerId = gameData.players[0].id;
+  // console.log(`Player id in line 187 ${playerId}`);
+  // const recommendedAirports = await fetchRecommendedAirports(playerId);
+  // addMarkersToMap(hardcodedAirports);  // Change back to recommendedAirports
 
   return map;
 }
 
-async function fetchRecommendedAirports(playerId) {
+async function fetchRecommendedAirports(name) {
   try {
     const response = await fetch(
-        `http://127.0.0.1:3000/api/get-recommended-airports/${playerId}`);
+        `http://127.0.0.1:3000/api/get-recommended-airports/${name}`,);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -433,9 +433,9 @@ async function gameRounds() {
   //await fetchPlayerTickets(gameData.players[0].id);
   //await fetchRound(gameData.game_id);
   //await fetchGameScreenNames(gameData.players[0].screen_name);
-  console.log(`Player id ${gameData.players[0].id}`);
-  console.log(`Game id ${gameData.game_id}`);
-  console.log(`Player screen name ${gameData.players[0].screen_name}`);
+  // console.log(`Player id ${gameData.players[0].id}`);
+  // console.log(`Game id ${gameData.game_id}`);
+  // console.log(`Player screen name ${gameData.players[0].screen_name}`);
 }
 
 /*
