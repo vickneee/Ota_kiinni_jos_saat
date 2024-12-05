@@ -107,6 +107,18 @@ class Game:
 
 
 
+    # Method to get player id whose turn it is
+    def get_current_turn(self, game_id):
+        sql = f"""
+            SELECT player_id
+            FROM game
+            WHERE id = {game_id}
+        """
+        result = self.database.db_query(sql)
+        if result:
+            return result[0][0]
+        return None
+
 
     #Method to fetch all games from DB
     def fetch_saved_games(self):
@@ -146,6 +158,7 @@ class Game:
 
         except Exception as e:
             raise Exception(f"Error fetching saved games: {str(e)}")
+
 
 
 

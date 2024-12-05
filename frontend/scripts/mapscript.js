@@ -394,6 +394,7 @@ function resumeData() {
       console.error('No game data found in localStorage');
     }
   });
+  return resumeData()
 }
 
 async function sendIfComp(players) {
@@ -453,7 +454,25 @@ async function gameRounds(marker,markers) {
     // Add other function calls here that need to be executed in the loop
 
 
+// Get the players id thats turn it is
+async function fetchCurrentTurn(game_id) {
+  const response = await fetch(`http://127.0.0.1:3000/api/current-turn/${game_id}`);
+  const data = await response.json();
+  return data.current_player_id;
 }
+
+// Loop when continue game is selected
+async function continueGameLoop() {
+  const gameData = JSON.parse(localStorage.getItem('gameData'));
+
+
+
+  playbanner()
+
+
+
+}
+
 
 
 

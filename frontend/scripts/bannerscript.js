@@ -43,18 +43,7 @@ export function displayBanner(firstPlayer) {
     playBanner.style.display = 'none'
 //h
 }
-/*
-export function displayBanner(firstPlayer, startBanner, playBanner, startGame) {
-    if (firstPlayer && firstPlayer.type === 0 && firstPlayer.is_computer === 0) {
-        startGame.textContent = `${firstPlayer.name}`;
-        startBanner.style.display = 'table';
-        playBanner.style.display = 'none';
-    } else {
-        startBanner.style.display = 'table';
-        playBanner.style.display = 'none';
-    }
-}
-*/
+
 // Fetch player tickets
 export function fetchPlayerTickets(playerId) {
     const potkurikone = document.getElementById('potkurikone');
