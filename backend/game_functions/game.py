@@ -31,8 +31,7 @@ class Game:
         self.round = 0
 
 
-    def players(self):
-        return self.players
+
 
     def insert_round(self):
         sql = f"""

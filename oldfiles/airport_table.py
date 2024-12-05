@@ -47,13 +47,13 @@ def get_recommended_airports(name):
     from oldfiles.tickets_table import player_tickets
     from oldfiles.insert_rounds import get_round
 
-    all_airports = get_airports()
-    player = get_players_info(name)
+    all_airports = self.get_airports()
+    player = Player.get_players_info(name)
     player_id = player.get('id')
     player_type = player.get('type')
     round = get_round(player_id)
 
-    tickets = player_tickets(player_id)
+    tickets = Tickets().player_tickets(player_id)
     all_airports_location = airports_location()
     player_location = all_airports_location[player['location']]
     airport_distances = {}

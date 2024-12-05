@@ -175,12 +175,17 @@ async function initMap() {
       title: ticketType,
     });
     markers.push(marker);
+    /*
     let players = playerData();
-    if (players[0].is_computer === 1) {
+    let playersSent = false;
+    if (players[0].is_computer === 1 && !playersSent) {
       await sendIfComp(players);
+      playersSent = true
     } else {
       await startingPoint(marker, markers);
-    }
+    }*/
+    await gameRounds(marker,markers)
+
   }
 
   // Add a hardcoded marker to test addMarkersToMap
@@ -211,10 +216,10 @@ async function initMap() {
     },
   ];
 
-  const gameData = await gamedata(); // Fetch game data here
-  const playerId = gameData.players[0].id;
-  console.log(`Player id in line 187 ${playerId}`);
-  const recommendedAirports = await fetchRecommendedAirports(playerId);
+  //const gameData = await gamedata(); // Fetch game data here
+  //const playerId = gameData.players[0].id;
+  //console.log(`Player id in line 187 ${playerId}`);
+  //const recommendedAirports = await fetchRecommendedAirports(playerId);
   addMarkersToMap(hardcodedAirports);  // Change back to recommendedAirports
 
   return map;
@@ -305,6 +310,12 @@ function getPinElement(PinElement, type) {
   }
 }
 
+async function gamedata() {
+  const response = await fetch('http://127.0.0.1:3000/api/getdata');
+  const data = await response.json();
+  return data;
+}
+
 async function startingPoint(marker, markers) {
   const {event} = await google.maps.importLibrary('core');
   google.maps.event.addListener(marker, 'click', async () => {
@@ -325,8 +336,11 @@ async function startingPoint(marker, markers) {
         res.detective2_location[0].longitude);
 
     markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
-    await gameRounds();
-
+    const gameData = await gamedata()
+    const playersgame = gameData.players
+    playbanner();
+    await showPlayerInfo(playersgame[0].id, gameData.game_id, playersgame[0].screen_name);
+    return gameData
   });
 }
 
@@ -399,10 +413,13 @@ async function sendIfComp(players) {
     }
 
     const json = await response.json();
-    console.log(json);
+    console.log(json)
+
   } catch (error) {
     console.error('Error sending players:', error);
   }
+  const gameData = await gamedata()
+  return gameData
 }
 
 function playerData() {
@@ -410,49 +427,35 @@ function playerData() {
     return players;
 }
 
-async function gamedata() {
-  const response = await fetch('http://127.0.0.1:3000/api/getdata');
-  const data = await response.json();
-  return data;
-}
 
-async function gameRounds() {
+let playerssent = false
+async function gameRounds(marker,markers) {
+  let gamedata;
+  const playerdata = playerData();
+  if (playerdata[0].is_computer === 1 && !playerssent) {
+    gamedata = await sendIfComp(playerdata);
+    playerssent = true
+  } else {
+    gamedata = startingPoint(marker, markers)
+  }
+  const gameid = gamedata.game_id
+  const players = gamedata.players
 
-  playbanner();
-
+  /*
   for (let i = 1; i < 11; i++) {
-    const gameData = await gamedata();
-    const players = gameData.players
-    for (let i = 0; i < 2; i++) {
-      if(players[i].type === 1){
-        await showPlayerInfo(players[i].id, gameData.game_id, players[i].screen_name)
+    for (let j = 0; j < players.length; j++) {
+      if (players[j].type === 1 && !firstHumanPlayerFound) {
 
+        firstHumanPlayerFound = true;
       }
     }
-    }
-  //await fetchPlayerTickets(gameData.players[0].id);
-  //await fetchRound(gameData.game_id);
-  //await fetchGameScreenNames(gameData.players[0].screen_name);
-  console.log(`Player id ${gameData.players[0].id}`);
-  console.log(`Game id ${gameData.game_id}`);
-  console.log(`Player screen name ${gameData.players[0].screen_name}`);
+  */
+    // Add other function calls here that need to be executed in the loop
+
+
 }
 
-/*
-  players.sort((a, b) => a.id - b.id);
-  console.log(players);
 
-  let round = 1;
-  const p_list = [];
-  for (let p of players) {
-    p_list.push(p.name);
-  }
-  for (let i = 1; i < 11; i++) {
-    for (let i = 0; i < 2; i++) {
-      await send_move(player, new_location, ticket_id);
-    }
-}
-*/
 
 async function send_move(player, new_location, ticket_id) {
   try {
@@ -480,13 +483,6 @@ async function send_move(player, new_location, ticket_id) {
 
 }
 
-async function game_rounds(map, players) {
-  const p_list = [];
-  for (let p of players) {
-    p_list.push(p);
-  }
-  console.log(p_list);
-}
 
 // To test gamedata
 
