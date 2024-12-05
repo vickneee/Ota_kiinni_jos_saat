@@ -1,4 +1,5 @@
 import traceback
+from crypt import methods
 
 from flask import Flask, jsonify, Response, request
 from flask_cors import CORS
@@ -56,11 +57,11 @@ def start_game():
         g.reset_game()
         g.create_game_id()
         g.add_players(player_list)
-        pl = g.players()
+        #pl = g.players()
         status = 200
         ans = {'status': status,
                'message': 'Game started successfully',
-               'players': pl,
+               'players': players,
             'detective1_location': det1_coord,
                'detective2_location': det2_coord,
                'criminal_location': criminal_data,
@@ -233,6 +234,22 @@ def resume_game():
 
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
+
+@app.route('/api/current-turn/<int:game_id>', methods=['GET'])
+def get_current_turn(game_id):
+    try:
+        current_turn = g.get_current_turn(game_id)
+
+        if current_turn:
+            return jsonify({"status": "success", "current_player_id": current_turn}), 200
+        else:
+            return jsonify({"status": "error", "message": "Game not found"}), 404
+
+    except Exception as e:
+        import traceback
+        error_message = traceback.format_exc()
+        print("Error in /api/current-turn:", error_message)
+        return jsonify({"status": "error", "message": str(e)}), 500
 
 # EIII TOIMIIII KORJAA TÄMÄ
 # @app.route('/api/get-recommended-airports/<int:player_id>', methods=['GET'])

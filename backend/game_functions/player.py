@@ -160,7 +160,8 @@ class Player:
 
     @staticmethod
     def get_game_players(game_id):
-        sql = f"""SELECT player.screen_name,player.id,player.location FROM player
+        sql = f"""SELECT player.screen_name, player.id, player.location, player.type, player.is_computer
+                    FROM player
                     left join game_player on game_player.player_id = player.id
                     left join game on game.id = game_player.game_id
                     where game.id = '{game_id}'
@@ -171,7 +172,9 @@ class Player:
             {
                 "screen_name": row[0],
                 "id": row[1],
-                "location": row[2]
+                "location": row[2],
+                "type": row[3],
+                "is_computer": row[4]
             }
             for row in result
         ]

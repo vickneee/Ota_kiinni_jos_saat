@@ -212,9 +212,9 @@ async function initMap() {
   ];
 
   const gameData = await gamedata(); // Fetch game data here
-  const playerId = gameData.players[0].id;
-  console.log(`Player id in line 187 ${playerId}`);
-  const recommendedAirports = await fetchRecommendedAirports(playerId);
+  //const playerId = gameData.players[0].id;
+  //console.log(`Player id in line 187 ${playerId}`);
+  //const recommendedAirports = await fetchRecommendedAirports(playerId);
   addMarkersToMap(hardcodedAirports);  // Change back to recommendedAirports
 
   return map;
@@ -380,6 +380,7 @@ function resumeData() {
       console.error('No game data found in localStorage');
     }
   });
+  return resumeData()
 }
 
 async function sendIfComp(players) {
@@ -438,21 +439,26 @@ async function gameRounds() {
   console.log(`Player screen name ${gameData.players[0].screen_name}`);
 }
 
-/*
-  players.sort((a, b) => a.id - b.id);
-  console.log(players);
 
-  let round = 1;
-  const p_list = [];
-  for (let p of players) {
-    p_list.push(p.name);
-  }
-  for (let i = 1; i < 11; i++) {
-    for (let i = 0; i < 2; i++) {
-      await send_move(player, new_location, ticket_id);
-    }
+// Get the players id thats turn it is
+async function fetchCurrentTurn(game_id) {
+  const response = await fetch(`http://127.0.0.1:3000/api/current-turn/${game_id}`);
+  const data = await response.json();
+  return data.current_player_id;
 }
-*/
+
+// Loop when continue game is selected
+async function continueGameLoop() {
+  const gameData = JSON.parse(localStorage.getItem('gameData'));
+
+
+
+  playbanner()
+
+
+
+}
+
 
 async function send_move(player, new_location, ticket_id) {
   try {
