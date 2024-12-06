@@ -7,7 +7,7 @@ import {
   playbanner,
   showPlayerInfo
 } from './bannerscript.js';
-
+let criminalMarker, etsijaMarker1, etsijaMarker2;
 let map;
 
 async function fetchEnv() {
@@ -184,37 +184,14 @@ async function initMap() {
     } else {
       await startingPoint(marker, markers);
     }*/
-    await gameRounds(marker,markers)
+    await Promise.all(markers.map(marker => marker));
+
+
 
   }
 
-  // Add a hardcoded marker to test addMarkersToMap
-  const hardcodedAirports = [
-    {
-      latitude: 42.7128,
-      longitude: 34.0060,
-      name: 'Test Airport Potkurikone',
-      ticketType: 'potkurikone',
-    },
-    {
-      latitude: 34.0522,
-      longitude: 18.2437,
-      name: 'Test Airport Matkustajakone',
-      ticketType: 'matkustajakone',
-    },
-    {
-      latitude: 60.5074,
-      longitude: -0.1278,
-      name: 'Test Airport Yksityiskone',
-      ticketType: 'yksityiskone',
-    },
-    {
-      latitude: 55.8566,
-      longitude: 20.3522,
-      name: 'Test Airport Default Unknown',
-      ticketType: 'unknown',
-    },
-  ];
+
+  await game(markers[0],markers)
 
 
 
@@ -237,15 +214,16 @@ async function fetchRecommendedAirports(name) {
 }
 
 function addMarkersToMap(recommendedAirports) {
-  recommendedAirports.forEach(async (airport) => {
+  let markers = []
+  Object.values(recommendedAirports).forEach(async (airport) => {
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
     const {PinElement} = await google.maps.importLibrary('marker');
 
-    const pinType = determinePinType(airport.ticketType);
+    const pinType = determinePinType(airport.ticket_type);
 
     const pinElement = new PinElement({
       background: pinType, // Customize the pin color as needed
-      glyphColor: airport.ticketType === 'unknown' ? '#23245c' : '#C49339',
+      glyphColor: airport.ticket_type === 'unknown' ? '#23245c' : '#C49339',
       borderColor: '#C49339',
     });
 
@@ -253,10 +231,14 @@ function addMarkersToMap(recommendedAirports) {
       map: map,
       position: {lat: airport.latitude, lng: airport.longitude},
       content: pinElement.element,
-      title: airport.name,
+      title: airport.icao,
     });
+    marker.pinType = pinType;
+    markers.push(marker)
   });
+  return markers
 }
+
 
 function determinePinType(ticketType) {
   // Define your criteria to determine the pin type based on the ticket type
@@ -314,29 +296,35 @@ async function gamedata() {
 
 async function startingPoint(marker, markers) {
   const {event} = await google.maps.importLibrary('core');
-  google.maps.event.addListener(marker, 'click', async () => {
-    let coordinates = {
-      'latitude': marker.position.lat,
-      'longitude': marker.position.lng,
-    };
-    let selected = marker.title;
-    let players = playerData();
-    console.log('Sending data:', {players, coordinates, selected});
-    const res = await sendPlayers(players, coordinates, selected);
-    console.log(res.detective1_location[0].latitude);
+  return new Promise((resolve, reject) => {
+    google.maps.event.addListener(marker, 'click', async () => {
+      try{
+        let coordinates = {
+          'latitude': marker.position.lat,
+          'longitude': marker.position.lng,
+        };
+        let selected = marker.title;
+        let players = playerData();
+        console.log('Sending data:', {players, coordinates, selected});
+        const res = await sendPlayers(players, coordinates, selected);
+        console.log(res.detective1_location[0].latitude);
 
-    await createCriminalMarker(map, marker.position.lat, marker.position.lng);
-    await createEtsijaMarker(map, res.detective1_location[0].latitude,
-        res.detective1_location[0].longitude);
-    await createEtsija2Marker(map, res.detective2_location[0].latitude,
-        res.detective2_location[0].longitude);
+      criminalMarker = createCriminalMarker(map, marker.position.lat, marker.position.lng);
+      etsijaMarker1 = createEtsijaMarker(map, res.detective1_location[0].latitude,
+          res.detective1_location[0].longitude);
+      etsijaMarker2 = createEtsija2Marker(map, res.detective2_location[0].latitude,
+          res.detective2_location[0].longitude);
 
-    markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
-    const gameData = await gamedata()
-    const playersgame = gameData.players
-    playbanner();
-    await showPlayerInfo(playersgame[0].id, gameData.game_id, playersgame[0].screen_name);
-    return gameData
+      markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
+      const gameData = await gamedata()
+      const playersgame = gameData.players
+      playbanner();
+      await showPlayerInfo(playersgame[0].id, gameData.game_id, playersgame[0].screen_name);
+      resolve(gameData);
+      }catch(error){
+        reject(error);
+      }
+     });
   });
 }
 
@@ -424,51 +412,7 @@ function playerData() {
     return players;
 }
 
-
-let playerssent = false
-async function gameRounds(marker,markers) {
-  let gamedata;
-  const playerdata = playerData();
-  if (playerdata[0].is_computer === 1 && !playerssent) {
-    gamedata = await sendIfComp(playerdata);
-    playerssent = true
-  } else {
-    gamedata = startingPoint(marker, markers)
-  }
-  const gameid = gamedata.game_id
-  const players = gamedata.players
-
-  /*
-  for (let i = 1; i < 11; i++) {
-    for (let j = 0; j < players.length; j++) {
-      if (players[j].type === 1 && !firstHumanPlayerFound) {
-
-        firstHumanPlayerFound = true;
-      }
-    }
-  */
-  // Add other function calls here that need to be executed in the loop
-
-
-// Get the players id thats turn it is
-  async function fetchCurrentTurn(game_id) {
-    const response = await fetch(`http://127.0.0.1:3000/api/current-turn/${game_id}`);
-    const data = await response.json();
-    return data.current_player_id;
-  }
-
-// Loop when continue game is selected
-  async function continueGameLoop() {
-    const gameData = JSON.parse(localStorage.getItem('gameData'));
-
-
-    playbanner()
-
-
-  }
-
-
-  async function send_move(player, new_location, ticket_id) {
+async function send_move(player, new_location, ticket_id) {
     try {
       const response = await fetch('http://127.0.0.1:3000/api/play_round', {
         method: 'POST',
@@ -488,11 +432,116 @@ async function gameRounds(marker,markers) {
 
       const json = await response.json();
       console.log(json);
+      return json
     } catch (error) {
       console.error('Error sending players:', error);
     }
 
   }
+
+async function moveListener(name,round,type){
+  const recommended = await fetchRecommendedAirports(name)
+  const markers = await addMarkersToMap(recommended)
+  const {event} = await google.maps.importLibrary('core');
+  let ticketid;
+  markers.forEach(marker => {
+    google.maps.event.addListener(marker,'click',async () =>{
+      if (marker.pinType === 'red'){
+        ticketid = 1
+      }else if(marker.pinType === 'blue'){
+        ticketid = 2
+      }else{
+        ticketid = 3
+      }
+      await send_move(name,marker.icao,ticketid)
+
+      markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
+      return marker.position
+    })
+  })
+
+
+
+}
+
+
+let playerssent = false
+async function game(marker, markers) {
+
+
+    const playerdata = playerData();
+    console.log(playerdata)
+    if (playerdata[0].is_computer === 1 && !playerssent) {
+      const res = await sendIfComp(playerdata);
+      console.log(res)
+      /*
+      const res = await sendIfComp(playerdata);
+      playerssent = true;
+      criminalMarker = await createCriminalMarker(map, res.criminal_coord.latitude, res.criminal_coord.longitude);
+      etsijaMarker1 = await createEtsijaMarker(map, res.detective1_location[0].latitude,
+          res.detective1_location[0].longitude);
+      etsijaMarker2 = await createEtsija2Marker(map, res.detective2_location[0].latitude,
+          res.detective2_location[0].longitude);
+      */
+    } else {
+      await startingPoint(marker, markers);
+    }
+    await gameRounds();
+
+}
+  // Add other function calls here that need to be executed in the loop
+  //
+async function gameRounds(){
+  try{
+    const gameData = await gamedata()
+    const gameid = gameData.game_id
+    const players = gameData.players
+
+
+    for (let i = 1; i < 11; i++) {
+      for (let j = 0; j < players.length; j++) {
+        if (players[j].is_computer === 0){
+          await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
+          const move = await moveListener(players[j].screen_name)
+          if(j === 0){
+            criminalMarker = createCriminalMarker(map, move.lat, move.lng);
+          }else if(j === 1){
+            etsijaMarker1 = createEtsijaMarker(map,move.lat, move.lng)
+          }else{
+            etsijaMarker2 = createEtsija2Marker(map,move.lat, move.lng)
+          }
+        }else{
+          await send_move(players[j],0,0)
+        }
+    }
+    }
+
+  }catch (err){
+    console.log(err)
+  }
+
+
+}
+
+// Get the players id thats turn it is
+  async function fetchCurrentTurn(game_id) {
+    const response = await fetch(`http://127.0.0.1:3000/api/current-turn/${game_id}`);
+    const data = await response.json();
+    return data.current_player_id;
+  }
+
+// Loop when continue game is selected
+  async function continueGameLoop() {
+    const gameData = JSON.parse(localStorage.getItem('gameData'));
+
+
+    playbanner()
+
+
+  }
+
+
+
 
 
 // To test gamedata
@@ -524,5 +573,4 @@ async function gameRounds(marker,markers) {
         }, 1500); // Match this duration to the CSS transition time (1.5s)
       };
     });
-  }
 }

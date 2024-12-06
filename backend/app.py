@@ -1,5 +1,5 @@
 import traceback
-from crypt import methods
+
 
 from flask import Flask, jsonify, Response, request
 from flask_cors import CORS
@@ -101,9 +101,7 @@ def start_game_ai():
 
         status = 200
         ans = {'status': status, 'message': 'Game started successfully', 'players': player_list,
-            'detective1_location': det1_coord, 'detective2_location': det2_coord, 'criminal_location': criminal_icao,
-
-        }
+            'detective1_location': det1_coord, 'detective2_location': det2_coord, 'criminal_coord': criminal_coord      }
     except Exception as e:
         import traceback
         error_message = traceback.format_exc()
@@ -177,7 +175,7 @@ def game_screen_names(game_id):
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
-@app.route('/api/play-round', methods=['POST'])
+@app.route('/api/play_round', methods=['POST'])
 def play_round():
     try:
         data = request.json

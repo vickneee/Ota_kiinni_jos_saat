@@ -55,19 +55,19 @@ class Airport:
         # Add recommended airports for each ticket type
         if 'potkurikone' in tickets:
             for key, value in sorted_distances[:2]:  # Limit to first 2
-                recommended[key] = {"name": all_airports[key]['name'], "country": [key]['country'],
-                                    "distance": value, "ticket_type": 'potkurikone'}
-
+                recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
+                                    "distance": value, "ticket_type": 'potkurikone', "latitude": all_airports[key][
+                        'latitude'], "longitude": all_airports[key]['longitude'], "icao":key}
         if 'matkustajakone' in tickets:
             for key, value in sorted_distances[2:4]:  # Next 2
-                recommended[key] = {"name": all_airports[key]['name'], "country": [key]['country'],
-                                    "distance": value, "ticket_type": 'matkustajakone'}
-
+                recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
+                                    "distance": value, "ticket_type": 'matkustajakone', "latitude": all_airports[key][
+                        'latitude'], "longitude": all_airports[key]['longitude'], "icao":key}
         if 'yksityiskone' in tickets:
             for key, value in sorted_distances[-2:]:  # Last 2 airports
-                recommended[key] = {"name": all_airports[key]['name'], "country": [key]['country'],
-                                    "distance": value, "ticket_type": 'yksityiskone'}
-
+                recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
+                                    "distance": value, "ticket_type": 'yksityiskone', "latitude": all_airports[key][
+                        'latitude'], "longitude": all_airports[key]['longitude'], "icao":key}
         return recommended
 
     # Find two farthest airports from players location
