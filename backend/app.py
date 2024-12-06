@@ -189,8 +189,11 @@ def play_round():
 
         }
     except Exception as e:
+        import traceback
+        error_message = traceback.format_exc()
+        print("Error in /api/play_round:", error_message)
         status = 500
-        ans = {'status': status, 'message': 'Failed to make move', 'error': str(e)}
+        ans = {'status': status, 'message': 'Failed to retrieve data', 'error': str(e)}
 
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")

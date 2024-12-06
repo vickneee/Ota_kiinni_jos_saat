@@ -211,47 +211,88 @@ async function initMap() {
 
 async function fetchRecommendedAirports(name) {
   try {
+    const cacheBuster = new Date().getTime(); // Generate a unique timestamp
     const response = await fetch(
-        `http://127.0.0.1:3000/api/get-recommended-airports/${name}`);
+      `http://127.0.0.1:3000/api/get-recommended-airports/${name}?cb=${cacheBuster}`
+    );
+    console.log(`Fetching recommended airports for: ${name}`);
+    console.log(`Request URL: http://127.0.0.1:3000/api/get-recommended-airports/${name}?cb=${cacheBuster}`);
+
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
+
     const data = await response.json();
-    return data.recommended_airports;
+    console.log(`Response data: ${JSON.stringify(data)}`);
+
+    if (data && data.recommended_airports) {
+      console.log(`Recommended airports: ${JSON.stringify(data.recommended_airports)}`);
+      return data.recommended_airports;
+    } else {
+      console.warn('No recommended airports found in the response.');
+      return [];
+    }
   } catch (error) {
     console.error('Error fetching recommended airports:', error);
     return [];
   }
 }
 
-async function addMarkersToMap(recommendedAirports) {
-  let markers = []
-  let markersdata = []
-  for (const airport of Object.values(recommendedAirports)) {
-    const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
-    const {PinElement} = await google.maps.importLibrary('marker');
+/*
+async function fetchRecommendedAirports(name) {
+  try {
+    const response = await fetch(
+        `http://127.0.0.1:3000/api/get-recommended-airports/${name}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    console.log(data)
+    console.log(name)
+    return data.recommended_airports;
 
-    const pinType = determinePinType(airport.ticket_type);
-
-    const pinElement = new PinElement({
-      background: pinType, // Customize the pin color as needed
-      glyphColor: airport.ticket_type === 'unknown' ? '#23245c' : '#C49339',
-      borderColor: '#C49339',
-    });
-
-    const marker = new AdvancedMarkerElement({
-      map: map,
-      position: {lat: airport.latitude, lng: airport.longitude},
-      content: pinElement.element,
-      title: airport.icao,
-    });
-
-    marker.pinType = pinType;
-    markers.push(marker)
-    markersdata.push({'position':marker.position,'title':marker.title})
+  } catch (error) {
+    console.error('Error fetching recommended airports:', error);
+    return [];
   }
-  console.log(markersdata)
-  return {markers,markersdata}
+}
+
+
+ */
+function addMarkersToMap(recommendedAirports) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let markers = [];
+      let markersdata = [];
+      for (const airport of Object.values(recommendedAirports)) {
+        const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
+        const {PinElement} = await google.maps.importLibrary('marker');
+
+        const pinType = determinePinType(airport.ticket_type);
+
+        const pinElement = new PinElement({
+          background: pinType, // Customize the pin color as needed
+          glyphColor: airport.ticket_type === 'unknown' ? '#23245c' : '#C49339',
+          borderColor: '#C49339',
+        });
+
+        const marker = new AdvancedMarkerElement({
+          map: map,
+          position: {lat: airport.latitude, lng: airport.longitude},
+          content: pinElement.element,
+          title: airport.icao,
+        });
+
+        marker.pinType = pinType;
+        markers.push(marker);
+        markersdata.push({'position': marker.position, 'title': marker.title});
+      }
+      console.log(markersdata);
+      resolve({markers, markersdata});
+    } catch (error) {
+      reject(error);
+    }
+  });
 }
 
 
@@ -491,7 +532,7 @@ async function moveListener(name,round,type){
 
 }
 */
-async function moveListener(name, round, type) {
+async function moveListener(name) {
   console.log('move');
   const recommended = await fetchRecommendedAirports(name);
   console.log(recommended);
@@ -518,8 +559,9 @@ async function moveListener(name, round, type) {
           ticketid = 3;
         }
 
-        // await send_move(name, marker.icao, ticketid);
+        const move = await send_move(name, markerData.title, ticketid);
         console.log(markerData);
+        console.log(move)
         markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
         resolve(markerData);
       });
@@ -534,11 +576,12 @@ async function gameRounds(){
     const gameData = await gamedata()
     const gameid = gameData.game_id
     const players = gameData.players
-
+    console.log(players)
 
     for (let i = 1; i < 11; i++) {
       for (let j = 0; j < players.length; j++) {
         if (players[j].is_computer === 0){
+          console.log(players[j].screen_name)
           await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
           const move = await moveListener(players[j].screen_name)
           console.log(move)
