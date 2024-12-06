@@ -163,7 +163,7 @@ async function initMap() {
   const locations = data.locations;
 
   const markers = [];
-  const markersdata = []
+  const markersdata = [];
   for (const [ticketType, coords] of Object.entries(locations)) {
     const pinType = determinePinType(ticketType);// Determine the pin type based on the ticket type
     const pinElement = getPinElement(PinElement, pinType);
@@ -174,8 +174,8 @@ async function initMap() {
       content: pinElement.element,
       title: ticketType,
     });
-    markers.push(marker)
-    markersdata.push({'position':marker.position,'title':marker.title});
+    markers.push(marker);
+    markersdata.push({'position': marker.position, 'title': marker.title});
     /*
     let players = playerData();
     let playersSent = false;
@@ -187,19 +187,19 @@ async function initMap() {
     }*/
     await Promise.all(markers.map(marker => marker));
 
-  //await game(markers[0],markers)
+    //await game(markers[0],markers)
 
   }
-  console.log(markersdata[0].position.lat)
-    let players = playerData();
+  console.log(markersdata[0].position.lat);
+  let players = playerData();
 
-    if (players[0].is_computer === 1 && !playersSent) {
-      await sendIfComp(players);
-      playersSent = true
-    } else {
-      await startingPoint(markersdata,markers);
-      await gameRounds()
-    }
+  if (players[0].is_computer === 1 && !playersSent) {
+    await sendIfComp(players);
+    playersSent = true;
+  } else {
+    await startingPoint(markersdata, markers);
+    await gameRounds();
+  }
 
 
 
@@ -213,7 +213,7 @@ async function fetchRecommendedAirports(name) {
   try {
     const cacheBuster = new Date().getTime(); // Generate a unique timestamp
     const response = await fetch(
-      `http://127.0.0.1:3000/api/get-recommended-airports/${name}?cb=${cacheBuster}`
+        `http://127.0.0.1:3000/api/get-recommended-airports/${name}?cb=${cacheBuster}`,
     );
     console.log(`Fetching recommended airports for: ${name}`);
     console.log(`Request URL: http://127.0.0.1:3000/api/get-recommended-airports/${name}?cb=${cacheBuster}`);
@@ -350,8 +350,8 @@ async function gamedata() {
   return data;
 }
 
-async function startingPoint(markersdata,markers) {
-  console.log(markersdata[0])
+async function startingPoint(markersdata, markers) {
+  console.log(markersdata[0]);
   const {event} = await google.maps.importLibrary('core');
   return new Promise((resolve, reject) => {
     markers.forEach((marker, index) => {
@@ -436,7 +436,7 @@ function resumeData() {
       console.error('No game data found in localStorage');
     }
   });
-  return resumeData()
+  return resumeData();
 }
 
 async function sendIfComp(players) {
@@ -456,44 +456,44 @@ async function sendIfComp(players) {
     }
 
     const json = await response.json();
-    console.log(json)
+    console.log(json);
 
   } catch (error) {
     console.error('Error sending players:', error);
   }
-  const gameData = await gamedata()
-  return gameData
+  const gameData = await gamedata();
+  return gameData;
 }
 
 function playerData() {
-    const players = JSON.parse(localStorage.getItem('players'));
-    return players;
+  const players = JSON.parse(localStorage.getItem('players'));
+  return players;
 }
 
 async function send_move(player, new_location, ticket_id) {
-    try {
-      const response = await fetch('http://127.0.0.1:3000/api/play_round', {
-        method: 'POST',
-        body: JSON.stringify({
-          'player': player,
-          'new_location': new_location,
-          'ticket_id': ticket_id,
-        }),
-        headers: {
-          'Content-type': 'application/json',
-        },
-      });
+  try {
+    const response = await fetch('http://127.0.0.1:3000/api/play_round', {
+      method: 'POST',
+      body: JSON.stringify({
+        'player': player,
+        'new_location': new_location,
+        'ticket_id': ticket_id,
+      }),
+      headers: {
+        'Content-type': 'application/json',
+      },
+    });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const json = await response.json();
-      console.log(json);
-      return json
-    } catch (error) {
-      console.error('Error sending players:', error);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+
+    const json = await response.json();
+    console.log(json);
+    return json;
+  } catch (error) {
+    console.error('Error sending players:', error);
+  }
 
   }
 /*
@@ -561,41 +561,52 @@ async function moveListener(name) {
 
         const move = await send_move(name, markerData.title, ticketid);
         console.log(markerData);
-        console.log(move)
-        markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
-        resolve(markerData);
+        console.log(move);
+
+
+        // Clear all recommended markers from the map
+        markers.forEach((marker) => {
+          google.maps.event.clearListeners(marker, 'click');
+          marker.setMap(null);
+        });
+
+        // markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
+        resolve(markerData); // Resolve with the clicked marker data
       });
     });
   });
 }
 
-  // Add other function calls here that need to be executed in the loop
-  //
-async function gameRounds(){
+// Add other function calls here that need to be executed in the loop
+//
+async function gameRounds() {
 
-    const gameData = await gamedata()
-    const gameid = gameData.game_id
-    const players = gameData.players
-    console.log(players)
+  const gameData = await gamedata();
+  const gameid = gameData.game_id;
+  const players = gameData.players;
+  console.log(players);
 
-    for (let i = 1; i < 11; i++) {
-      for (let j = 0; j < players.length; j++) {
-        if (players[j].is_computer === 0){
-          console.log(players[j].screen_name)
-          await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
-          const move = await moveListener(players[j].screen_name)
-          console.log(move)
+  for (let i = 1; i < 11; i++) {
+    for (let j = 0; j < players.length; j++) {
+      if (players[j].is_computer === 0) {
+        console.log(players[j].screen_name);
+        await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
+        const move = await moveListener(players[j].screen_name);
+        console.log(move);
 
-          if(j === 0){
-            criminalMarker = createCriminalMarker(map, move.position.lat, move.position.lng);
-          }else if(j === 1){
-            etsijaMarker1 = createEtsijaMarker(map,move.position.lat, move.position.lng)
-          }else{
-            etsijaMarker2 = createEtsija2Marker(map,move.position.lat, move.position.lng)
-          }
-        }else{
-          await send_move(players[j],0,0)
+        if (j === 0) {
+          criminalMarker = createCriminalMarker(map, move.position.lat,
+              move.position.lng);
+        } else if (j === 1) {
+          etsijaMarker1 = createEtsijaMarker(map, move.position.lat,
+              move.position.lng);
+        } else {
+          etsijaMarker2 = createEtsija2Marker(map, move.position.lat,
+              move.position.lng);
         }
+      } else {
+        await send_move(players[j], 0, 0);
+      }
     }
 
 
@@ -605,15 +616,16 @@ async function gameRounds(){
 }
 
 // Get the players id thats turn it is
-  async function fetchCurrentTurn(game_id) {
-    const response = await fetch(`http://127.0.0.1:3000/api/current-turn/${game_id}`);
-    const data = await response.json();
-    return data.current_player_id;
-  }
+async function fetchCurrentTurn(game_id) {
+  const response = await fetch(
+      `http://127.0.0.1:3000/api/current-turn/${game_id}`);
+  const data = await response.json();
+  return data.current_player_id;
+}
 
 // Loop when continue game is selected
-  async function continueGameLoop() {
-    const gameData = JSON.parse(localStorage.getItem('gameData'));
+async function continueGameLoop() {
+  const gameData = JSON.parse(localStorage.getItem('gameData'));
 
 
     playbanner()
@@ -627,31 +639,31 @@ async function gameRounds(){
 
 // To test gamedata
 
-  /* // Call the animation function
-          await playVideoWithAnimation();
-  */
-  async function playVideoWithAnimation() {
-    const videoContainer = document.getElementById('video-container');
-    const video = document.getElementById('animation-video');
+/* // Call the animation function
+        await playVideoWithAnimation();
+*/
+async function playVideoWithAnimation() {
+  const videoContainer = document.getElementById('video-container');
+  const video = document.getElementById('animation-video');
 
-    // Show and animate the video container (rising up)
-    videoContainer.style.display = 'block';
-    videoContainer.classList.add('active'); // Add rising animation
-    video.play();
+  // Show and animate the video container (rising up)
+  videoContainer.style.display = 'block';
+  videoContainer.classList.add('active'); // Add rising animation
+  video.play();
 
-    // Wait for the video to finish
-    await new Promise((resolve) => {
-      video.onended = () => {
-        // Add the exit animation
-        videoContainer.classList.remove('active');
-        videoContainer.classList.add('exit'); // Start falling animation
+  // Wait for the video to finish
+  await new Promise((resolve) => {
+    video.onended = () => {
+      // Add the exit animation
+      videoContainer.classList.remove('active');
+      videoContainer.classList.add('exit'); // Start falling animation
 
-        // Wait for the animation to complete
-        setTimeout(() => {
-          videoContainer.classList.remove('exit'); // Clean up the exit class
-          videoContainer.style.display = 'none'; // Hide the video
-          resolve(); // Resolve the promise after animation
-        }, 1500); // Match this duration to the CSS transition time (1.5s)
-      };
-    });
+      // Wait for the animation to complete
+      setTimeout(() => {
+        videoContainer.classList.remove('exit'); // Clean up the exit class
+        videoContainer.style.display = 'none'; // Hide the video
+        resolve(); // Resolve the promise after animation
+      }, 1500); // Match this duration to the CSS transition time (1.5s)
+    };
+  });
 }
