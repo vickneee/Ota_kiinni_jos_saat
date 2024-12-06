@@ -224,9 +224,10 @@ async function fetchRecommendedAirports(name) {
   }
 }
 
-function addMarkersToMap(recommendedAirports) {
+async function addMarkersToMap(recommendedAirports) {
   let markers = []
-  Object.values(recommendedAirports).forEach(async (airport) => {
+  let markersdata = []
+  for (const airport of Object.values(recommendedAirports)) {
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
     const {PinElement} = await google.maps.importLibrary('marker');
 
@@ -247,8 +248,10 @@ function addMarkersToMap(recommendedAirports) {
 
     marker.pinType = pinType;
     markers.push(marker)
-  });
-  return markers
+    markersdata.push({'position':marker.position,'title':marker.title})
+  }
+  console.log(markersdata)
+  return {markers,markersdata}
 }
 
 
@@ -307,7 +310,7 @@ async function gamedata() {
 }
 
 async function startingPoint(markersdata,markers) {
-  console.log(markersdata)
+  console.log(markersdata[0])
   const {event} = await google.maps.importLibrary('core');
   return new Promise((resolve, reject) => {
     markers.forEach((marker, index) => {
@@ -452,65 +455,78 @@ async function send_move(player, new_location, ticket_id) {
     }
 
   }
-
+/*
 async function moveListener(name,round,type){
   console.log('move')
   const recommended = await fetchRecommendedAirports(name)
-  const markers = await addMarkersToMap(recommended)
+  console.log(recommended)
+  const {markers,markersdata} = await addMarkersToMap(recommended)
+  const mdata = markersdata
   const {event} = await google.maps.importLibrary('core');
   let ticketid;
-  markers.forEach(marker => {
+  let chosen = []
+  console.log(markersdata[0])
 
-    google.maps.event.addListener(marker,'click',async () =>{
-      if (marker.pinType === 'red'){
+  markers.forEach((marker,index) => {
+    const markerData = markersdata[index];
+    google.maps.event.addListener(marker, 'click', async () => {
+      if (marker.pinType === 'red') {
         ticketid = 1
-      }else if(marker.pinType === 'blue'){
+      } else if (marker.pinType === 'blue') {
         ticketid = 2
-      }else{
+      } else {
         ticketid = 3
       }
-      await send_move(name,marker.icao,ticketid)
-      console.log('movelistener')
+
+      //await send_move(name, marker.icao, ticketid)
+      chosen = markerData
+      console.log(markerData)
       markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
-      return marker
+      return markerData
     })
   })
 
 
+  //return chosen
 
 }
+*/
+async function moveListener(name, round, type) {
+  console.log('move');
+  const recommended = await fetchRecommendedAirports(name);
+  console.log(recommended);
+  const { markers, markersdata } = await addMarkersToMap(recommended);
+  const { event } = await google.maps.importLibrary('core');
+  let ticketid;
 
-
-//let playerssent = false
-async function game(marker, markers) {
-  if (playerssent) {
-    return; // Exit early if players have already been sent
-  }
-
-    const playerdata = playerData();
-    console.log(playerdata)
-    if (playerdata[0].is_computer === 1 && !playerssent) {
-      const res = await sendIfComp(playerdata);
-      console.log(res)
-      playerssent = true;
-      /*
-      const res = await sendIfComp(playerdata);
-
-      criminalMarker = await createCriminalMarker(map, res.criminal_coord.latitude, res.criminal_coord.longitude);
-      etsijaMarker1 = await createEtsijaMarker(map, res.detective1_location[0].latitude,
-          res.detective1_location[0].longitude);
-      etsijaMarker2 = await createEtsija2Marker(map, res.detective2_location[0].latitude,
-          res.detective2_location[0].longitude);
-      */
-    } else {
-
-      await startingPoint(marker, markers);
-      playerssent = true
-      console.log('pöö')
+  return new Promise((resolve, reject) => {
+    if (markersdata.length === 0) {
+      reject(new Error('No markers data available'));
+      return;
     }
-    await gameRounds();
 
+    console.log(markersdata[0]);
+
+    markers.forEach((marker, index) => {
+      const markerData = markersdata[index];
+      google.maps.event.addListener(marker, 'click', async () => {
+        if (marker.pinType === 'red') {
+          ticketid = 1;
+        } else if (marker.pinType === 'blue') {
+          ticketid = 2;
+        } else {
+          ticketid = 3;
+        }
+
+        // await send_move(name, marker.icao, ticketid);
+        console.log(markerData);
+        markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
+        resolve(markerData);
+      });
+    });
+  });
 }
+
   // Add other function calls here that need to be executed in the loop
   //
 async function gameRounds(){
@@ -526,7 +542,7 @@ async function gameRounds(){
           await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
           const move = await moveListener(players[j].screen_name)
           console.log(move)
-          /*
+
           if(j === 0){
             criminalMarker = createCriminalMarker(map, move.position.lat, move.position.lng);
           }else if(j === 1){
@@ -536,9 +552,9 @@ async function gameRounds(){
           }
         }else{
           await send_move(players[j],0,0)
-        }*/
+        }
     }
-    }
+
 
 
 }
