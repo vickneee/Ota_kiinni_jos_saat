@@ -532,8 +532,11 @@ async function moveListener(name,round,type){
 
 }
 */
+
 async function moveListener(name) {
   console.log('move');
+  const gameData = await gamedata();
+  const players = gameData.players;
   const recommended = await fetchRecommendedAirports(name);
   console.log(recommended);
   const { markers, markersdata } = await addMarkersToMap(recommended);
@@ -563,7 +566,6 @@ async function moveListener(name) {
         console.log(markerData);
         console.log(move);
 
-
         // Clear all recommended markers from the map
         markers.forEach((marker) => {
           google.maps.event.clearListeners(marker, 'click');
@@ -579,6 +581,15 @@ async function moveListener(name) {
 
 // Add other function calls here that need to be executed in the loop
 //
+// Function to remove a marker from the map and return null
+function removeMarker(marker) {
+  if (marker) {
+    marker.setMap(null); // Remove the marker from the map
+    marker = null; // Clear the reference
+  }
+  return marker; // Return the cleared marker reference
+}
+
 async function gameRounds() {
 
   const gameData = await gamedata();
@@ -595,13 +606,16 @@ async function gameRounds() {
         console.log(move);
 
         if (j === 0) {
-          criminalMarker = createCriminalMarker(map, move.position.lat,
+          criminalMarker = removeMarker(criminalMarker);
+          criminalMarker = await createCriminalMarker(map, move.position.lat,
               move.position.lng);
         } else if (j === 1) {
-          etsijaMarker1 = createEtsijaMarker(map, move.position.lat,
+          etsijaMarker1 = removeMarker(etsijaMarker1);
+          etsijaMarker1 = await createEtsijaMarker(map, move.position.lat,
               move.position.lng);
         } else {
-          etsijaMarker2 = createEtsija2Marker(map, move.position.lat,
+          etsijaMarker2 = removeMarker(etsijaMarker2);
+          etsijaMarker2 = await createEtsija2Marker(map, move.position.lat,
               move.position.lng);
         }
       } else {
@@ -615,7 +629,7 @@ async function gameRounds() {
 
 }
 
-// Get the players id thats turn it is
+// Get the players id that's turn it is
 async function fetchCurrentTurn(game_id) {
   const response = await fetch(
       `http://127.0.0.1:3000/api/current-turn/${game_id}`);
