@@ -672,8 +672,9 @@ async function resumeGame(){
 
     for (let i = round; i < 11; i++) {
       for (let j = 0; j < players.length; j++) {
-        if (players[j].is_computer === 0){
+        if (players[j].is_computer === 0) {
           await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
           const move = await moveListener(players[j].screen_name)
           console.log(move)
-
+        }
+      }
