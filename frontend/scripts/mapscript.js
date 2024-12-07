@@ -194,10 +194,8 @@ async function initMap() {
   let players = playerData();
 
   if (players[0].is_computer === 1 && !playersSent) {
-    await aistart(players)
-    await gameRounds()
+    await sendIfComp(players);
     playersSent = true;
-
   } else {
     await startingPoint(markersdata, markers);
     await gameRounds();
@@ -357,21 +355,6 @@ async function gamedata() {
   return data;
 }
 
-async function aistart(players){
-  return new Promise(async (resolve, reject) => {
-    try {
-      const res = await sendIfComp(players)
-      console.log(res)
-      criminalMarker = await createCriminalMarker(map, res.criminal_coord.latitude, res.criminal_coord.longitude);
-      etsijaMarker1 = await createEtsijaMarker(map, res.detective1_location[0].latitude, res.detective1_location[0].longitude);
-      etsijaMarker2 = await createEtsija2Marker(map, res.detective2_location[0].latitude, res.detective2_location[0].longitude);
-      resolve(res)
-    } catch (err) {
-      reject(err)
-    }
-  })
-}
-
 async function startingPoint(markersdata, markers) {
   console.log(markersdata[0]);
   const {event} = await google.maps.importLibrary('core');
@@ -479,11 +462,12 @@ async function sendIfComp(players) {
 
     const json = await response.json();
     console.log(json);
-    return json
+
   } catch (error) {
     console.error('Error sending players:', error);
   }
-
+  const gameData = await gamedata();
+  return gameData;
 }
 
 function playerData() {
@@ -491,7 +475,7 @@ function playerData() {
   return players;
 }
 
-async function send_move(player, new_location, ticket_id,is_computer) {
+async function send_move(player, new_location, ticket_id) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch('http://127.0.0.1:3000/api/play_round', {
@@ -500,7 +484,6 @@ async function send_move(player, new_location, ticket_id,is_computer) {
           'player': player,
           'new_location': new_location,
           'ticket_id': ticket_id,
-          'is_computer':is_computer
         }),
         headers: {
           'Content-type': 'application/json',
@@ -557,7 +540,7 @@ async function moveListener(name,round,type){
 }
 */
 
-async function moveListener(name,iscomp) {
+async function moveListener(name) {
   console.log('move');
   const gameData = await gamedata();
   const players = gameData.players;
@@ -586,7 +569,7 @@ async function moveListener(name,iscomp) {
           ticketid = 3;
         }
 
-        const move = await send_move(name, markerData.title, ticketid,iscomp);
+        const move = await send_move(name, markerData.title, ticketid);
         console.log(markerData);
         console.log(move);
 
@@ -613,35 +596,21 @@ function removeMarker(marker) {
   }
   return marker; // Return the cleared marker reference
 }
-/*
-function isGameOver(players) {
-  const criminal = players.find(player => player.type === 0);
-  const detectives = players.filter(player => player.type === 1);
 
-  if (!criminal) return false;
-
-  console.log('Criminal Location:', criminal.location);
-  console.log('Detective Location:', detectives.location);
-
-  return detectives.some(detective => detective.location === criminal.location && detective.location.lng === criminal.location.lng);
-}
-*/
-
-// function isGameOver(players) {
-//   const criminal = players.find(player => player.type === 0);
-//   const detectives = players.filter(player => player.type === 1);
-//
-//   if (!criminal) return false;
-//
-//   console.log('Criminal Location:', criminal.location);
-//   console.log('Detective Location:', detectives.location);
-//
-//   return detectives.some(detective => detective.location === criminal.location && detective.location.lng === criminal.location.lng);
-// }
 
 async function gameRounds() {
-  console.log('moi')
+
+  console.log('Fetching game data...');
   const gameData = await gamedata();
+  console.log('Game data fetched in Game Rounds:', gameData);
+
+  if (!gameData || !gameData.game_id || !gameData.players) {
+    console.error('Invalid game data:', gameData);
+    return; // Exit if data is missing or invalid
+  }
+
+  // const gameData = await gamedata();
+  // console.log(gameData);
   const gameid = gameData.game_id;
   const players = gameData.players;
   console.log(players);
@@ -651,7 +620,7 @@ async function gameRounds() {
       if (players[j].is_computer === 0) {
         console.log(players[j].screen_name);
         await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
-        const move = await moveListener(players[j].screen_name,players[j].is_computer);
+        const move = await moveListener(players[j].screen_name);
         console.log(move);
 
         if (j === 0) {
@@ -674,36 +643,23 @@ async function gameRounds() {
           lng: move.position.lng,
           };
 
-        // Check if the game is over after every move
-        /*
-        if (isGameOver(players)) {
-          console.log('Game Over');
-          return; // Exit the function as the game is over
-        }*/
+          // Check if the game is over after every move
+          // Check if any previous player in the same round is at the same location
+          for (let k = 0; k < j; k++) { // Compare with earlier players in the same round
+            if (
+            players[k].location.lat === players[j].location.lat && players[k].location.lng === players[j].location.lng
+            ) {
+              console.log(`Players ${players[k].screen_name} and ${players[j].screen_name} are at the same location!`);
+              console.log('Game over!!!!!!!!!!!!!');
+              // Additional logic for handling players at the same location can go here
+        }
+      }
 
       } else {
-        console.log(players[j].screen_name)
-          const aimove = await send_move(players[j].screen_name, 1, 1,players[j].is_computer);
-          if(j === 0){
-            criminalMarker = removeMarker(criminalMarker);
-            criminalMarker = await createCriminalMarker(map, aimove.coords[0],aimove.coords[1]);
-          }
-          else if (j === 1){
-            etsijaMarker1 = removeMarker(etsijaMarker1);
-            etsijaMarker1 = await createEtsijaMarker(map, aimove.coords[0],aimove.coords[1]);
-          }
-          else{
-            etsijaMarker2 = removeMarker(etsijaMarker2);
-            etsijaMarker2 = await createEtsija2Marker(map, aimove.coords[0],aimove.coords[1]);
-          }
-
-          players[j].location = {
-          lat: aimove.coords[0],
-          lng: aimove.coords[1],
-          };
-        }
-
+        await send_move(players[j], 0, 0);
       }
+
+    }
   }
 }
 

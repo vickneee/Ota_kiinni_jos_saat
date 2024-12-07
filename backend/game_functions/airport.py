@@ -1,4 +1,3 @@
-
 from oldfiles.assisting_functions import haversine
 from geopy.distance import geodesic as GD
 from backend.game_functions.database import Database
@@ -31,10 +30,6 @@ class Airport:
             airports_location_dict[key] = (value['latitude'], value['longitude'])
 
         return airports_location_dict
-
-    def airports_coord(self,icao):
-        all_coord = self.airports_location()
-        return all_coord[icao]
 
     # Get recommended airports based on the players location and ticket types
     def get_recommended_airports(self, name):
@@ -98,5 +93,3 @@ class Airport:
                 farthest_airports[1] = (icao, location['name'], location['country'], location['latitude'], location['longitude'], f"{distance:.2f} km")
 
         return farthest_airports
-
-
