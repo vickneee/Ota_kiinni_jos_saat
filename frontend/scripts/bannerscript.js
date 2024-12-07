@@ -56,9 +56,9 @@ export function fetchPlayerTickets(playerId) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                potkurikone.textContent = `Potkurikone: ${data.tickets.potkurikone || 0} kpl`;
-                matkustajakone.textContent = `Matkustajakone: ${data.tickets.matkustajakone || 0} kpl`;
-                yksityiskone.textContent = `Yksityiskone: ${data.tickets.yksityiskone || 0} kpl`;
+                potkurikone.textContent = `${data.tickets.potkurikone || 0}`;
+                matkustajakone.textContent = `${data.tickets.matkustajakone || 0}`;
+                yksityiskone.textContent = `${data.tickets.yksityiskone || 0} kpl`;
             } else {
                 console.error('Error fetching player tickets:', data.message);
             }
@@ -76,7 +76,7 @@ export function fetchRound(gameId) {
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
-                roundElement.textContent = `Round: ${data.round} / 10`;
+                roundElement.textContent = `${data.round}`;
             } else {
                 console.error('Error fetching round:', data.message);
             }

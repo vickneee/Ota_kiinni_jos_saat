@@ -246,6 +246,13 @@ li {
     margin-bottom: 0.2rem;
 }
 
+/***** Banner *****/
+
+.kierros-th {
+    min-width: 9rem;
+    padding: 0 2rem;
+}
+
 /***** Dropdown *****/
 
 .align-container {
@@ -528,8 +535,6 @@ table {
     object-fit: cover; /* Ensures video fills the container without distortion */
 }
 
-
-
 /***** Game Start *****/
 
 #start-banner {
@@ -614,11 +619,6 @@ audio {
 
     .th-padding {
         padding: 1rem;
-    }
-
-    .counter {
-        padding: 1rem;
-        width: 100%;
     }
 }
 
