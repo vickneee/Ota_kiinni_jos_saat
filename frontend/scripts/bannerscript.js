@@ -13,6 +13,8 @@ function bannerFunc() {
         displayBanner(firstPlayer);
     } else {
         console.error('No player data available. Ensure localStorage is populated.');
+        startBanner.style.display = 'none'
+
     }
 }
 
