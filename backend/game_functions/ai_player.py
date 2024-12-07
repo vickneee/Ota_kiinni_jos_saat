@@ -65,7 +65,7 @@ class AIPlayer(Player):
         self.add_player_past_movement(self.location,ticket_id,self.id)
         self.update_location(split_response[0])
 
-        return response
+        return split_response[0]
 
     def detective_move(self, own_loc, criminal_loc, round):
         tickets = self.remaining_tickets()
@@ -112,5 +112,7 @@ class AIPlayer(Player):
         Tickets.delete_ticket(ticket_id,self.id)
 
 
-        return response
+        return split_response[0]
 
+#a = AIPlayer('aicr',0,'EFHK')
+#a.

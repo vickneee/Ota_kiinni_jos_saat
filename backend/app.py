@@ -185,7 +185,7 @@ def play_round():
         player = data.get('player')
         new_location = data.get('new_location')
         ticket_id = data.get('ticket_id')
-
+        is_computer = data.get('is_computer')
         # Validate input data
         if not player or not new_location or not ticket_id:
             raise ValueError("Missing required fields: 'player', 'new_location', or 'ticket_id'.")
@@ -193,11 +193,14 @@ def play_round():
         print(f"Player: {player}, New Location: {new_location}, Ticket ID: {ticket_id}")
 
         # Perform the move
-        g.play_round(player, new_location, ticket_id)
-
-        # Response for success
+        move = g.play_round(player, new_location, ticket_id)
         status = 200
-        ans = {'status': status, 'message': 'Move made successfully'}
+        if is_computer == 1:
+            coords = Airport().airports_coord(move)
+            ans = {'status': status, 'message': 'Move made successfully', 'icao': move, 'coords':coords}
+        else:
+            ans = {'status': status, 'message': 'Move made successfully'}
+
 
     except Exception as e:
         # Log detailed error
