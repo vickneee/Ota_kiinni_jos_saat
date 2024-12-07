@@ -80,15 +80,11 @@ class Game:
 
     def play_round(self, player_name, new_location, ticket_id):
         # Find the index of the player
-        print(f"Player name: {player_name}")
-        print(f"Screen names: {self.screen_names}")
         name_index = self.screen_names.index(player_name)
-        print('indeksi ',name_index)
         other_loc = []
         player = self.players[name_index]
-        print('pelaaja ', player)
         criminal = ""
-        #aicriminal = []
+
         # Gather criminal location and other player locations
         for p in self.players:
             if p.type == 0:
@@ -106,14 +102,10 @@ class Game:
             self.update_round_player(player.id)
         elif player.is_computer == 1:
             if player.type == 0:
-                aicriminal = player.criminal_move(player.location, other_loc)
-                self.update_round_player(player.id)
-                print('aicriminal', aicriminal)
-                return aicriminal
+                player.criminal_move(player.location, other_loc)
             else:
-                aidetective = player.detective_move(player.location, criminal, self.round)
-                self.update_round_player(player.id)
-                return aidetective
+                player.detective_move(player.location, criminal, self.round)
+            self.update_round_player(player.id)
 
         return
 
@@ -173,6 +165,10 @@ class Game:
 
 
 
-
-
+# g = Game()
+# g.create_game_id()
+# pl = {"name": "oia", "player_type": 0, "is_computer": 0, 'location':'EFHK'},{"name": "sad", "player_type": 1, "is_computer": 0,'location':'ESSA'},{"name": "olom", "player_type": 1, "is_computer": 0,'location':'UKBB'}
+# g.add_players(pl)
+# g.play_round('sad','LIRF',3)
+# print(g.players[2].location)
 
