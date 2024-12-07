@@ -87,6 +87,7 @@ class Game:
         other_loc = []
         player = self.players[name_index]
         print('pelaaja ', player)
+        print('pelaaja id', player.id)
         criminal = ""
         #aicriminal = []
         # Gather criminal location and other player locations
@@ -100,7 +101,7 @@ class Game:
         if name_index == 2:
             self.insert_round()
 
-        # Process player moves
+         #Process player moves
         if player.is_computer == 0:
             player.player_move(new_location, ticket_id)
             self.update_round_player(player.id)

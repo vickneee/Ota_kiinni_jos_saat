@@ -109,7 +109,7 @@ class AIPlayer(Player):
         elif split_response == 'F':
             ticket_id = 3
         self.update_location(split_response[0])
-        Tickets.delete_ticket(ticket_id,self.id)
+        Tickets().delete_ticket(ticket_id, self.id)
 
 
         return split_response[0]
