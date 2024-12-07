@@ -264,6 +264,11 @@ function addMarkersToMap(recommendedAirports) {
     try {
       let markers = [];
       let markersdata = [];
+      // fetch the player tickets
+      const players = playerData();
+      console.log(players);
+
+
       for (const airport of Object.values(recommendedAirports)) {
         const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
         const {PinElement} = await google.maps.importLibrary('marker');
