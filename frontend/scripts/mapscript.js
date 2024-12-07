@@ -662,7 +662,7 @@ async function gameRounds() {
     }
   }
 }
-
+//moi
 // Get the players id that's turn it is
 async function fetchCurrentTurn(game_id) {
   const response = await fetch(
