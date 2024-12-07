@@ -29,47 +29,59 @@ class AIPlayer(Player):
             azure_endpoint=self.endpoint
         )
 
+        ticket_info = []
+        if 'matkustajakone' in tickets:
+            ticket_info.append(f"{tickets['matkustajakone']}x Closest (C)")
+        if 'potkurikone' in tickets:
+            ticket_info.append(f"{tickets['potkurikone']}x Near (N)")
+        if 'yksityiskone' in tickets:
+            ticket_info.append(f"{tickets['yksityiskone']}x Farthest (F)")
+
+        ticket_info_str = ', '.join(ticket_info)
+
         message = f"""
-            Airports list: BIKF, EBBR, EDDB, EFHK, EGLL, EIDW, ENGM, EPWA, ESSA, LBSF, LEMD, LFPG, LGAV, LHBP, LIRF, LKPR, LOWW, LPPT, LROP, LYBE, UKBB
+            Possible airports: BIKF, EBBR, EDDB, EFHK, EGLL, EIDW, ENGM, EPWA, ESSA, LBSF, LEMD, LFPG, LGAV, LHBP, LIRF, LKPR, LOWW, LPPT, LROP, LYBE, UKBB
             You: {own_loc}
             Detectives: {det_loc[0]}, {det_loc[1]}
-            Tickets: {tickets['matkustajakone']}x Closest (C), {tickets['potkurikone']}x Near (N), {tickets['yksityiskone']}x Farthest (F)
+            Tickets: {ticket_info_str}
             Goal: Avoid being caught by the detectives
 
             Important: Avoid airports close to the detectives. Do not fly directly to or near {det_loc[0]} or {det_loc[1]}. Choose an airport that is not near the detectives, even if it means selecting a farther airport.
 
-            Only respond with one ICAO code from the airports list and the ticket used (C, N, F), one at a time. For example:
+            Important: You must choose only one ICAO code from the possible airports listed above and the ticket used (C, N, F). For example:
             EPWA,C
 
             Do not list multiple answers. Prioritize staying far from the detectives.
         """
 
-        chat_completion = client.chat.completions.create(
-            model=self.model_name,  # model = "deployment_name".
-            messages=[
-                {"role": "system", "content": "You are an AI assistant."},
-                {"role": "user", "content": message}
-            ]
-        )
+        max_retries = 2
+        for _ in range(max_retries):
+            chat_completion = client.chat.completions.create(
+                model=self.model_name,
+                messages=[
+                    {"role": "system", "content": "You are an AI assistant."},
+                    {"role": "user", "content": message}
+                ]
+            )
 
-        response = chat_completion.choices[0].message.content
-        split_response = response.split(',')
-        ticket_id = 0
-        if split_response == 'C':
-            ticket_id = 1
-        elif split_response == 'N':
-            ticket_id = 2
-        elif split_response == 'F':
-            ticket_id = 3
+            response = chat_completion.choices[0].message.content.strip()
+            split_response = response.split(',')
+            if len(split_response) == 2 and split_response[0] in [
+                "BIKF", "EBBR", "EDDB", "EFHK", "EGLL", "EIDW", "ENGM", "EPWA", "ESSA", "LBSF", "LEMD", "LFPG", "LGAV",
+                "LHBP", "LIRF", "LKPR", "LOWW", "LPPT", "LROP", "LYBE", "UKBB"
+            ] and split_response[1] in ["C", "N", "F"]:
+                ticket_id = {"C": 1, "N": 2, "F": 3}[split_response[1]]
+                self.add_player_past_movement(self.location, ticket_id, self.id)
+                self.update_location(split_response[0])
+                return split_response[0]
+            print(f"Invalid response format or values: {response}. Retrying...")
 
-        self.add_player_past_movement(self.location,ticket_id,self.id)
-        self.update_location(split_response[0])
+        raise ValueError("Failed to get a valid response after multiple attempts")
 
-        return split_response[0]
 
-    def detective_move(self, own_loc, criminal_loc, round):
+    def detective_move(self, own_loc, criminal_id, round):
         tickets = self.remaining_tickets()
-
+        criminal_loc = self.get_criminal_movements(criminal_id)
         client = AzureOpenAI(
             api_key=self.api_key,
             api_version=self.api_version,
@@ -77,39 +89,54 @@ class AIPlayer(Player):
         )
         if round == 1:
             tickets['yksityiskone'] = 0
+
+        ticket_info = []
+        if 'matkustajakone' in tickets:
+            ticket_info.append(f"{tickets['matkustajakone']}x Closest (C)")
+        if 'potkurikone' in tickets:
+            ticket_info.append(f"{tickets['potkurikone']}x Near (N)")
+        if 'yksityiskone' in tickets:
+            ticket_info.append(f"{tickets['yksityiskone']}x Farthest (F)")
+
+        ticket_info_str = ', '.join(ticket_info)
+
         message = f"""
-                    Airports: BIKF, EBBR, EDDB, EFHK, EGLL, EIDW, ENGM, EPWA, ESSA, LBSF, LEMD, LFPG, LGAV, LHBP, LIRF, LKPR, LOWW, LPPT, LROP, LYBE, UKBB
+                    Possible airports: BIKF, EBBR, EDDB, EFHK, EGLL, EIDW, ENGM, EPWA, ESSA, LBSF, LEMD, LFPG, LGAV, LHBP, LIRF, LKPR, LOWW, LPPT, LROP, LYBE, UKBB
                     You: {own_loc}
                     Criminals last known location: {criminal_loc}
-                    Tickets: {tickets['matkustajakone']}x Closest (C), {tickets['potkurikone']}x Near (N), {tickets['yksityiskone']}x Farthest (F)
+                    Tickets: {ticket_info_str}
                     Goal: To catch the criminal by flying to the same airport 
-
-                    Only respond with one ICAO code from the airports list and the ticket used (C, N, F), one at a time. For example:
+                    
+                    Important: You must choose only one ICAO code from the possible airports listed above and the ticket used (C, N, F). For example:
                     EPWA,C
 
                     Do not list multiple answers.
                 """
 
-        chat_completion = client.chat.completions.create(
-            model=self.model_name,  # model = "deployment_name".
-            messages=[
-                {"role": "system", "content": "You are an AI assistant."},
-                {"role": "user", "content": message}
-            ]
-        )
+        max_retries = 2
+        for _ in range(max_retries):
+            chat_completion = client.chat.completions.create(
+                model=self.model_name,
+                messages=[
+                    {"role": "system", "content": "You are an AI assistant."},
+                    {"role": "user", "content": message}
+                ]
+            )
+
+            response = chat_completion.choices[0].message.content.strip()
+            split_response = response.split(',')
+            if len(split_response) == 2 and split_response[0] in [
+                "BIKF", "EBBR", "EDDB", "EFHK", "EGLL", "EIDW", "ENGM", "EPWA", "ESSA", "LBSF", "LEMD", "LFPG", "LGAV",
+                "LHBP", "LIRF", "LKPR", "LOWW", "LPPT", "LROP", "LYBE", "UKBB"
+            ] and split_response[1] in ["C", "N", "F"]:
+                ticket_id = {"C": 1, "N": 2, "F": 3}[split_response[1]]
+                self.update_location(split_response[0])
+                Tickets().delete_ticket(ticket_id, self.id)
+                print(response)
+                return split_response[0]
+            print(f"Invalid response format or values: {response}. Retrying...")
+
+        raise ValueError("Failed to get a valid response after multiple attempts")
 
 
-        response = chat_completion.choices[0].message.content
-        split_response = response.split(',')
-        ticket_id=0
-        if split_response == 'C':
-            ticket_id = 1
-        elif split_response == 'N':
-            ticket_id = 2
-        elif split_response == 'F':
-            ticket_id = 3
-        self.update_location(split_response[0])
-        Tickets().delete_ticket(ticket_id, self.id)
-
-        return split_response[0]
 

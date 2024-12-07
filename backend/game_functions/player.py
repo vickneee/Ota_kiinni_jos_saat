@@ -75,7 +75,7 @@ class Player:
 
 
 
-    def get_criminal_movements(self):
+    def get_criminal_movements(self,id):
         sql = f"""
         SELECT player.screen_name, airport.name, country.name, past_movement.ticket_type
         FROM past_movement
@@ -98,6 +98,14 @@ class Player:
 
 
     def update_location(self, location):
+        # Log the new location
+        print(f"Updating location to: {location}")
+
+        # Check if the new location exists in the airport table
+        sql_check = f"SELECT COUNT(*) FROM airport WHERE ident = '{location}'"
+        result = self.database.db_query(sql_check)
+        if result[0][0] == 0:
+            raise ValueError(f"Location '{location}' does not exist in the airport table")
         sql = f"""
         UPDATE player
         SET location = '{location}'

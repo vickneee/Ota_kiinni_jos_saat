@@ -81,7 +81,10 @@ class Game:
 
     def play_round(self, player_name, new_location, ticket_id):
         # Find the index of the player
+        if player_name not in self.screen_names:
+            raise ValueError(f"Player name '{player_name}' not found in screen names: {self.screen_names}")
         name_index = self.screen_names.index(player_name)
+        print('indeksi ', name_index)
         other_loc = []
         player = self.players[name_index]
         print('pelaaja ', player)
@@ -91,7 +94,7 @@ class Game:
         # Gather criminal location and other player locations
         for p in self.players:
             if p.type == 0:
-                criminal = p.location
+                criminal = p.id
             if p != player:
                 other_loc.append(p.location)
 
