@@ -264,6 +264,11 @@ function addMarkersToMap(recommendedAirports) {
     try {
       let markers = [];
       let markersdata = [];
+      // fetch the player tickets
+      const players = playerData();
+      console.log(players);
+
+
       for (const airport of Object.values(recommendedAirports)) {
         const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
         const {PinElement} = await google.maps.importLibrary('marker');
@@ -471,31 +476,33 @@ function playerData() {
 }
 
 async function send_move(player, new_location, ticket_id) {
-  try {
-    const response = await fetch('http://127.0.0.1:3000/api/play_round', {
-      method: 'POST',
-      body: JSON.stringify({
-        'player': player,
-        'new_location': new_location,
-        'ticket_id': ticket_id,
-      }),
-      headers: {
-        'Content-type': 'application/json',
-      },
-    });
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch('http://127.0.0.1:3000/api/play_round', {
+        method: 'POST',
+        body: JSON.stringify({
+          'player': player,
+          'new_location': new_location,
+          'ticket_id': ticket_id,
+        }),
+        headers: {
+          'Content-type': 'application/json',
+        },
+      });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const json = await response.json();
+      console.log(json);
+      resolve(json); // Resolve the promise with the response data
+    } catch (error) {
+      console.error('Error sending players:', error);
+      reject(error); // Reject the promise with the error
     }
-
-    const json = await response.json();
-    console.log(json);
-    return json;
-  } catch (error) {
-    console.error('Error sending players:', error);
-  }
-
-  }
+  });
+}
 /*
 async function moveListener(name,round,type){
   console.log('move')
@@ -590,6 +597,18 @@ function removeMarker(marker) {
   return marker; // Return the cleared marker reference
 }
 
+function isGameOver(players) {
+  const criminal = players.find(player => player.type === 0);
+  const detectives = players.filter(player => player.type === 1);
+
+  if (!criminal) return false;
+
+  console.log('Criminal Location:', criminal.location);
+  console.log('Detective Location:', detectives.location);
+
+  return detectives.some(detective => detective.location === criminal.location && detective.location.lng === criminal.location.lng);
+}
+
 async function gameRounds() {
 
   const gameData = await gamedata();
@@ -618,15 +637,25 @@ async function gameRounds() {
           etsijaMarker2 = await createEtsija2Marker(map, move.position.lat,
               move.position.lng);
         }
+          console.log(`Round ${i}, Player ${j}:`, players[j].location);
+          // Update the player's location in the data
+          players[j].location = {
+          lat: move.position.lat,
+          lng: move.position.lng,
+          };
+
+        // Check if the game is over after every move
+        if (isGameOver(players)) {
+          console.log('Game Over');
+          return; // Exit the function as the game is over
+        }
+
       } else {
         await send_move(players[j], 0, 0);
       }
+
     }
-
-
-
-}
-
+  }
 }
 
 // Get the players id that's turn it is

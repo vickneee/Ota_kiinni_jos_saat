@@ -180,25 +180,44 @@ def game_screen_names(game_id):
 def play_round():
     try:
         data = request.json
+        if not data:
+            raise ValueError("No data provided in request.")
+
         player = data.get('player')
         new_location = data.get('new_location')
         ticket_id = data.get('ticket_id')
+
+        # Validate input data
+        if not player or not new_location or not ticket_id:
+            raise ValueError("Missing required fields: 'player', 'new_location', or 'ticket_id'.")
+
+        print(f"Player: {player}, New Location: {new_location}, Ticket ID: {ticket_id}")
+
+        # Perform the move
         g.play_round(player, new_location, ticket_id)
 
+        # Response for success
         status = 200
-        ans = {'status': status, 'message': 'move made succesfully',
+        ans = {'status': status, 'message': 'Move made successfully'}
 
-        }
     except Exception as e:
+        # Log detailed error
         import traceback
         error_message = traceback.format_exc()
         print("Error in /api/play_round:", error_message)
-        status = 500
-        ans = {'status': status, 'message': 'Failed to retrieve data', 'error': str(e)}
 
+        # Response for failure
+        status = 500
+        ans = {
+            'status': status,
+            'message': 'Failed to make a move',
+            'error': str(e),
+            'details': error_message.splitlines()
+        }
+
+    # Return JSON response
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
-
 
 @app.route('/api/getdata', methods=['GET'])
 def get_data():
