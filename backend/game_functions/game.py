@@ -161,10 +161,10 @@ class Game:
 
 
 
-g = Game()
-g.create_game_id()
-pl = {"name": "oia", "player_type": 0, "is_computer": 0, 'location':'EFHK'},{"name": "sad", "player_type": 1, "is_computer": 0,'location':'ESSA'},{"name": "olom", "player_type": 1, "is_computer": 0,'location':'UKBB'}
-g.add_players(pl)
-g.play_round('sad','LIRF',3)
-print(g.players[1].location)
+# g = Game()
+# g.create_game_id()
+# pl = {"name": "oia", "player_type": 0, "is_computer": 0, 'location':'EFHK'},{"name": "sad", "player_type": 1, "is_computer": 0,'location':'ESSA'},{"name": "olom", "player_type": 1, "is_computer": 0,'location':'UKBB'}
+# g.add_players(pl)
+# g.play_round('sad','LIRF',3)
+# print(g.players[2].location)
 
