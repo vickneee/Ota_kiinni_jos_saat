@@ -597,21 +597,20 @@ function removeMarker(marker) {
   return marker; // Return the cleared marker reference
 }
 
-// function isGameOver(players) {
-//   const criminal = players.find(player => player.type === 0);
-//   const detectives = players.filter(player => player.type === 1);
-//
-//   if (!criminal) return false;
-//
-//   console.log('Criminal Location:', criminal.location);
-//   console.log('Detective Location:', detectives.location);
-//
-//   return detectives.some(detective => detective.location === criminal.location && detective.location.lng === criminal.location.lng);
-// }
 
 async function gameRounds() {
 
+  console.log('Fetching game data...');
   const gameData = await gamedata();
+  console.log('Game data fetched in Game Rounds:', gameData);
+
+  if (!gameData || !gameData.game_id || !gameData.players) {
+    console.error('Invalid game data:', gameData);
+    return; // Exit if data is missing or invalid
+  }
+
+  // const gameData = await gamedata();
+  // console.log(gameData);
   const gameid = gameData.game_id;
   const players = gameData.players;
   console.log(players);
@@ -644,11 +643,17 @@ async function gameRounds() {
           lng: move.position.lng,
           };
 
-        // Check if the game is over after every move
-        // if (isGameOver(players)) {
-        //   console.log('Game Over');
-        //   return; // Exit the function as the game is over
-        // }
+          // Check if the game is over after every move
+          // Check if any previous player in the same round is at the same location
+          for (let k = 0; k < j; k++) { // Compare with earlier players in the same round
+            if (
+            players[k].location.lat === players[j].location.lat && players[k].location.lng === players[j].location.lng
+            ) {
+              console.log(`Players ${players[k].screen_name} and ${players[j].screen_name} are at the same location!`);
+              console.log('Game over!!!!!!!!!!!!!');
+              // Additional logic for handling players at the same location can go here
+        }
+      }
 
       } else {
         await send_move(players[j], 0, 0);
