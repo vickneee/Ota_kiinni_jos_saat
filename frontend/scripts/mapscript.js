@@ -625,6 +625,19 @@ function isGameOver(players) {
   return detectives.some(detective => detective.location === criminal.location && detective.location.lng === criminal.location.lng);
 }
 */
+
+// function isGameOver(players) {
+//   const criminal = players.find(player => player.type === 0);
+//   const detectives = players.filter(player => player.type === 1);
+//
+//   if (!criminal) return false;
+//
+//   console.log('Criminal Location:', criminal.location);
+//   console.log('Detective Location:', detectives.location);
+//
+//   return detectives.some(detective => detective.location === criminal.location && detective.location.lng === criminal.location.lng);
+// }
+
 async function gameRounds() {
   console.log('moi')
   const gameData = await gamedata();
