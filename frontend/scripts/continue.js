@@ -20,10 +20,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             // Create table header
             const headerRow = document.createElement("tr");
             headerRow.innerHTML = `
-                <th>Round</th>
-                <th>Players</th>
-                <th>Date</th>
-                <th>Actions</th>
+                <th>Kierros</th>
+                <th>Pelaajat</th>
+                <th>Päivämäärä</th>
+                <th></th>
             `;
             table.appendChild(headerRow);
 
@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 // Add Resume button
                 const actionCell = document.createElement("td");
                 const resumeButton = document.createElement("button");
+                resumeButton.classList.add("continue-button");
                 resumeButton.textContent = "Jatka peliä";
                 resumeButton.addEventListener("click", async () => {
                   await resumeGame(game);

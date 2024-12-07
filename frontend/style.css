@@ -442,15 +442,8 @@ select:focus {
 
 /***** Continue game *****/
 
-.game-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-
-.game-row span {
-    margin-right: 30px; /* Space between columns */
+.continue-button {
+    margin-left: 4rem;
 }
 
 /***** Game Map *****/
@@ -465,6 +458,8 @@ table {
     width: 100%;
     font-size: 1.2rem;
 }
+
+/***** Video Animation *****/
 
 /* Initial hidden state */
 #video-container {
