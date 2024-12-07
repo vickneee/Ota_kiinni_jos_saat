@@ -653,31 +653,54 @@ async function continueGameLoop() {
 
 // To test gamedata
 
-/* // Call the animation function
-        await playVideoWithAnimation();
-*/
-async function playVideoWithAnimation() {
-  const videoContainer = document.getElementById('video-container');
-  const video = document.getElementById('animation-video');
+  /* // Call the animation function
+          await playVideoWithAnimation();
+  */
+  async function playVideoWithAnimation() {
+    const videoContainer = document.getElementById('video-container');
+    const video = document.getElementById('animation-video');
 
-  // Show and animate the video container (rising up)
-  videoContainer.style.display = 'block';
-  videoContainer.classList.add('active'); // Add rising animation
-  video.play();
+    // Show and animate the video container (rising up)
+    videoContainer.style.display = 'block';
+    videoContainer.classList.add('active'); // Add rising animation
+    video.play();
 
-  // Wait for the video to finish
-  await new Promise((resolve) => {
-    video.onended = () => {
-      // Add the exit animation
-      videoContainer.classList.remove('active');
-      videoContainer.classList.add('exit'); // Start falling animation
+    // Wait for the video to finish
+    await new Promise((resolve) => {
+      video.onended = () => {
+        // Add the exit animation
+        videoContainer.classList.remove('active');
+        videoContainer.classList.add('exit'); // Start falling animation
 
-      // Wait for the animation to complete
-      setTimeout(() => {
-        videoContainer.classList.remove('exit'); // Clean up the exit class
-        videoContainer.style.display = 'none'; // Hide the video
-        resolve(); // Resolve the promise after animation
-      }, 1500); // Match this duration to the CSS transition time (1.5s)
-    };
-  });
+        // Wait for the animation to complete
+        setTimeout(() => {
+          videoContainer.classList.remove('exit'); // Clean up the exit class
+          videoContainer.style.display = 'none'; // Hide the video
+          resolve(); // Resolve the promise after animation
+        }, 1500); // Match this duration to the CSS transition time (1.5s)
+      };
+    });
+}
+
+async function resumeGame() {
+
+  const gameData = await gamedata()
+  const gameid = gameData.game_id
+  const players = gameData.players
+  const round = await fetchRound(gameid);
+  const turn = await fetchCurrentTurn(gameid);
+  /* etsi kenen vuoro listassa missä kohtaa.
+  kierros pitää pelataloppuun ja lisätä yksi kierros. sitten jatkuu normaalisti <3
+   */
+
+
+  for (let i = round; i < 11; i++) {
+    for (let j = 0; j < players.length; j++) {
+      if (players[j].is_computer === 0) {
+        await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
+        const move = await moveListener(players[j].screen_name)
+        console.log(move)
+      }
+    }
+  }
 }
