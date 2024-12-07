@@ -31,6 +31,10 @@ class Airport:
 
         return airports_location_dict
 
+    def airports_coord(self, icao):
+        all_coord = self.airports_location()
+        return all_coord[icao]
+
     # Get recommended airports based on the players location and ticket types
     def get_recommended_airports(self, name):
         from backend.game_functions.tickets import Tickets
