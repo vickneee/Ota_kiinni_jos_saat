@@ -597,17 +597,17 @@ function removeMarker(marker) {
   return marker; // Return the cleared marker reference
 }
 
-function isGameOver(players) {
-  const criminal = players.find(player => player.type === 0);
-  const detectives = players.filter(player => player.type === 1);
-
-  if (!criminal) return false;
-
-  console.log('Criminal Location:', criminal.location);
-  console.log('Detective Location:', detectives.location);
-
-  return detectives.some(detective => detective.location === criminal.location && detective.location.lng === criminal.location.lng);
-}
+// function isGameOver(players) {
+//   const criminal = players.find(player => player.type === 0);
+//   const detectives = players.filter(player => player.type === 1);
+//
+//   if (!criminal) return false;
+//
+//   console.log('Criminal Location:', criminal.location);
+//   console.log('Detective Location:', detectives.location);
+//
+//   return detectives.some(detective => detective.location === criminal.location && detective.location.lng === criminal.location.lng);
+// }
 
 async function gameRounds() {
 
@@ -645,10 +645,10 @@ async function gameRounds() {
           };
 
         // Check if the game is over after every move
-        if (isGameOver(players)) {
-          console.log('Game Over');
-          return; // Exit the function as the game is over
-        }
+        // if (isGameOver(players)) {
+        //   console.log('Game Over');
+        //   return; // Exit the function as the game is over
+        // }
 
       } else {
         await send_move(players[j], 0, 0);
