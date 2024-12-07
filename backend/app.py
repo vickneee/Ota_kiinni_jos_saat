@@ -194,9 +194,11 @@ def play_round():
 
         # Perform the move
         move = g.play_round(player, new_location, ticket_id)
+        print(move)
         status = 200
         if is_computer == 1:
             coords = Airport().airports_coord(move)
+            print()
             ans = {'status': status, 'message': 'Move made successfully', 'icao': move, 'coords':coords}
         else:
             ans = {'status': status, 'message': 'Move made successfully'}
