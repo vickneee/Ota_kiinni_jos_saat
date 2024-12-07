@@ -30,7 +30,7 @@ class AIPlayer(Player):
         )
 
         message = f"""
-            Airports: BIKF, EBBR, EDDB, EFHK, EGLL, EIDW, ENGM, EPWA, ESSA, LBSF, LEMD, LFPG, LGAV, LHBP, LIRF, LKPR, LOWW, LPPT, LROP, LYBE, UKBB
+            Airports list: BIKF, EBBR, EDDB, EFHK, EGLL, EIDW, ENGM, EPWA, ESSA, LBSF, LEMD, LFPG, LGAV, LHBP, LIRF, LKPR, LOWW, LPPT, LROP, LYBE, UKBB
             You: {own_loc}
             Detectives: {det_loc[0]}, {det_loc[1]}
             Tickets: {tickets['matkustajakone']}x Closest (C), {tickets['potkurikone']}x Near (N), {tickets['yksityiskone']}x Farthest (F)
@@ -38,7 +38,7 @@ class AIPlayer(Player):
 
             Important: Avoid airports close to the detectives. Do not fly directly to or near {det_loc[0]} or {det_loc[1]}. Choose an airport that is not near the detectives, even if it means selecting a farther airport.
 
-            Only respond with one ICAO code and the ticket used (C, N, F), one at a time. For example:
+            Only respond with one ICAO code from the airports list and the ticket used (C, N, F), one at a time. For example:
             EPWA,C
 
             Do not list multiple answers. Prioritize staying far from the detectives.
@@ -84,7 +84,7 @@ class AIPlayer(Player):
                     Tickets: {tickets['matkustajakone']}x Closest (C), {tickets['potkurikone']}x Near (N), {tickets['yksityiskone']}x Farthest (F)
                     Goal: To catch the criminal by flying to the same airport 
 
-                    Only respond with one ICAO code and the ticket used (C, N, F), one at a time. For example:
+                    Only respond with one ICAO code from the airports list and the ticket used (C, N, F), one at a time. For example:
                     EPWA,C
 
                     Do not list multiple answers.

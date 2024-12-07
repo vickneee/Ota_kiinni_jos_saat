@@ -40,6 +40,7 @@ class Game:
             WHERE id = {self.game_id}
         """
         Database().db_update(sql)
+        self.round = self.round + 1
 ##j
     # Update the player_id column in the game table
     def update_round_player(self,player_id):
@@ -95,7 +96,7 @@ class Game:
                 other_loc.append(p.location)
 
         # Handle round insertion if necessary
-        if name_index == 2:
+        if name_index == 2 and self.round < 11:
             self.insert_round()
 
          #Process player moves

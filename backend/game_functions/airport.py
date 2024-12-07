@@ -97,3 +97,4 @@ class Airport:
                 farthest_airports[1] = (icao, location['name'], location['country'], location['latitude'], location['longitude'], f"{distance:.2f} km")
 
         return farthest_airports
+
