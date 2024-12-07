@@ -656,25 +656,25 @@ async function gameRounds(){
     });
 }
 
-async function resumeGame(){
+async function resumeGame() {
 
-    const gameData = await gamedata()
-    const gameid = gameData.game_id
-    const players = gameData.players
-    const round = await fetchRound(gameid);
-    const turn = await fetchCurrentTurn(gameid);
-    /* etsi kenen vuoro listassa missä kohtaa.
-    kierros pitää pelataloppuun ja lisätä yksi kierros. sitten jatkuu normaalisti <3
-     */
-
-
+  const gameData = await gamedata()
+  const gameid = gameData.game_id
+  const players = gameData.players
+  const round = await fetchRound(gameid);
+  const turn = await fetchCurrentTurn(gameid);
+  /* etsi kenen vuoro listassa missä kohtaa.
+  kierros pitää pelataloppuun ja lisätä yksi kierros. sitten jatkuu normaalisti <3
+   */
 
 
-    for (let i = round; i < 11; i++) {
-      for (let j = 0; j < players.length; j++) {
-        if (players[j].is_computer === 0) {
-          await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
-          const move = await moveListener(players[j].screen_name)
-          console.log(move)
-        }
+  for (let i = round; i < 11; i++) {
+    for (let j = 0; j < players.length; j++) {
+      if (players[j].is_computer === 0) {
+        await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
+        const move = await moveListener(players[j].screen_name)
+        console.log(move)
       }
+    }
+  }
+}
