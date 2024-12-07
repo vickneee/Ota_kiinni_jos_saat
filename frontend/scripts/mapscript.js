@@ -195,8 +195,9 @@ async function initMap() {
 
   if (players[0].is_computer === 1 && !playersSent) {
     await aistart(players)
-    playersSent = true;
     await gameRounds()
+    playersSent = true;
+
   } else {
     await startingPoint(markersdata, markers);
     await gameRounds();
@@ -625,7 +626,7 @@ function isGameOver(players) {
 }
 */
 async function gameRounds() {
-
+  console.log('moi')
   const gameData = await gamedata();
   const gameid = gameData.game_id;
   const players = gameData.players;
