@@ -80,16 +80,13 @@ class Game:
 
     def play_round(self, player_name, new_location, ticket_id):
         # Find the index of the player
-        print(f"Player name: {player_name}")
-        print(f"Screen names: {self.screen_names}")
         name_index = self.screen_names.index(player_name)
-        print('indeksi ',name_index)
         other_loc = []
         player = self.players[name_index]
         print('pelaaja ', player)
         print('pelaaja id', player.id)
         criminal = ""
-        #aicriminal = []
+
         # Gather criminal location and other player locations
         for p in self.players:
             if p.type == 0:
