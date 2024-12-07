@@ -365,6 +365,7 @@ async function aistart(players){
       criminalMarker = await createCriminalMarker(map, res.criminal_coord.latitude, res.criminal_coord.longitude);
       etsijaMarker1 = await createEtsijaMarker(map, res.detective1_location[0].latitude, res.detective1_location[0].longitude);
       etsijaMarker2 = await createEtsija2Marker(map, res.detective2_location[0].latitude, res.detective2_location[0].longitude);
+      resolve(res)
     } catch (err) {
       reject(err)
     }
