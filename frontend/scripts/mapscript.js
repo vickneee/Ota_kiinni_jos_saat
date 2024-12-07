@@ -661,12 +661,17 @@ async function gameRounds() {
           lng: move.position.lng,
           };
 
-        // Check if the game is over after every move
-        /*
-        if (isGameOver(players)) {
-          console.log('Game Over');
-          return; // Exit the function as the game is over
-        }*/
+          // Check if the game is over after every move
+          // Check if any previous player in the same round is at the same location
+          for (let k = 0; k < j; k++) { // Compare with earlier players in the same round
+            if (
+            players[k].location.lat === players[j].location.lat && players[k].location.lng === players[j].location.lng
+            ) {
+              console.log(`Players ${players[k].screen_name} and ${players[j].screen_name} are at the same location!`);
+              console.log('Game over!!!!!!!!!!!!!');
+              // Additional logic for handling players at the same location can go here
+        }
+      }
 
       } else {
         console.log(players[j].screen_name)
