@@ -16,7 +16,6 @@ from backend.game_functions.player import Player
 load_dotenv()
 app = Flask(__name__)
 CORS(app)
-CORS(app, resources={r"/*": {"origins": "http://localhost:63342"}})
 g = Game()
 
 
