@@ -41,7 +41,6 @@ export function displayBanner(firstPlayer) {
     startGame.textContent = `${firstPlayer.name}`;
     startBanner.style.display = 'table';
     playBanner.style.display = 'none'
-
 //h
 }
 
