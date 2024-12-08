@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("saved-games-container");
+    container.classList.add("saved-game-container");
 
     try {
         // Fetch saved games from the API
@@ -20,23 +21,25 @@ document.addEventListener("DOMContentLoaded", async () => {
             // Create table header
             const headerRow = document.createElement("tr");
             headerRow.innerHTML = `
-                <th>Kierros</th>
-                <th>Pelaajat</th>
-                <th>Päivämäärä</th>
-                <th></th>
+                <th class="new-game-th">Kierros</th>
+                <th class="new-game-th">Pelaajat</th>
+                <th class="new-game-th">Päivämäärä</th>
+                <th class="new-game-th"></th>
             `;
             table.appendChild(headerRow);
 
             // Populate table rows with saved games
             data.saved_games.forEach((game) => {
                 const gameRow = document.createElement("tr");
+                gameRow.classList.add("game-row");
+
 
                 const formattedDate = new Date(game.date).toLocaleDateString("fi-FI"); // Finnish date format (Nordic style)
 
                 gameRow.innerHTML = `
-                    <td>${game.round}</td>
-                    <td>${game.players.length > 0 ? game.players.join(", ") : "None"}</td>
-                    <td>${formattedDate}</td>
+                    <td class="new-game-td">${game.round}</td>
+                    <td class="new-game-td">${game.players.length > 0 ? game.players.join(", ") : "None"}</td>
+                    <td class="new-game-td">${formattedDate}</td>
                 `;
 
                 // Add Resume button
