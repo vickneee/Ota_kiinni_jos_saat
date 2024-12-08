@@ -598,6 +598,9 @@ async function moveListener(name,iscomp) {
           marker.setMap(null);
         });
 
+        // Play animation after move
+        await playVideoWithAnimation(); // Ensure animation finishes before proceeding
+
         // markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
         resolve(markerData); // Resolve with the clicked marker data
       });
