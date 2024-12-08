@@ -638,7 +638,7 @@ async function gameRounds() {
     for (let j = 0; j < players.length; j++) {
       if (players[j].is_computer === 0) {
         console.log(players[j].screen_name);
-        await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
+        await showPlayerInfo(players[j].id, gameid, players[j].screen_name, j);
         const move = await moveListener(players[j].screen_name, players[j].is_computer);
         console.log(move);
 

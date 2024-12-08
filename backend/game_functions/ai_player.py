@@ -66,11 +66,14 @@ class AIPlayer(Player):
 
             response = chat_completion.choices[0].message.content.strip()
             split_response = response.split(',')
+            ticket = split_response[1]
+            filtered = filter(str.isalpha,ticket)
+            filtered_t = "".join(filtered)
             if len(split_response) == 2 and split_response[0] in [
                 "BIKF", "EBBR", "EDDB", "EFHK", "EGLL", "EIDW", "ENGM", "EPWA", "ESSA", "LBSF", "LEMD", "LFPG", "LGAV",
                 "LHBP", "LIRF", "LKPR", "LOWW", "LPPT", "LROP", "LYBE", "UKBB"
-            ] and split_response[1] in ["C", "N", "F"]:
-                ticket_id = {"C": 1, "N": 2, "F": 3}[split_response[1]]
+            ] and  filtered_t in ["C", "N", "F"]:
+                ticket_id = {"C": 1, "N": 2, "F": 3}[filtered_t]
                 self.add_player_past_movement(self.location, ticket_id, self.id)
                 self.update_location(split_response[0])
                 return split_response[0]
@@ -125,11 +128,14 @@ class AIPlayer(Player):
 
             response = chat_completion.choices[0].message.content.strip()
             split_response = response.split(',')
+            ticket = split_response[1]
+            filtered = filter(str.isalpha, ticket)
+            filtered_t = "".join(filtered)
             if len(split_response) == 2 and split_response[0] in [
                 "BIKF", "EBBR", "EDDB", "EFHK", "EGLL", "EIDW", "ENGM", "EPWA", "ESSA", "LBSF", "LEMD", "LFPG", "LGAV",
                 "LHBP", "LIRF", "LKPR", "LOWW", "LPPT", "LROP", "LYBE", "UKBB"
-            ] and split_response[1] in ["C", "N", "F"]:
-                ticket_id = {"C": 1, "N": 2, "F": 3}[split_response[1]]
+            ] and filtered_t in ["C", "N", "F"]:
+                ticket_id = {"C": 1, "N": 2, "F": 3}[filtered_t]
                 self.update_location(split_response[0])
                 Tickets().delete_ticket(ticket_id, self.id)
                 print(response)

@@ -87,15 +87,26 @@ export function fetchRound(gameId) {
 }
 
 // Fetch game screen names
-export function fetchGameScreenNames(screen_name) {
+export function fetchGameScreenNames(index,screen_name) {
     const playerInfoElement = document.getElementById('pelaaja');
-    playerInfoElement.textContent = screen_name
+    const playerNameElement = document.getElementById('nimi')
+    if(index === 0){
+        playerInfoElement.className = 'rikollinen'
+        playerInfoElement.textContent = "Rikollinen: "
+    }else if (index === 1){
+        playerInfoElement.className = 'etsiva1'
+        playerInfoElement.textContent = "Etsivä1: "
+    }else{
+        playerInfoElement.className = 'etsiva2'
+        playerInfoElement.textContent = "Etsivä 2: "
+    }
+    playerNameElement.textContent = screen_name
 }
 
-export async function showPlayerInfo(playerId, gameId,screen_name){
+export async function showPlayerInfo(playerId, gameId,screen_name,index){
       await fetchPlayerTickets(playerId);
       await fetchRound(gameId);
-      await fetchGameScreenNames(screen_name);
+      await fetchGameScreenNames(index,screen_name);
 }
 
     /*

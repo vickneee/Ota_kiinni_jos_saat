@@ -268,6 +268,17 @@ select:focus {
     border: none;
 }
 
+.rikollinen{
+    color:var(--gold);
+}
+
+.etsiva1 {
+    color:var(--darker-blue)
+}
+
+.etsiva2{
+    color:var(--darker-red)
+}
 /***** Exit confirmation *****/
 
 .modal {
