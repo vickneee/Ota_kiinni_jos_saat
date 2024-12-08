@@ -17,6 +17,7 @@
     --raisin-black: #202231; /* Main black, text color */
     --red: red; /* Ticket text color */
     --green: green; /* Ticket text color */
+    --darker-green: #005300; /* Ticket text color */
     --blue: blue; /* Ticket text color */
 }
 
@@ -68,21 +69,26 @@ body::before {
 
 .highlighted-image {
     border: 2px solid var(--gold);
-    box-shadow: 0 0 10px 5px var(--gold);
+    box-shadow: 0 0 10px 15px var(--gold);
     border-radius: 50%; /* Rounded corners */
     position: relative;
     z-index: 1;
     pointer-events: auto;
 }
 
+.hl-0 {
+    border: 2px solid var(--green);
+    box-shadow: 0 0 10px 5px var(--darker-green);
+}
+
 .hl-1 {
-    border: 2px solid var(--darker-blue);
-    box-shadow: 0 0 10px 8px var(--darker-blue);
+    border: 2px solid var(--blue);
+    box-shadow: 0 0 10px 8px var(--blue);
 }
 
 .hl-2 {
-    border: 2px solid var(--darker-red);
-    box-shadow: 0 0 10px 5px var(--darker-red);
+    border: 2px solid var(--red);
+    box-shadow: 0 0 10px 5px var(--red);
 }
 
 /***** Video *****/
@@ -269,15 +275,15 @@ select:focus {
 }
 
 .rikollinen{
-    color:var(--gold);
+    color:var(--green);
 }
 
 .etsiva1 {
-    color:var(--darker-blue)
+    color:var(--blue)
 }
 
 .etsiva2{
-    color:var(--darker-red)
+    color:var(--red)
 }
 /***** Exit confirmation *****/
 

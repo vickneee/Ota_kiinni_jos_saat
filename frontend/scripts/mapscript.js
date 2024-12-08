@@ -50,6 +50,7 @@ async function createCriminalMarker(map, lat, lng) {
     glyphImg1.style.width = '30px';
     glyphImg1.style.height = '30px';
     glyphImg1.classList.add('highlighted-image');
+    glyphImg1.classList.add('hl-0');
     glyphImg1.title = 'Rikollinen';
 
     const glyphSvgPinElement1 = new PinElement({
