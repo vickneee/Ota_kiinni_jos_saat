@@ -476,6 +476,10 @@ select:focus {
     padding: 0 3rem;
 }
 
+.jatka-pelia {
+    padding-left: 4rem;
+}
+
 .continue-button {
     margin-left: 4rem;
 }
@@ -744,6 +748,10 @@ audio {
     .continue-button {
     margin-left: 0 !important;
     }
+
+    .jatka-pelia {
+    padding-left: 0;
+}
 
     .game-over-h1 {
         font-size: 2.5rem;

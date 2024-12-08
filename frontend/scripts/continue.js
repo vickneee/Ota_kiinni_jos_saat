@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 <th class="new-game-th">Kierros</th>
                 <th class="new-game-th">Pelaajat</th>
                 <th class="new-game-th">Päivämäärä</th>
-                <th class="new-game-th"></th>
+                <th class="new-game-th jatka-pelia">Jatka peliä</th>
             `;
             table.appendChild(headerRow);
 
