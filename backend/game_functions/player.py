@@ -77,7 +77,7 @@ class Player:
     @staticmethod
     def get_criminal_movements(id):
         sql = f"""
-        SELECT player.screen_name, airport.name, country.name, past_movement.ticket_type, airport.latitude,airport.longitude
+        SELECT player.screen_name, airport.name, country.name, past_movement.ticket_type, airport.latitude_deg,airport.longitude_deg
         FROM past_movement
         LEFT JOIN player ON past_movement.player_id = player.id
         LEFT JOIN airport ON past_movement.location = airport.ident
