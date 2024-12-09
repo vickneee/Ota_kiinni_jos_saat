@@ -124,8 +124,8 @@ async function fetchRecommendedAirports(name, round) {
         `http://127.0.0.1:3000/api/get-recommended-airports/${name}/${round}?cb=${cacheBuster}`,
     );
     console.log(`Fetching recommended airports for: ${name}`);
-    console.log(
-        `Request URL: http://127.0.0.1:3000/api/get-recommended-airports/${name}?cb=${cacheBuster}`);
+
+    console.log(`Request URL: http://127.0.0.1:3000/api/get-recommended-airports/${name}/${round}?cb=${cacheBuster}`);
 
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -298,7 +298,30 @@ function playerData() {
   return players;
 }
 
-async function send_move(player, new_location, ticket_id, is_computer) {
+async function criminalMoves(id){
+  const response = await fetch(`http://127.0.0.1:3000/api/criminal/${id}`);
+  const data = await response.json();
+  return data.past_location
+}
+
+async function showCriminalOldLoc(id){
+  return new Promise(async (resolve, reject)=>{
+    try{
+      const data = await criminalMoves(id)
+      criminalMarker = removeMarker(criminalMarker);
+      criminalMarker = await createCriminalMarker(map, data.latitude,data.longitude);
+      console.log(data)
+      resolve(data)
+    }catch(err){
+      console.log(err)
+      reject(err)
+    }
+  })
+}
+
+
+
+async function send_move(player, new_location, ticket_id,is_computer) {
   return new Promise(async (resolve, reject) => {
     try {
       const response = await fetch('http://127.0.0.1:3000/api/play_round', {
@@ -328,7 +351,16 @@ async function send_move(player, new_location, ticket_id, is_computer) {
   });
 }
 
-async function moveListener(name, iscomp, round) {
+function criminal(players){
+  for (let player of players){
+    if (player.type === 0){
+      return player
+    }
+  }
+}
+
+
+async function moveListener(name,iscomp,round) {
   console.log('move');
   const gameData = await gamedata();
   const players = gameData.players;
@@ -445,18 +477,35 @@ async function gameRounds() {
   const gameData = await gamedata();
   const gameid = gameData.game_id;
   const players = gameData.players;
+  const criminalp = criminal(players)
   console.log(players);
+  let move;
 
   for (let i = 1; i < 11; i++) {
     for (let j = 0; j < players.length; j++) {
       if (players[j].is_computer === 0) {
         console.log(players[j].screen_name);
-        await showPlayerInfo(players[j].id, gameid, players[j].screen_name,
-            j);
-        const move = await moveListener(players[j].screen_name,
-            players[j].is_computer, i);
-        console.log(move);
+        await showPlayerInfo(players[j].id, gameid, players[j].screen_name, j);
+        if (players[j].type === 1){
+          const c_coord = await showCriminalOldLoc(criminalp.id)
+          console.log(c_coord)
+          move = await moveListener(players[j].screen_name, players[j].is_computer,i);
+        }else{
+          if (i >= 2){
+            criminalMarker = removeMarker(criminalMarker);
+            criminalMarker = await createCriminalMarker(map, players[j].location.lat,players[j].location.lng);
+            move = await moveListener(players[j].screen_name, players[j].is_computer,i);
+            console.log(move);
+            console.log('kierros on 2=>')
+          }else{
+            move = await moveListener(players[j].screen_name, players[j].is_computer,i);
+            console.log('kierros1')
+          }
 
+
+        }
+
+        /*
         if (j === 0) {
           criminalMarker = removeMarker(criminalMarker);
           criminalMarker = await createCriminalMarker(map, move.position.lat,
@@ -470,6 +519,21 @@ async function gameRounds() {
           etsijaMarker2 = await createEtsija2Marker(map, move.position.lat,
               move.position.lng);
         }
+        */
+        if (j === 0) {
+          criminalMarker = removeMarker(criminalMarker);
+          criminalMarker = await createCriminalMarker(map, move.position.lat, move.position.lng);
+        }else{
+
+          if (j === 1) {
+          etsijaMarker1 = removeMarker(etsijaMarker1);
+          etsijaMarker1 = await createEtsijaMarker(map, move.position.lat, move.position.lng);
+        } else {
+          etsijaMarker2 = removeMarker(etsijaMarker2);
+          etsijaMarker2 = await createEtsija2Marker(map, move.position.lat, move.position.lng);
+        }
+        }
+
 
         players[j].location = {
           lat: move.position.lat,

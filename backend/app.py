@@ -290,7 +290,17 @@ def get_recommended_airports(name,round):
         status = 500
         ans = {'status': status, 'message': 'Failed to retrieve data', 'error': str(e)}
 
-
+@app.route('/api/criminal/<int:id>',methods=['GET'])
+def criminal_moves(id):
+    try:
+        past_location = Player.get_criminal_movements(id)
+        return jsonify({"status": "success", "past_location":past_location}), 200
+    except Exception as e:
+        import traceback
+        error_message = traceback.format_exc()
+        print("Error in /api/getdata:", error_message)
+        status = 500
+        ans = {'status': status, 'message': 'Failed to retrieve data', 'error': str(e)}
 
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)

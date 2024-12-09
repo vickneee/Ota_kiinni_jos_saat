@@ -74,25 +74,27 @@ class Player:
 
 
 
-
-    def get_criminal_movements(self,id):
+    @staticmethod
+    def get_criminal_movements(id):
         sql = f"""
-        SELECT player.screen_name, airport.name, country.name, past_movement.ticket_type
+        SELECT player.screen_name, airport.name, country.name, past_movement.ticket_type, airport.latitude_deg,airport.longitude_deg
         FROM past_movement
         LEFT JOIN player ON past_movement.player_id = player.id
         LEFT JOIN airport ON past_movement.location = airport.ident
         LEFT JOIN country ON airport.iso_country = country.iso_country
-        WHERE past_movement.player_id = '{self.id}'
+        WHERE past_movement.player_id = '{id}'
         ORDER BY past_movement.id DESC
         LIMIT 1
         """
-        result = self.database.db_query(sql)
+        result = Database().db_query(sql)
         if result:
             return {
                 "screen_name": result[0][0],
                 "airport": result[0][1],
                 "country": result[0][2],
-                "ticket_type": result[0][3]
+                "ticket_type": result[0][3],
+                "latitude":result[0][4],
+                "longitude":result[0][5]
             }
         return {}
 
@@ -156,11 +158,13 @@ class Player:
 
     @staticmethod
     def get_game_players(game_id):
-        sql = f"""SELECT player.screen_name, player.id, player.location, player.type, player.is_computer
+        sql = f"""SELECT player.screen_name, player.id, player.location, player.type, player.is_computer,airport.latitude_deg,airport.longitude_deg
                     FROM player
+                    left join airport on airport.ident = player.location
                     left join game_player on game_player.player_id = player.id
                     left join game on game.id = game_player.game_id
-                    where game.id = '{game_id}'
+
+                    where game.id ='{game_id}'
                     """
         result = Database().db_query(sql)
 
@@ -170,7 +174,10 @@ class Player:
                 "id": row[1],
                 "location": row[2],
                 "type": row[3],
-                "is_computer": row[4]
+                "is_computer": row[4],
+                "latitude":row[5],
+                "longitude":row[6]
+
             }
             for row in result
         ]
@@ -197,3 +204,5 @@ class Player:
         ]
         return players
 
+
+print(Player.get_criminal_movements(231))
