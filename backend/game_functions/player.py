@@ -4,6 +4,8 @@ from backend.game_functions.airport import Airport
 from backend.game_functions.tickets import Tickets
 from backend.game_functions.database import Database
 
+
+# Class to handle player data
 class Player:
     def __init__(self, name, player_type, location, is_computer=0):
         self.name = name  # Player's name
@@ -13,17 +15,20 @@ class Player:
         self.database = Database()  # Database instance
         self.id = None  # Player ID, to be set once the player is inserted into the database
 
+    # Insert a new player into the database
     def insert_player(self):
         sql = f"""INSERT INTO player (screen_name, type, location, is_computer)
                   VALUES ('{self.name}', '{self.type}', '{self.location}', {self.is_computer})"""
         self.id = self.database.db_insert(sql)
         return self.id
 
+    # Add the player to a game
     def add_player_to_game(self, game_id):
         sql = f"""INSERT INTO game_player (game_id, player_id)
                   VALUES ('{game_id}', '{self.id}')"""
         self.database.db_insert(sql)
 
+    # Get player information from the database
     @staticmethod
     def get_player_info(name):
         sql = f"""
@@ -48,13 +53,14 @@ class Player:
             }
         return {}
 
-
+    # Get player screen names from the database
     @staticmethod
     def get_screen_names():
         sql = "SELECT screen_name FROM player"
         result = Database().db_query(sql)
         return [row[0] for row in result]
 
+    # Get player information from the database
     def insert_player_tickets(self):
         tickets = {
             0: [(1, 10), (2, 6), (3, 4)],  # Criminal
@@ -65,15 +71,14 @@ class Player:
             for _ in range(count):
                 Tickets().insert_tickets(self.id, ticket_id)
 
-
+    # Get criminal information from the database
     @staticmethod
     def criminal_starting_point():
         airports = Airport().get_airports()
         icao = random.choice(list(airports.items()))
         return icao
 
-
-
+    # Get criminal information from the database by ID
     @staticmethod
     def get_criminal_movements(id):
         sql = f"""
@@ -100,7 +105,7 @@ class Player:
             }
         return {}
 
-
+    # Update player location in the database
     def update_location(self, location):
         # Log the new location
         print(f"Updating location to: {location}")
@@ -118,12 +123,14 @@ class Player:
         self.database.db_update(sql)
         self.location = location
 
+    # Add player past movement to the database
     def add_player_past_movement(self, location, ticket_id, player_id):
         sql = f"""INSERT INTO past_movement (player_id, location, ticket_type)
                   VALUES ('{player_id}', '{location}','{ticket_id}' )"""
         self.database.db_insert(sql)
         Tickets().delete_ticket(ticket_id, player_id)
 
+    # Get player tickets from the database
     @staticmethod
     def get_player_tickets(player_id):
         sql = f"""SELECT ticket_type, count(*)
@@ -134,6 +141,7 @@ class Player:
         tickets = {row[0]: row[1] for row in result}
         return tickets
 
+    # Get round from the database
     @staticmethod
     def get_round(game_id):
         sql = f"""
@@ -144,6 +152,7 @@ class Player:
         result = Database().db_query(sql)
         return result[0][0] if result else None
 
+    # get player screen names from the database
     @staticmethod
     def get_game_screen_names(game_id):
         sql = f"""
@@ -157,7 +166,7 @@ class Player:
         screen_names = [row[0] for row in result]
         return screen_names
 
-
+    # Get game players from the database
     @staticmethod
     def get_game_players(game_id):
         sql = f"""SELECT player.screen_name, player.id, player.location, player.type, player.is_computer,airport.latitude_deg,airport.longitude_deg
@@ -185,6 +194,7 @@ class Player:
         ]
         return players
 
+    # Get player by IDs from the database
     @staticmethod
     def get_players_by_ids(player_ids):
 
@@ -205,5 +215,3 @@ class Player:
             for row in result
         ]
         return players
-
-
