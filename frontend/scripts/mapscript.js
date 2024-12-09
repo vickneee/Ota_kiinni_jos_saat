@@ -102,6 +102,12 @@ async function initMap() {
 
   }
   console.log(markersdata[0].position.lat);
+
+  let resumegame = Resume();
+  if(resumegame === true){
+    await resumeGame();
+
+  }else{
   let players = playerData();
 
   if (players[0].is_computer === 1 && !playersSent) {
@@ -252,20 +258,12 @@ async function sendPlayers(players, coord, icao) {
 
 }
 
-function resumeData() {
+function Resume() {
   document.addEventListener('DOMContentLoaded', () => {
-    const gameData = JSON.parse(localStorage.getItem('gameData'));
-
-    if (gameData) {
-      console.log('Game Data:', gameData);
-      // Use the game data to initialize the map or players
-      // For example:
-      // initializeMap(gameData);
-    } else {
-      console.error('No game data found in localStorage');
-    }
+    const resume = JSON.parse(localStorage.getItem('continue'));
+    return resume;
   });
-  return resumeData();
+
 }
 
 async function sendIfComp(players) {
@@ -599,23 +597,171 @@ async function playVideoWithAnimation() {
 }
 
 async function resumeGame() {
+  try {
+    playbanner();
 
-  const gameData = await gamedata();
-  const gameid = gameData.game_id;
-  const players = gameData.players;
-  const round = await fetchRound(gameid);
-  const turn = await fetchCurrentTurn(gameid);
-  /* etsi kenen vuoro listassa missä kohtaa.
-  kierros pitää pelataloppuun ja lisätä yksi kierros. sitten jatkuu normaalisti <3
-   */
+    const gameData = await gamedata(); // Fetch game data
+    const gameid = gameData.game_id;
+    const players = gameData.players;
+    let round = await fetchRound(gameid);
 
-  for (let i = round; i < 11; i++) {
-    for (let j = 0; j < players.length; j++) {
-      if (players[j].is_computer === 0) {
-        await showPlayerInfo(players[j].id, gameid, players[j].screen_name);
-        const move = await moveListener(players[j].screen_name);
-        console.log(move);
+    // Fetch the current player ID whose turn it is
+    let currentPlayerId = await fetchCurrentTurn(gameid);
+
+    // Determine the current player's type (criminal or detective)
+    const currentPlayer = players.find(player => player.id === currentPlayerId);
+    if (!currentPlayer) {
+      console.error("Error: Current player not found in players list.");
+      return;
+    }
+    console.log(`Starting with player ${currentPlayer.screen_name}, type: ${currentPlayer.type}.`);
+
+    // Initialize markers based on the current player's type
+    if (currentPlayer.type === 0) {
+      console.log("Initializing markers for all players (Criminal's turn).");
+      for (let i = 0; i < players.length; i++) {
+        const player = players[i];
+        if (player.type === 0) {
+          criminalMarker = await createCriminalMarker(map, player.location.lat, player.location.lng);
+          console.log(`Criminal marker initialized at (${player.location.lat}, ${player.location.lng}).`);
+        } else if (i === 1) {
+          etsijaMarker1 = await createEtsijaMarker(map, player.location.lat, player.location.lng);
+          console.log(`Detective 1 marker initialized at (${player.location.lat}, ${player.location.lng}).`);
+        } else if (i === 2) {
+          etsijaMarker2 = await createEtsija2Marker(map, player.location.lat, player.location.lng);
+          console.log(`Detective 2 marker initialized at (${player.location.lat}, ${player.location.lng}).`);
+        }
+      }
+    } else if (currentPlayer.type === 1) {
+      console.log("Initializing markers for detectives only (Detective's turn).");
+      for (let i = 0; i < players.length; i++) {
+        const player = players[i];
+        if (player.type === 1) {
+          if (i === 1) {
+            etsijaMarker1 = await createEtsijaMarker(map, player.location.lat, player.location.lng);
+            console.log(`Detective 1 marker initialized at (${player.location.lat}, ${player.location.lng}).`);
+          } else if (i === 2) {
+            etsijaMarker2 = await createEtsija2Marker(map, player.location.lat, player.location.lng);
+            console.log(`Detective 2 marker initialized at (${player.location.lat}, ${player.location.lng}).`);
+          }
+        }
       }
     }
+
+
+
+
+    // Find the current player's index
+    let currentPlayerIndex = players.findIndex(player => player.id === currentPlayerId);
+    if (currentPlayerIndex === -1) {
+      console.error("Error: Current player ID not found in players list.");
+      return;
+    }
+
+    console.log(`Resuming round ${round} from player ${players[currentPlayerIndex].screen_name}.`);
+
+    // Complete the current round
+    while (currentPlayerIndex < players.length) {
+      const currentPlayer = players[currentPlayerIndex];
+
+      if (currentPlayer.is_computer === 0) {
+        console.log(`Processing turn for ${currentPlayer.screen_name} (Human).`);
+        await showPlayerInfo(currentPlayer.id, gameid, currentPlayer.screen_name);
+        const move = await moveListener(currentPlayer.screen_name);
+        console.log(`Player ${currentPlayer.screen_name} moved to ${move.position.lat}, ${move.position.lng}.`);
+
+        // Update marker and player location
+        await updatePlayerMarker(currentPlayer, move, map);
+      } else {
+        console.log(`Processing turn for ${currentPlayer.screen_name} (AI).`);
+        const aiMove = await send_move(currentPlayer.screen_name, 1, 1, currentPlayer.is_computer);
+        await updatePlayerMarker(currentPlayer, { position: { lat: aiMove.coords[0], lng: aiMove.coords[1] } }, map);
+      }
+
+      // Check for game-over condition
+      for (let k = 0; k < players.length; k++) {
+        if (k !== currentPlayerIndex) {
+          const otherPlayer = players[k];
+          if (
+            currentPlayer.location.lat === otherPlayer.location.lat &&
+            currentPlayer.location.lng === otherPlayer.location.lng &&
+            currentPlayer.type !== otherPlayer.type
+          ) {
+            console.log(`Game over! ${currentPlayer.screen_name} and ${otherPlayer.screen_name} are at the same location.`);
+            await endGame(currentPlayer, otherPlayer);
+            return;
+          }
+        }
+      }
+
+      currentPlayerIndex++;
+    }
+    round = round + 1
+    console.log("End of round reached. Proceeding to normal game loop.");
+
+    // Resume normal game loop for remaining rounds
+    for (let i = round; i <= 11; i++) {
+      console.log(`Starting round ${i}`);
+      for (let j = 0; j < players.length; j++) {
+        const player = players[j];
+
+        if (player.is_computer === 0) {
+          console.log(`Processing turn for ${player.screen_name} (Human).`);
+          await showPlayerInfo(player.id, gameid, player.screen_name);
+          const move = await moveListener(player.screen_name);
+          console.log(`Player ${player.screen_name} moved to ${move.position.lat}, ${move.position.lng}.`);
+          await updatePlayerMarker(player, move, map);
+        } else {
+          console.log(`Processing turn for ${player.screen_name} (AI).`);
+          const aiMove = await send_move(player.screen_name, 1, 1, player.is_computer);
+          await updatePlayerMarker(player, { position: { lat: aiMove.coords[0], lng: aiMove.coords[1] } }, map);
+        }
+
+        // Check for game-over condition
+        for (let k = 0; k < players.length; k++) {
+          if (k !== j) {
+            const otherPlayer = players[k];
+            if (
+              player.location.lat === otherPlayer.location.lat &&
+              player.location.lng === otherPlayer.location.lng &&
+              player.type !== otherPlayer.type
+            ) {
+              console.log(`Game over! ${player.screen_name} and ${otherPlayer.screen_name} are at the same location.`);
+              await endGame(player, otherPlayer);
+              return;
+            }
+          }
+        }
+      }
+    }
+  } catch (error) {
+    console.error("Error during game resumption:", error);
   }
 }
+
+// Helper function to update markers and locations
+async function updatePlayerMarker(index, move, map) {
+  let marker;
+  if (index === 0) {
+    criminalMarker = removeMarker(criminalMarker);
+    criminalMarker = await createCriminalMarker(map, move.position.lat, move.position.lng);
+  } else if (index === 1) {
+          etsijaMarker1 = removeMarker(etsijaMarker1);
+          etsijaMarker1 = await createEtsijaMarker(map, move.position.lat, move.position.lng);
+  } else {
+          etsijaMarker2 = removeMarker(etsijaMarker2);
+          etsijaMarker2 = await createEtsija2Marker(map, move.position.lat, move.position.lng);
+  }
+}
+
+// Helper function to handle the game-over logic
+async function endGame(player1, player2) {
+  console.log(`Game Over! ${player1.screen_name} and ${player2.screen_name} collided.`);
+  const winner = document.querySelector("#winner");
+  if (winner) {
+    winner.innerHTML = `Player ${player1.screen_name} caught Player ${player2.screen_name}!`;
+  }
+  setTimeout(() => {
+    window.location.href = "../pages/gameover.html";
+  }, 2000);
+}}
