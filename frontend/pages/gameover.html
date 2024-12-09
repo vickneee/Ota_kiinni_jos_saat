@@ -22,5 +22,11 @@ Your browser does not support the audio element.
 <a href="../index.html">
     <button class="back-to-main">Päävalikkoon</button>
 </a>
+<script>
+    const winnerMessage = localStorage.getItem('winnerMessage');
+            if (winnerMessage) {
+            document.querySelector('#winner').innerHTML = winnerMessage;
+            }
+</script>
 </body>
 </html>

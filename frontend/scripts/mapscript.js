@@ -439,15 +439,15 @@ async function gameRounds() {
             console.log('Game over!');
 
             // Update winner and redirect
-            const winner = document.querySelector('#winner');
-            if (winner) {
-              winner.innerHTML = `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`;
-            }
+            const winnerMessage = `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`;
+
+            localStorage.getItem('winnerMessage');
 
             // Redirect immediately
+            localStorage.setItem('winnerMessage', `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`);
             setTimeout(() => {
               console.log('Redirecting to gameover.html...');
-              window.location.href = '../pages/gameover.html';
+                window.location.href = '../pages/gameover.html';
             }, 2000);
 
             return; // Stop further execution as the game is over
