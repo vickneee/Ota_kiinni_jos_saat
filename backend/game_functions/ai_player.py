@@ -54,7 +54,7 @@ class AIPlayer(Player):
             Do not list multiple answers. Prioritize staying far from the detectives.
         """
 
-        max_retries = 2
+        max_retries = 3
         for _ in range(max_retries):
             chat_completion = client.chat.completions.create(
                 model=self.model_name,
@@ -116,7 +116,7 @@ class AIPlayer(Player):
                     Do not list multiple answers.
                 """
 
-        max_retries = 2
+        max_retries = 3
         for _ in range(max_retries):
             chat_completion = client.chat.completions.create(
                 model=self.model_name,

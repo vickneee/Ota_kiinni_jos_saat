@@ -29,6 +29,7 @@ class Game:
         self.game_id = None
         self.players = []
         self.round = 0
+        self.screen_names = []
 
 
 

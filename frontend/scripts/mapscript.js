@@ -1,12 +1,13 @@
 'use strict';
 
 import {
-  fetchPlayerTickets,
   fetchRound,
-  fetchGameScreenNames,
   playbanner,
   showPlayerInfo
 } from './bannerscript.js';
+
+import {createCriminalMarker, createEtsijaMarker, createEtsija2Marker, addMarkersToMap, determinePinType, getPinElement} from "./markers.js";
+
 let criminalMarker, etsijaMarker1, etsijaMarker2;
 let map;
 
@@ -36,6 +37,7 @@ async function fetchJSONData() {
 }
 
 // Create and add the criminal marker
+/*
 async function createCriminalMarker(map, lat, lng) {
   try {
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
@@ -72,7 +74,10 @@ async function createCriminalMarker(map, lat, lng) {
   }
 }
 
+ */
+
 // Create and add the etsiva 1 marker
+/*
 async function createEtsijaMarker(map, lat, lng) {
   try {
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
@@ -134,6 +139,10 @@ async function createEtsija2Marker(map, lat, lng) {
     // console.error('Error creating etsiva 2 marker:', error);
   }
 }
+
+ */
+
+
 let playersSent = false;
 async function initMap() {
   // The location of Center of Europe
@@ -212,11 +221,11 @@ async function initMap() {
   return map;
 }
 
-async function fetchRecommendedAirports(name) {
+async function fetchRecommendedAirports(name,round) {
   try {
     const cacheBuster = new Date().getTime(); // Generate a unique timestamp
     const response = await fetch(
-        `http://127.0.0.1:3000/api/get-recommended-airports/${name}?cb=${cacheBuster}`,
+        `http://127.0.0.1:3000/api/get-recommended-airports/${name}/${round}?cb=${cacheBuster}`,
     );
     console.log(`Fetching recommended airports for: ${name}`);
     console.log(`Request URL: http://127.0.0.1:3000/api/get-recommended-airports/${name}?cb=${cacheBuster}`);
@@ -240,28 +249,7 @@ async function fetchRecommendedAirports(name) {
     return [];
   }
 }
-
 /*
-async function fetchRecommendedAirports(name) {
-  try {
-    const response = await fetch(
-        `http://127.0.0.1:3000/api/get-recommended-airports/${name}`);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-    console.log(data)
-    console.log(name)
-    return data.recommended_airports;
-
-  } catch (error) {
-    console.error('Error fetching recommended airports:', error);
-    return [];
-  }
-}
-
-
- */
 function addMarkersToMap(recommendedAirports) {
   return new Promise(async (resolve, reject) => {
     try {
@@ -351,7 +339,7 @@ function getPinElement(PinElement, type) {
       });
   }
 }
-
+*/
 async function gamedata() {
   const response = await fetch('http://127.0.0.1:3000/api/getdata');
   const data = await response.json();
@@ -522,50 +510,14 @@ async function send_move(player, new_location, ticket_id,is_computer) {
   });
 }
 
-/*
-async function moveListener(name,round,type){
-  console.log('move')
-  const recommended = await fetchRecommendedAirports(name)
-  console.log(recommended)
-  const {markers,markersdata} = await addMarkersToMap(recommended)
-  const mdata = markersdata
-  const {event} = await google.maps.importLibrary('core');
-  let ticketid;
-  let chosen = []
-  console.log(markersdata[0])
 
-  markers.forEach((marker,index) => {
-    const markerData = markersdata[index];
-    google.maps.event.addListener(marker, 'click', async () => {
-      if (marker.pinType === 'red') {
-        ticketid = 1
-      } else if (marker.pinType === 'blue') {
-        ticketid = 2
-      } else {
-        ticketid = 3
-      }
-
-      //await send_move(name, marker.icao, ticketid)
-      chosen = markerData
-      console.log(markerData)
-      markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
-      return markerData
-    })
-  })
-
-
-  //return chosen
-
-}
-*/
-
-async function moveListener(name,iscomp) {
+async function moveListener(name,iscomp,round) {
   console.log('move');
   const gameData = await gamedata();
   const players = gameData.players;
-  const recommended = await fetchRecommendedAirports(name);
+  const recommended = await fetchRecommendedAirports(name,round);
   console.log(recommended);
-  const { markers, markersdata } = await addMarkersToMap(recommended);
+  const { markers, markersdata } = await addMarkersToMap(map,recommended);
   const { event } = await google.maps.importLibrary('core');
   let ticketid;
 
@@ -618,19 +570,7 @@ function removeMarker(marker) {
   }
   return marker; // Return the cleared marker reference
 }
-/*
-function isGameOver(players) {
-  const criminal = players.find(player => player.type === 0);
-  const detectives = players.filter(player => player.type === 1);
 
-  if (!criminal) return false;
-
-  console.log('Criminal Location:', criminal.location);
-  console.log('Detective Location:', detectives.location);
-
-  return detectives.some(detective => detective.location === criminal.location && detective.location.lng === criminal.location.lng);
-}
-*/
 async function gameRounds() {
   console.log('moi');
   const gameData = await gamedata();
@@ -643,7 +583,7 @@ async function gameRounds() {
       if (players[j].is_computer === 0) {
         console.log(players[j].screen_name);
         await showPlayerInfo(players[j].id, gameid, players[j].screen_name, j);
-        const move = await moveListener(players[j].screen_name, players[j].is_computer);
+        const move = await moveListener(players[j].screen_name, players[j].is_computer,i);
         console.log(move);
 
         if (j === 0) {

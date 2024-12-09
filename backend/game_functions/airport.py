@@ -36,7 +36,7 @@ class Airport:
         return all_coord[icao]
 
     # Get recommended airports based on the players location and ticket types
-    def get_recommended_airports(self, name):
+    def get_recommended_airports(self, name,round):
         from backend.game_functions.tickets import Tickets
         from backend.game_functions.player import Player
         all_airports = self.get_airports()
@@ -67,11 +67,17 @@ class Airport:
                 recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
                                     "distance": value, "ticket_type": 'matkustajakone', "latitude": all_airports[key][
                         'latitude'], "longitude": all_airports[key]['longitude'], "icao":key}
-        if 'yksityiskone' in tickets:
+        if player_type == 0:
+            if 'yksityiskone' in tickets:
+                for key, value in sorted_distances[-2:]:  # Last 2 airports
+                    recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
+                                        "distance": value, "ticket_type": 'yksityiskone', "latitude": all_airports[key][
+                            'latitude'], "longitude": all_airports[key]['longitude'], "icao": key}
+        if player_type == 1 and round > 1 and 'yksityiskone' in tickets:
             for key, value in sorted_distances[-2:]:  # Last 2 airports
                 recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
                                     "distance": value, "ticket_type": 'yksityiskone', "latitude": all_airports[key][
-                        'latitude'], "longitude": all_airports[key]['longitude'], "icao":key}
+                        'latitude'], "longitude": all_airports[key]['longitude'], "icao": key}
         return recommended
 
     # Find two farthest airports from players location

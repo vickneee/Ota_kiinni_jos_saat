@@ -62,7 +62,7 @@ def start_game():
         ans = {'status': status,
                'message': 'Game started successfully',
                'players': players,
-            'detective1_location': det1_coord,
+                'detective1_location': det1_coord,
                'detective2_location': det2_coord,
                'criminal_location': criminal_data,
 
@@ -247,6 +247,7 @@ def resume_game():
     try:
         data = request.json
         gamedata = data.get('gamedata')
+        g.reset_game()
         g.resume_game(data)
         status = 200
         ans = {'status': status, 'gamedata': gamedata, 'id': g.game_id}
@@ -277,10 +278,10 @@ def get_current_turn(game_id):
         return jsonify({"status": "error", "message": str(e)}), 500
 
 # Get recommended airports based on the players location and ticket types
-@app.route('/api/get-recommended-airports/<name>', methods=['GET'])
-def get_recommended_airports(name):
+@app.route('/api/get-recommended-airports/<name>/<int:round>', methods=['GET'])
+def get_recommended_airports(name,round):
     try:
-        recommended_airports = Airport().get_recommended_airports(name)
+        recommended_airports = Airport().get_recommended_airports(name,round)
         return jsonify({"status": "success", "recommended_airports": recommended_airports}), 200
     except Exception as e:
         import traceback
