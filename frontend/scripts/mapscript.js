@@ -424,13 +424,15 @@ async function gameRounds() {
           console.log(c_coord)
           move = await moveListener(players[j].screen_name, players[j].is_computer,i);
         }else{
-          if (i > 2){
+          if (i >= 2){
             criminalMarker = removeMarker(criminalMarker);
             criminalMarker = await createCriminalMarker(map, players[j].location.lat,players[j].location.lng);
             move = await moveListener(players[j].screen_name, players[j].is_computer,i);
             console.log(move);
+            console.log('kierros on 2=>')
           }else{
             move = await moveListener(players[j].screen_name, players[j].is_computer,i);
+            console.log('kierros1')
           }
 
 

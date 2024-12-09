@@ -158,11 +158,13 @@ class Player:
 
     @staticmethod
     def get_game_players(game_id):
-        sql = f"""SELECT player.screen_name, player.id, player.location, player.type, player.is_computer
+        sql = f"""SELECT player.screen_name, player.id, player.location, player.type, player.is_computer,airport.latitude_deg,airport.longitude_deg
                     FROM player
+                    left join airport on airport.ident = player.location
                     left join game_player on game_player.player_id = player.id
                     left join game on game.id = game_player.game_id
-                    where game.id = '{game_id}'
+
+                    where game.id ='{game_id}'
                     """
         result = Database().db_query(sql)
 
@@ -172,7 +174,10 @@ class Player:
                 "id": row[1],
                 "location": row[2],
                 "type": row[3],
-                "is_computer": row[4]
+                "is_computer": row[4],
+                "latitude":row[5],
+                "longitude":row[6]
+
             }
             for row in result
         ]
