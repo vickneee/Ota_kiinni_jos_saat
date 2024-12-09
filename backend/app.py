@@ -242,7 +242,7 @@ def get_data():
     return Response(response=jsonans, status=status, mimetype="application/json")
 
 
-@app.route('/api/resume_game', methods=['POST'])
+@app.route('/api/resume_game', methods=['PUT'])
 def resume_game():
     try:
         data = request.json

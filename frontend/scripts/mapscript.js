@@ -106,7 +106,7 @@ async function initMap() {
   let resumegame = Resume();
   if (resumegame === true) {
     await resumeGame();
-
+    playersSent = true;
   } else {
     let players = playerData();
     if (players[0].is_computer === 1 && !playersSent) {
@@ -599,7 +599,9 @@ async function gameRounds() {
     });
   }
 
-  async function resumeGame() {
+function resumeGame() {
+    console.log("paska")
+  return new Promise(async (resolve, reject) => {
     try {
       playbanner();
 
