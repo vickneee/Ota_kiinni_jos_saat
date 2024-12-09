@@ -132,11 +132,10 @@ async function fetchRecommendedAirports(name, round) {
     }
 
     const data = await response.json();
-    console.log(`Response data: ${JSON.stringify(data)}`);
+    // console.log(`Response data: ${JSON.stringify(data)}`);
 
     if (data && data.recommended_airports) {
-      console.log(
-          `Recommended airports: ${JSON.stringify(data.recommended_airports)}`);
+      // console.log(`Recommended airports: ${JSON.stringify(data.recommended_airports)}`);
       return data.recommended_airports;
     } else {
       console.warn('No recommended airports found in the response.');
@@ -423,51 +422,65 @@ function removeMarker(marker) {
 async function gameover() {
   // Fetch game data
   const gameData = await gamedata();
-  // Ensure gamedata() returns the required structure
   console.log('Line 395 Game data:', gameData);
+
+  // Ensure gamedata() returns the required structure
   if (!gameData || !gameData.players) {
     console.error('Invalid game data:', gameData);
     return;
   }
 
-  // const gameid = gameData.game_id;
   const players = gameData.players;
 
-  // Check if the game is over after every move
-  for (let j = 0; j < players.length; j++) {
-    for (let k = 0; k < j; k++) {
-      if (
-        (players[k].type === 0 && players[j].type === 1) ||
-        (players[k].type === 1 && players[j].type === 0)
-      ) {
-        if (
-          players[k].location.lat === players[j].location.lat &&
-          players[k].location.lng === players[j].location.lng
-        ) {
-          if (players[k].location.lat && players[k].location.lng === players[j].location.lat && players[j].location.lng) {
-            console.log(
-              `Criminal ${players[k].screen_name} and Detective ${players[j].screen_name} are at the same location!`
-            );
-            console.log('Game over!');
+  // Get the criminal player
+  const criminalPlayer = criminal(players);
+  if (!criminalPlayer) {
+    console.error('No criminal player found.');
+    return;
+  }
 
-            // Update winner message
-            const winnerMessage = `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`;
+  console.log('Criminal player:', criminalPlayer);
 
-            // Store the message in localStorage
-            localStorage.setItem('winnerMessage', winnerMessage);
+  // Flag to determine if the game is over
+  let gameEnded = false;
 
-            // Redirect to gameover.html after a short delay
-            setTimeout(() => {
-              console.log('Redirecting to gameover.html...');
-              window.location.href = '../pages/gameover.html';
-            }, 2000);
+  // Check for detectives at the same airport as the criminal
+  for (const player of players) {
+    if (player.type === 1) { // Detectives only
+      console.log(`Checking detective ${player.screen_name} at airport: ${player.latitude} ${player.longitude}`);
+      console.log(`Comparing Detective with Criminal ${criminalPlayer.screen_name} at airport: ${criminalPlayer.latitude} ${criminalPlayer.longitude} and player ${player.latitude} ${player.longitude}`);
 
-            // Exit the loops
-            return;
-          }
-        }
+      // Compare airport IDs
+      if (player.latitude && criminalPlayer.latitude &&
+          player.longitude === criminalPlayer.longitude) {
+        console.log(
+          `Criminal ${criminalPlayer.screen_name} and Detective ${player.screen_name} are at the same airport!`
+        );
+
+        // Update winner message
+        const winnerMessage = `Pelaaja ${criminalPlayer.screen_name} sai kinnii pelaaja ${player.screen_name}!`;
+
+        // Store the message in localStorage
+        localStorage.setItem('winnerMessage', winnerMessage);
+
+        // Set game-ended flag
+        gameEnded = true;
+
+        // Exit loop as the game is over
+        break;
       }
     }
+  }
+
+  if (gameEnded) {
+    console.log('Game over!');
+    // Redirect to gameover.html after a short delay
+    setTimeout(() => {
+      console.log('Redirecting to gameover.html...');
+      window.location.href = '../pages/gameover.html';
+    }, 2000);
+  } else {
+    console.log('Game continues...');
   }
 }
 
