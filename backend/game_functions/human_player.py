@@ -1,4 +1,3 @@
-from backend.game_functions.airport import Airport
 from backend.game_functions.player import Player
 from backend.game_functions.tickets import Tickets
 
@@ -12,7 +11,7 @@ class HumanPlayer(Player):
     def player_move(self, new_location, ticket_id):
 
         if self.type == 0:
-            self.add_player_past_movement(self.location, ticket_id,self.id )
+            self.add_player_past_movement(self.location, ticket_id, self.id)
             self.update_location(new_location)
             self.location = new_location
 

@@ -100,8 +100,8 @@ class Player:
                 "airport": result[0][1],
                 "country": result[0][2],
                 "ticket_type": result[0][3],
-                "latitude":result[0][4],
-                "longitude":result[0][5]
+                "latitude": result[0][4],
+                "longitude": result[0][5]
             }
         return {}
 
@@ -186,8 +186,8 @@ class Player:
                 "location": row[2],
                 "type": row[3],
                 "is_computer": row[4],
-                "latitude":row[5],
-                "longitude":row[6]
+                "latitude": row[5],
+                "longitude": row[6]
 
             }
             for row in result

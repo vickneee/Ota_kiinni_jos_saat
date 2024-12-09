@@ -4,6 +4,7 @@ from backend.game_functions.ai_player import AIPlayer
 from backend.game_functions.database import Database
 
 
+# Class to handle game data
 class Game:
 
     def __init__(self, game_id=None):
@@ -13,7 +14,7 @@ class Game:
         self.screen_names = []
         self.round = 0
 
-    #Create a new game in the database and return the game ID
+    # Create a new game in the database and return the game ID
     def create_game_id(self):
 
         sql_insert = "INSERT INTO game (round, player_id) VALUES (0, null)"
@@ -21,7 +22,7 @@ class Game:
         print(id)
         self.game_id = id
 
-
+    # Set the game ID
     def set_game_id(self, game_id):
         self.game_id = game_id
 
@@ -31,9 +32,7 @@ class Game:
         self.round = 0
         self.screen_names = []
 
-
-
-
+    # Insert a new round into the game table
     def insert_round(self):
         sql = f"""
             UPDATE game
@@ -42,9 +41,9 @@ class Game:
         """
         Database().db_update(sql)
         self.round = self.round + 1
-##j
+
     # Update the player_id column in the game table
-    def update_round_player(self,player_id):
+    def update_round_player(self, player_id):
         sql = f"""
             UPDATE game 
             SET player_id={player_id},
@@ -55,7 +54,8 @@ class Game:
 
     # Add players to the game based on the user input provided by frontend
     # Parameters:
-    # payer_data: list of dict, where each dict contains: "name", "player_type"(0 = criminal, 1 = detective), "is_human"(boolean)
+    # Player_data: list of dict, where each dict contains: "name", "player_type"(0 = criminal, 1 = detective),
+    # "is_human"(boolean)
     def add_players(self, player_data):
 
         for pdata in player_data:
@@ -72,8 +72,7 @@ class Game:
         self.round = 1
         self.insert_round()
 
-
-
+    # Method to resume a game
     def resume_game(self, data):
         gamedata = data
         self.set_game_id(gamedata['game_id'])
@@ -93,6 +92,7 @@ class Game:
 
         self.round = gamedata['round']
 
+    # Play a round of the game and return the new location of the player
     def play_round(self, player_name, new_location, ticket_id):
         # Find the index of the player
         if player_name not in self.screen_names:
@@ -116,7 +116,7 @@ class Game:
         if name_index == 2 and self.round < 11:
             self.insert_round()
 
-         #Process player moves
+        # Process player moves
         if player.is_computer == 0:
             player.player_move(new_location, ticket_id)
             self.update_round_player(player.id)
@@ -133,8 +133,6 @@ class Game:
 
         return
 
-
-
     # Method to get player id whose turn it is
     def get_current_turn(self, game_id):
         sql = f"""
@@ -147,8 +145,7 @@ class Game:
             return result[0][0]
         return None
 
-
-    #Method to fetch all games from DB
+    # Method to fetch all games from DB
     def fetch_saved_games(self):
         try:
             sql = """
@@ -186,9 +183,3 @@ class Game:
 
         except Exception as e:
             raise Exception(f"Error fetching saved games: {str(e)}")
-
-
-
-
-
-
