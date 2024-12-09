@@ -403,7 +403,7 @@ async function moveListener(name,iscomp,round) {
         // await playVideoWithAnimation(); // Ensure animation finishes before proceeding
 
         // markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
-        resolve(markers, markerData); // Resolve with the clicked marker data
+        resolve(markerData); // Resolve with the clicked marker data
       });
     });
   });
@@ -490,10 +490,17 @@ async function gameRounds() {
           const c_coord = await showCriminalOldLoc(criminalp.id)
           console.log(c_coord)
           move = await moveListener(players[j].screen_name, players[j].is_computer,i);
+          if (j === 1) {
+          etsijaMarker1 = removeMarker(etsijaMarker1);
+          etsijaMarker1 = await createEtsijaMarker(map, move.position.lat, move.position.lng);
+          } else {
+            etsijaMarker2 = removeMarker(etsijaMarker2);
+            etsijaMarker2 = await createEtsija2Marker(map, move.position.lat, move.position.lng);
+          }
         }else{
           if (i >= 2){
             criminalMarker = removeMarker(criminalMarker);
-            criminalMarker = await createCriminalMarker(map, players[j].location.lat,players[j].location.lng);
+            criminalMarker = await createCriminalMarker(map, players[j].latitude,players[j].longitude);
             move = await moveListener(players[j].screen_name, players[j].is_computer,i);
             console.log(move);
             console.log('kierros on 2=>')
@@ -504,41 +511,12 @@ async function gameRounds() {
 
 
         }
-
-        /*
-        if (j === 0) {
-          criminalMarker = removeMarker(criminalMarker);
-          criminalMarker = await createCriminalMarker(map, move.position.lat,
-              move.position.lng);
-        } else if (j === 1) {
-          etsijaMarker1 = removeMarker(etsijaMarker1);
-          etsijaMarker1 = await createEtsijaMarker(map, move.position.lat,
-              move.position.lng);
-        } else {
-          etsijaMarker2 = removeMarker(etsijaMarker2);
-          etsijaMarker2 = await createEtsija2Marker(map, move.position.lat,
-              move.position.lng);
-        }
-        */
-        if (j === 0) {
-          criminalMarker = removeMarker(criminalMarker);
-          criminalMarker = await createCriminalMarker(map, move.position.lat, move.position.lng);
-        }else{
-
-          if (j === 1) {
-          etsijaMarker1 = removeMarker(etsijaMarker1);
-          etsijaMarker1 = await createEtsijaMarker(map, move.position.lat, move.position.lng);
-        } else {
-          etsijaMarker2 = removeMarker(etsijaMarker2);
-          etsijaMarker2 = await createEtsija2Marker(map, move.position.lat, move.position.lng);
-        }
-        }
+        players[j].latitude = move.position.lat
+        players[j].longitude = move.position.lng
 
 
-        players[j].location = {
-          lat: move.position.lat,
-          lng: move.position.lng,
-        };
+
+
 
       } else {
         console.log(players[j].screen_name);
@@ -558,10 +536,9 @@ async function gameRounds() {
               aimove.coords[1]);
         }
 
-        players[j].location = {
-          lat: aimove.coords[0],
-          lng: aimove.coords[1],
-        };
+
+        players[j].latitude = aimove.coords[0]
+        players[j].longitude = aimove.coords[1]
       }
 
       // Check if the game is over after every move
