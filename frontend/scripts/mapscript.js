@@ -102,9 +102,11 @@ async function initMap() {
 
   }
   console.log(markersdata[0].position.lat);
-
+  await resumeGame();
+  /*
   let resumegame = Resume();
   if (resumegame === true) {
+    console.log('pöö')
     await resumeGame();
 
   } else {
@@ -118,9 +120,9 @@ async function initMap() {
       await startingPoint(markersdata, markers);
       await gameRounds();
     }
-
+  */
     return map;
-  }
+
 }
 
   async function fetchRecommendedAirports(name, round) {
@@ -260,12 +262,10 @@ async function initMap() {
     }
 
   }
-
   function Resume() {
-    document.addEventListener('DOMContentLoaded', () => {
-      const resume = JSON.parse(localStorage.getItem('continue'));
-      return resume;
-    });
+    const resume = JSON.parse(localStorage.getItem('continue'));
+    return resume;
+
 
   }
 
@@ -684,7 +684,7 @@ async function gameRounds() {
               `Processing turn for ${currentPlayer.screen_name} (Human).`);
           await showPlayerInfo(currentPlayer.id, gameid,
               currentPlayer.screen_name);
-          const move = await moveListener(currentPlayer.screen_name);
+          const move = await moveListener(currentPlayer.screen_name,currentPlayer.is_computer, round);
           console.log(
               `Player ${currentPlayer.screen_name} moved to ${move.position.lat}, ${move.position.lng}.`);
 
@@ -729,7 +729,7 @@ async function gameRounds() {
           if (player.is_computer === 0) {
             console.log(`Processing turn for ${player.screen_name} (Human).`);
             await showPlayerInfo(player.id, gameid, player.screen_name);
-            const move = await moveListener(player.screen_name);
+            const move = await moveListener(player.screen_name, player.is_computer,round);
             console.log(
                 `Player ${player.screen_name} moved to ${move.position.lat}, ${move.position.lng}.`);
             await updatePlayerMarker(player, move, map);
