@@ -69,14 +69,16 @@ export function fetchPlayerTickets(playerId) {
 }
 
 // Fetch round
-export function fetchRound(gameId) {
+export function fetchRound(gameId, ticket_type) {
     const roundElement = document.getElementById('kierrokset');
+    const ticket = document.getElementById('ticket-type')
 
     fetch(`http://127.0.0.1:3000/api/round/${gameId}`)
         .then(response => response.json())
         .then(data => {
             if (data.status === 'success') {
                 roundElement.textContent = `${data.round}`;
+
             } else {
                 console.error('Error fetching round:', data.message);
             }
@@ -84,6 +86,17 @@ export function fetchRound(gameId) {
         .catch(error => {
             console.error('Error:', error);
         });
+    if(ticket_type){
+        if(ticket_type === 'potkurikone'){
+            ticket.className = 'color-red'
+        }
+        else if(ticket_type === 'matkustajakone'){
+            ticket.className = 'color-blue'
+        }else{
+            ticket.className = 'color-green'
+        }
+        ticket.textContent = `${ticket_type}`
+    }
 }
 
 // Fetch game screen names
@@ -103,9 +116,9 @@ export function fetchGameScreenNames(index,screen_name) {
     playerNameElement.textContent = screen_name
 }
 
-export async function showPlayerInfo(playerId, gameId,screen_name,index){
+export async function showPlayerInfo(playerId, gameId,screen_name,index,ticket_type){
       await fetchPlayerTickets(playerId);
-      await fetchRound(gameId);
+      await fetchRound(gameId,ticket_type);
       await fetchGameScreenNames(index,screen_name);
 }
 

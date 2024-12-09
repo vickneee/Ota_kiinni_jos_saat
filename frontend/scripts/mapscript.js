@@ -472,113 +472,84 @@ async function initMap() {
     }
   }
 
-  async function gameRounds() {
-    console.log('moi');
-    const gameData = await gamedata();
-    const gameid = gameData.game_id;
-    const players = gameData.players;
-    const criminalp = criminal(players)
-    console.log(players);
-    let move;
 
-    for (let i = 1; i < 11; i++) {
-      for (let j = 0; j < players.length; j++) {
-        if (players[j].is_computer === 0) {
-          console.log(players[j].screen_name);
-          await showPlayerInfo(players[j].id, gameid, players[j].screen_name,
-              j);
-          if (players[j].type === 1) {
-            const c_coord = await showCriminalOldLoc(criminalp.id)
-            console.log(c_coord)
-            move = await moveListener(players[j].screen_name,
-                players[j].is_computer, i);
-            if (j === 1) {
-              etsijaMarker1 = removeMarker(etsijaMarker1);
-              etsijaMarker1 = await createEtsijaMarker(map, move.position.lat,
-                  move.position.lng);
-            } else {
-              etsijaMarker2 = removeMarker(etsijaMarker2);
-              etsijaMarker2 = await createEtsija2Marker(map, move.position.lat,
-                  move.position.lng);
-            }
-          } else {
-            if (i >= 2) {
-              criminalMarker = removeMarker(criminalMarker);
-              criminalMarker = await createCriminalMarker(map,
-                  players[j].latitude, players[j].longitude);
-              move = await moveListener(players[j].screen_name,
-                  players[j].is_computer, i);
-              console.log(move);
-              console.log('kierros on 2=>')
-            } else {
-              move = await moveListener(players[j].screen_name,
-                  players[j].is_computer, i);
-              console.log('kierros1')
-            }
+async function gameRounds() {
+  console.log('moi');
+  const gameData = await gamedata();
+  const gameid = gameData.game_id;
+  const players = gameData.players;
+  const criminalp = criminal(players)
+  console.log(players);
+  let move;
+  let tickettype;
 
-          }
-          players[j].latitude = move.position.lat
-          players[j].longitude = move.position.lng
+  for (let i = 1; i < 11; i++) {
 
-        } else {
-          console.log(players[j].screen_name);
-          const aimove = await send_move(players[j].screen_name, 1, 1,
-              players[j].is_computer);
-          if (j === 0) {
-            criminalMarker = removeMarker(criminalMarker);
-            criminalMarker = await createCriminalMarker(map, aimove.coords[0],
-                aimove.coords[1]);
-          } else if (j === 1) {
-            etsijaMarker1 = removeMarker(etsijaMarker1);
-            etsijaMarker1 = await createEtsijaMarker(map, aimove.coords[0],
-                aimove.coords[1]);
+    for (let j = 0; j < players.length; j++) {
+      if (players[j].is_computer === 0) {
+        console.log(players[j].screen_name);
+        if(j>=1){
+          const criminalinfo = await showCriminalOldLoc(criminalp.id)
+          tickettype = criminalinfo.ticket_type
+          console.log(tickettype )
+        }else{
+          tickettype = null
+        }
+        await showPlayerInfo(players[j].id, gameid, players[j].screen_name, j,tickettype);
+        if (players[j].type === 1){
+          const c_coord = await showCriminalOldLoc(criminalp.id)
+          console.log(c_coord)
+          move = await moveListener(players[j].screen_name, players[j].is_computer,i);
+          if (j === 1) {
+          etsijaMarker1 = removeMarker(etsijaMarker1);
+          etsijaMarker1 = await createEtsijaMarker(map, move.position.lat, move.position.lng);
           } else {
             etsijaMarker2 = removeMarker(etsijaMarker2);
-            etsijaMarker2 = await createEtsija2Marker(map, aimove.coords[0],
-                aimove.coords[1]);
+            etsijaMarker2 = await createEtsija2Marker(map, move.position.lat, move.position.lng);
           }
-
-          players[j].latitude = aimove.coords[0]
-          players[j].longitude = aimove.coords[1]
+        }else{
+          if (i >= 2){
+            criminalMarker = removeMarker(criminalMarker);
+            criminalMarker = await createCriminalMarker(map, players[j].latitude,players[j].longitude);
+            move = await moveListener(players[j].screen_name, players[j].is_computer,i);
+            console.log(move);
+            console.log('kierros on 2=>')
+          }else{
+            move = await moveListener(players[j].screen_name, players[j].is_computer,i);
+            console.log('kierros1')
+          }
         }
+        players[j].latitude = move.position.lat
+        players[j].longitude = move.position.lng
+      } else {
+        console.log(players[j].screen_name);
+        const aimove = await send_move(players[j].screen_name, 1, 1,
+            players[j].is_computer);
+        if (j === 0) {
+          criminalMarker = removeMarker(criminalMarker);
+          criminalMarker = await createCriminalMarker(map, aimove.coords[0],
+              aimove.coords[1]);
+        } else if (j === 1) {
+          etsijaMarker1 = removeMarker(etsijaMarker1);
+          etsijaMarker1 = await createEtsijaMarker(map, aimove.coords[0],
+              aimove.coords[1]);
+        } else {
+          etsijaMarker2 = removeMarker(etsijaMarker2);
+          etsijaMarker2 = await createEtsija2Marker(map, aimove.coords[0],
+              aimove.coords[1]);
+        }
+
+        players[j].latitude = aimove.coords[0]
+        players[j].longitude = aimove.coords[1]
+      }
 
         // Check if the game is over after every move
         await gameover();
 
-        // // Check if the game is over after every move
-        // for (let k = 0; k < j; k++) {
-        //   if (
-        //       (players[k].type === 0 && players[j].type === 1) ||
-        //       (players[k].type === 1 && players[j].type === 0)
-        //   ) {
-        //     if (
-        //         players[k].location.lat === players[j].location.lat &&
-        //         players[k].location.lng === players[j].location.lng
-        //     ) {
-        //       console.log(
-        //           `Criminal ${players[k].screen_name} and Detective ${players[j].screen_name} are at the same location!`);
-        //       console.log('Game over!');
-        //
-        //       // Update winner and redirect
-        //       const winnerMessage = `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`;
-        //
-        //       localStorage.getItem('winnerMessage');
-        //
-        //       // Redirect immediately
-        //       localStorage.setItem('winnerMessage',
-        //           `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`);
-        //       setTimeout(() => {
-        //         console.log('Redirecting to gameover.html...');
-        //         window.location.href = '../pages/gameover.html';
-        //       }, 2000);
-        //
-        //       return; // Stop further execution as the game is over
-        //     }
-        //   }
-        // }
-      }
+
     }
   }
+}
 
 //moi
 // Get the players id that's turn it is
