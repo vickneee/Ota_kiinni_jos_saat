@@ -20,12 +20,14 @@ async function fetchUserNames() {
   }
 }
 
+// Check if the user already exists in the database
 async function checkUser(input) {
   const userNameInputs = document.querySelectorAll(
       'input[name="player1"], input[name="player2"], input[name="player3"]');
   const userNames = await fetchUserNames();
   // console.log('Fetched user names in checkUser:', userNames); // Debugging line
 
+  // Check if the username is in the list of usernames
   if (userNames && Array.isArray(userNames)) {
     userNameInputs.forEach(input => {
           const userName = input.value.trim();
@@ -41,6 +43,7 @@ async function checkUser(input) {
   }
 }
 
+// Add event listeners to the input fields
 document.addEventListener('DOMContentLoaded', async function() {
   const userNameInputs = document.querySelectorAll(
       'input[name="player1"], input[name="player2"], input[name="player3"]');
