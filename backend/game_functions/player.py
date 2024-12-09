@@ -74,25 +74,27 @@ class Player:
 
 
 
-
-    def get_criminal_movements(self,id):
+    @staticmethod
+    def get_criminal_movements(id):
         sql = f"""
-        SELECT player.screen_name, airport.name, country.name, past_movement.ticket_type
+        SELECT player.screen_name, airport.name, country.name, past_movement.ticket_type, airport.latitude,airport.longitude
         FROM past_movement
         LEFT JOIN player ON past_movement.player_id = player.id
         LEFT JOIN airport ON past_movement.location = airport.ident
         LEFT JOIN country ON airport.iso_country = country.iso_country
-        WHERE past_movement.player_id = '{self.id}'
+        WHERE past_movement.player_id = '{id}'
         ORDER BY past_movement.id DESC
         LIMIT 1
         """
-        result = self.database.db_query(sql)
+        result = Database().db_query(sql)
         if result:
             return {
                 "screen_name": result[0][0],
                 "airport": result[0][1],
                 "country": result[0][2],
-                "ticket_type": result[0][3]
+                "ticket_type": result[0][3],
+                "latitude":result[0][4],
+                "longitude":result[0][5]
             }
         return {}
 
@@ -197,3 +199,5 @@ class Player:
         ]
         return players
 
+
+print(Player.get_criminal_movements(231))
