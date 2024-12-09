@@ -11,8 +11,6 @@
     --light-main-blue: #ADD1F8FF; /* Light main blue */
     --main-blue: #b0d6f8; /* Main blue */
     --main-blue-hover: rgb(141, 197, 246); /* Main blue */
-    --darker-blue: #23245c; /* Secondary blue */
-    --darker-red: #6c0000; /* Secondary blue */
     --gold: #C49339; /* Luxury accent */
     --raisin-black: #202231; /* Main black, text color */
     --red: red; /* Ticket text color */
@@ -477,7 +475,7 @@ select:focus {
     padding: 0 3rem;
 }
 
-.jatka-pelia {
+.continue-game {
     padding-left: 4rem;
 }
 
@@ -625,6 +623,10 @@ table {
     text-transform: uppercase;
 }
 
+#winner {
+    font-size: 1.6rem;
+}
+
 audio {
     margin-bottom: 3rem;
 }
@@ -750,7 +752,7 @@ audio {
     margin-left: 0 !important;
     }
 
-    .jatka-pelia {
+    .continue-game {
     padding-left: 0;
 }
 

@@ -16,6 +16,8 @@ import {
   getPinElement,
 } from './markers.js';
 
+import { gameover } from './gameover.js';
+
 let criminalMarker, etsijaMarker1, etsijaMarker2;
 let map;
 
@@ -158,6 +160,14 @@ async function initMap() {
       return [];
     }
   }
+}
+
+export async function gamedata() {
+  const response = await fetch('http://127.0.0.1:3000/api/getdata');
+  const data = await response.json();
+  return data;
+}
+
 
   async function gamedata() {
     const response = await fetch('http://127.0.0.1:3000/api/getdata');
@@ -293,6 +303,13 @@ async function initMap() {
       console.error('Error sending players:', error);
     }
 
+export function criminal(players){
+  for (let player of players){
+    if (player.type === 0){
+      return player
+    }
+  }
+
   }
 
   function playerData() {
@@ -421,59 +438,6 @@ async function initMap() {
     return marker; // Return the cleared marker reference
   }
 
-  async function gameover() {
-    // Fetch game data
-    const gameData = await gamedata();
-    // Ensure gamedata() returns the required structure
-    console.log('Line 395 Game data:', gameData);
-    if (!gameData || !gameData.players) {
-      console.error('Invalid game data:', gameData);
-      return;
-    }
-
-    // const gameid = gameData.game_id;
-    const players = gameData.players;
-
-    // Check if the game is over after every move
-    for (let j = 0; j < players.length; j++) {
-      for (let k = 0; k < j; k++) {
-        if (
-            (players[k].type === 0 && players[j].type === 1) ||
-            (players[k].type === 1 && players[j].type === 0)
-        ) {
-          if (
-              players[k].location.lat === players[j].location.lat &&
-              players[k].location.lng === players[j].location.lng
-          ) {
-            if (players[k].location.lat && players[k].location.lng ===
-                players[j].location.lat && players[j].location.lng) {
-              console.log(
-                  `Criminal ${players[k].screen_name} and Detective ${players[j].screen_name} are at the same location!`
-              );
-              console.log('Game over!');
-
-              // Update winner message
-              const winnerMessage = `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`;
-
-              // Store the message in localStorage
-              localStorage.setItem('winnerMessage', winnerMessage);
-
-              // Redirect to gameover.html after a short delay
-              setTimeout(() => {
-                console.log('Redirecting to gameover.html...');
-                window.location.href = '../pages/gameover.html';
-              }, 2000);
-
-              // Exit the loops
-              return;
-            }
-          }
-        }
-      }
-    }
-  }
-
-
 async function gameRounds() {
   console.log('moi');
   const gameData = await gamedata();
@@ -544,10 +508,8 @@ async function gameRounds() {
         players[j].longitude = aimove.coords[1]
       }
 
-        // Check if the game is over after every move
-        await gameover();
-
-
+      // Check if the game is over after every move
+      await gameover(i);
     }
   }
 }
