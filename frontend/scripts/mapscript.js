@@ -793,4 +793,4 @@ async function endGame(player1, player2) {
   setTimeout(() => {
     window.location.href = "../pages/gameover.html";
   }, 2000);
-}
+}}

@@ -205,4 +205,3 @@ class Player:
         return players
 
 
-print(Player.get_criminal_movements(231))
