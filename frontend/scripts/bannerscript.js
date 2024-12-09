@@ -8,8 +8,9 @@ function bannerFunc() {
 
     console.log('Players fetched:', players); // Debugging
     console.log('First player:', firstPlayer); // Debugging
+    const continueG = Resume()
 
-    if (firstPlayer && firstPlayer.type === 0 && firstPlayer.is_computer === 0) {
+    if (firstPlayer && firstPlayer.type === 0 && firstPlayer.is_computer === 0 && continueG === false) {
         displayBanner(firstPlayer);
     } else {
         console.error('No player data available. Ensure localStorage is populated.');
@@ -33,6 +34,11 @@ export function playbanner() {
     const playBanner = document.getElementById('play-banner');
     playBanner.style.display = 'table';
     startBanner.style.display = 'none'
+}
+
+function Resume() {
+  const resume = JSON.parse(localStorage.getItem('continue'));
+  return resume;
 }
 
 
