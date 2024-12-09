@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+
+# Database class to connect to the database
 class Database:
     def __init__(self):
         self.host = '127.0.0.1'
@@ -26,7 +28,7 @@ class Database:
         return conn
 
     # Query the database
-    def db_query(self,sql):
+    def db_query(self, sql):
         conn = self.get_db_connection()
         cursor = conn.cursor()
         cursor.execute(sql)
@@ -34,7 +36,7 @@ class Database:
         return result
 
     # Insert into the database
-    def db_insert(self,sql):
+    def db_insert(self, sql):
         conn = self.get_db_connection()
         cursor = conn.cursor()
         cursor.execute(sql)
@@ -43,14 +45,14 @@ class Database:
         return lastrowid
 
     # Delete from the database
-    def db_delete(self,sql):
+    def db_delete(self, sql):
         conn = self.get_db_connection()
         cursor = conn.cursor()
         cursor.execute(sql)
         conn.commit()
 
     # Update the database
-    def db_update(self,sql):
+    def db_update(self, sql):
         conn = self.get_db_connection()
         cursor = conn.cursor()
         cursor.execute(sql)
