@@ -11,8 +11,6 @@
     --light-main-blue: #ADD1F8FF; /* Light main blue */
     --main-blue: #b0d6f8; /* Main blue */
     --main-blue-hover: rgb(141, 197, 246); /* Main blue */
-    --darker-blue: #23245c; /* Secondary blue */
-    --darker-red: #6c0000; /* Secondary blue */
     --gold: #C49339; /* Luxury accent */
     --raisin-black: #202231; /* Main black, text color */
     --red: red; /* Ticket text color */
@@ -91,7 +89,76 @@ body::before {
     box-shadow: 0 0 10px 5px var(--red);
 }
 
-/***** Video *****/
+/***** Video Animation *****/
+
+/* Initial hidden state */
+#video-container {
+    position: fixed;
+    bottom: -100%; /* Completely off-screen at the bottom */
+    left: 0;
+    width: 100vw;  /* Full screen width */
+    height: 100vh; /* Full screen height */
+    opacity: 0;    /* Start barely visible */
+    background-color: transparent; /* Transparent initially */
+    z-index: 1001; /* Ensure it stays above other elements */
+    display: none; /* Initially hidden */
+}
+
+/* Active state: apply rise animation */
+#video-container.active {
+    display: block; /* Make it visible */
+    animation: riseAndCover 1.8s forwards;
+}
+
+/* Exiting state: apply fall animation */
+#video-container.exit {
+    animation: fallAndReveal 1.8s forwards;
+}
+
+/* Rising animation */
+@keyframes riseAndCover {
+    0% {
+        bottom: -100%; /* Start fully off-screen */
+        opacity: 0.2;  /* Barely visible */
+        background-color: transparent; /* Background still transparent */
+    }
+    50% {
+        bottom: 0;     /* At full screen */
+        opacity: 0.5;  /* Semi-transparent */
+        background-color: rgba(0, 0, 0, 0.5); /* Add slight background tint */
+    }
+    100% {
+        bottom: 0;     /* Fully visible at full screen */
+        opacity: 1;    /* Fully opaque */
+        background-color: black; /* Solid black background */
+    }
+}
+
+/* Falling animation */
+@keyframes fallAndReveal {
+    0% {
+        bottom: 0;     /* Start from full screen */
+        opacity: 1;    /* Fully visible */
+        background-color: black; /* Solid black background */
+    }
+    50% {
+        bottom: -100%; /* Move off-screen */
+        opacity: 0.5;  /* Semi-transparent */
+        background-color: rgba(0, 0, 0, 0.5); /* Slight background tint */
+    }
+    100% {
+        bottom: -100%; /* Fully off-screen */
+        opacity: 0;    /* Fully transparent */
+        background-color: transparent; /* Background becomes transparent */
+    }
+}
+
+/* Full-screen video styling */
+#animation-video {
+    width: 100%; /* Scale to container's width */
+    height: 100%; /* Scale to container's height */
+    object-fit: cover; /* Ensures video fills the container without distortion */
+}
 
 .animation-video {
     width: 20%;
@@ -180,6 +247,8 @@ input {
     border-radius: 2px;
 }
 
+/***** Colors *****/
+
 .color-red {
     color: var(--red);
 }
@@ -190,6 +259,18 @@ input {
 
 .color-blue {
     color: var(--blue);
+}
+
+.rikollinen{
+    color:var(--green);
+}
+
+.etsiva1 {
+    color:var(--blue)
+}
+
+.etsiva2{
+    color:var(--red)
 }
 
 /***** Buttons *****/
@@ -255,8 +336,37 @@ li {
 
 /***** Banner *****/
 
-.kierros-th {
-    min-width: 14.7rem;
+#start-banner {
+    background-color: var(--seasalt); /* Background color */
+    color: var(--green);
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+#play-banner {
+    background-color: var(--seasalt); /* Background color */
+}
+
+.map-th {
+    border: 2px solid var(--gold);
+    padding: 1rem 0;
+    border-collapse: revert;
+}
+
+.dropdown-th {
+    width: 4rem;
+    padding: 0 2rem;
+    overflow: hidden;
+}
+
+.counter {
+    padding: 1rem;
+    width: 3rem;
+}
+
+.round-th {
+    min-width: 15rem;
     padding: 0 2rem;
 }
 
@@ -275,37 +385,16 @@ select:focus {
     border: none;
 }
 
-.rikollinen{
-    color:var(--green);
-}
+/***** Instructions *****/
 
-.etsiva1 {
-    color:var(--blue)
-}
-
-.etsiva2{
-    color:var(--red)
-}
-/***** Exit confirmation *****/
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding-top: 10rem;
-}
-
-.exit-modal-content {
-    background-color: #fff;
-    margin: auto;
-    padding: 1.25rem;
-    width: 18.75rem;
-    text-align: center;
+.instructions-container {
+    font-size: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: left;
+    margin-bottom: 2rem;
+    max-width: 52rem;
 }
 
 /***** Instructions modal *****/
@@ -350,6 +439,28 @@ button#confirmNo:hover {
     box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
     transform: translateY(-1px);
     background-color: #dd0000;
+}
+
+/***** Exit confirmation *****/
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-top: 10rem;
+}
+
+.exit-modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 1.25rem;
+    width: 18.75rem;
+    text-align: center;
 }
 
 /***** New Game *****/
@@ -422,42 +533,6 @@ select:focus {
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.1);
 }
 
-/***** Instructions *****/
-
-.instructions-container {
-    font-size: 1.2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: left;
-    margin-bottom: 2rem;
-    max-width: 52rem;
-}
-
-/***** Tekijät *****/
-
-.card-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem 2rem;
-    margin-bottom: 2rem;
-    font-size: 1.2rem;
-    width: 13rem;
-    color: var(--light-gray);
-    background-color: var(--seasalt);
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    border-radius: 2px; /* Rounded corners */
-}
-
 /***** Continue game *****/
 
 .saved-game-container {
@@ -498,110 +573,28 @@ table {
     font-size: 1.2rem;
 }
 
-/***** Video Animation *****/
+/***** Developers *****/
 
-/* Initial hidden state */
-#video-container {
-    position: fixed;
-    bottom: -100%; /* Completely off-screen at the bottom */
-    left: 0;
-    width: 100vw;  /* Full screen width */
-    height: 100vh; /* Full screen height */
-    opacity: 0;    /* Start barely visible */
-    background-color: transparent; /* Transparent initially */
-    z-index: 1001; /* Ensure it stays above other elements */
-    display: none; /* Initially hidden */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
-/* Active state: apply rise animation */
-#video-container.active {
-    display: block; /* Make it visible */
-    animation: riseAndCover 1.8s forwards;
-}
-
-/* Exiting state: apply fall animation */
-#video-container.exit {
-    animation: fallAndReveal 1.8s forwards;
-}
-
-/* Rising animation */
-@keyframes riseAndCover {
-    0% {
-        bottom: -100%; /* Start fully off-screen */
-        opacity: 0.2;  /* Barely visible */
-        background-color: transparent; /* Background still transparent */
-    }
-    50% {
-        bottom: 0;     /* At full screen */
-        opacity: 0.5;  /* Semi-transparent */
-        background-color: rgba(0, 0, 0, 0.5); /* Add slight background tint */
-    }
-    100% {
-        bottom: 0;     /* Fully visible at full screen */
-        opacity: 1;    /* Fully opaque */
-        background-color: black; /* Solid black background */
-    }
-}
-
-/* Falling animation */
-@keyframes fallAndReveal {
-    0% {
-        bottom: 0;     /* Start from full screen */
-        opacity: 1;    /* Fully visible */
-        background-color: black; /* Solid black background */
-    }
-    50% {
-        bottom: -100%; /* Move off-screen */
-        opacity: 0.5;  /* Semi-transparent */
-        background-color: rgba(0, 0, 0, 0.5); /* Slight background tint */
-    }
-    100% {
-        bottom: -100%; /* Fully off-screen */
-        opacity: 0;    /* Fully transparent */
-        background-color: transparent; /* Background becomes transparent */
-    }
-}
-
-/* Full-screen video styling */
-#animation-video {
-    width: 100%; /* Scale to container's width */
-    height: 100%; /* Scale to container's height */
-    object-fit: cover; /* Ensures video fills the container without distortion */
-}
-
-/***** Game Start *****/
-
-#start-banner {
-    background-color: var(--seasalt); /* Background color */
-    color: var(--green);
-    padding: 1.2rem;
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 2rem;
+    margin-bottom: 2rem;
     font-size: 1.2rem;
-    text-align: center;
-    /* display: none */
-    /*border: 2px solid var(--gold);*/
-    /*border-collapse: revert;*/
-}
-
-#play-banner {
-    /* display: none; */
-    background-color: var(--seasalt); /* Background color */
-}
-
-.map-th {
-    border: 2px solid var(--gold);
-    padding: 1rem 0;
-    border-collapse: revert;
-}
-
-.dropdown-th {
-    width: 4rem;
-    padding: 0 2rem;
-    overflow: hidden;
-}
-
-.counter {
-    padding: 1rem;
-    width: 3rem;
+    width: 13rem;
+    color: var(--light-gray);
+    background-color: var(--seasalt);
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border-radius: 2px; /* Rounded corners */
 }
 
 /***** Game Over *****/
@@ -752,7 +745,7 @@ audio {
 
     .jatka-pelia {
     padding-left: 0;
-}
+    }
 
     .game-over-h1 {
         font-size: 2.5rem;
@@ -807,7 +800,6 @@ audio {
     h1 {
         font-size: 2.5rem;
     }
-
 }
 
 /* For screens smaller than 400px */
@@ -820,7 +812,4 @@ audio {
     h1 {
         font-size: 2.5rem;
     }
-
 }
-
-/* For screens smaller than 300px */

@@ -1,12 +1,8 @@
-import traceback
-
-
 from flask import Flask, jsonify, Response, request
 from flask_cors import CORS
 import os
 import json
 
-from backend.game_functions.database import Database
 from backend.game_functions.airport import Airport
 from backend.game_functions.game import Game
 from dotenv import load_dotenv
@@ -19,11 +15,13 @@ CORS(app)
 g = Game()
 
 
+# Get the environment variables
 @app.route('/api/env')
 def get_env():
     return jsonify({'MAP_KEY': os.getenv('MAP_KEY')})
 
 
+# Get all the airports
 @app.route('/api/airports')
 def airport_locations():
     try:
@@ -38,6 +36,7 @@ def airport_locations():
     return Response(response=jsonans, status=status, mimetype="application/json")
 
 
+# Start a new game
 @app.route('/api/start_game', methods=['POST'])
 def start_game():
     try:
@@ -52,22 +51,16 @@ def start_game():
         det2_coord = [{'latitude': det_starts[1][3], 'longitude': det_starts[1][4]}]
         player_list = []
         for i in range(3):
-
-            player_list.append({'name': players[i]['name'], 'player_type': players[i]['type'], 'location': all_loc[i], 'is_computer': players[i]['is_computer']})
+            player_list.append({'name': players[i]['name'], 'player_type': players[i]['type'], 'location': all_loc[i],
+                                'is_computer': players[i]['is_computer']})
         g.reset_game()
         g.create_game_id()
         g.add_players(player_list)
 
         status = 200
-        ans = {'status': status,
-               'message': 'Game started successfully',
-               'players': players,
-                'detective1_location': det1_coord,
-               'detective2_location': det2_coord,
-               'criminal_location': criminal_data,
-
-
-        }
+        ans = {'status': status, 'message': 'Game started successfully', 'players': players,
+               'detective1_location': det1_coord, 'detective2_location': det2_coord,
+               'criminal_location': criminal_data, }
     except Exception as e:
         import traceback
         error_message = traceback.format_exc()
@@ -78,6 +71,7 @@ def start_game():
     return Response(response=jsonans, status=status, mimetype="application/json")
 
 
+# Start a new game with AI
 @app.route('/api/start_game_ai', methods=['POST'])
 def start_game_ai():
     try:
@@ -101,7 +95,7 @@ def start_game_ai():
 
         status = 200
         ans = {'status': status, 'message': 'Game started successfully', 'players': player_list,
-            'detective1_location': det1_coord, 'detective2_location': det2_coord, 'criminal_coord': criminal_coord      }
+               'detective1_location': det1_coord, 'detective2_location': det2_coord, 'criminal_coord': criminal_coord}
     except Exception as e:
         import traceback
         error_message = traceback.format_exc()
@@ -112,6 +106,7 @@ def start_game_ai():
     return Response(response=jsonans, status=status, mimetype="application/json")
 
 
+# Error handling for 404
 @app.errorhandler(404)
 def page_not_found(err):
     ans = {"status": "404", "teksti": "Virheellinen päätepiste"}
@@ -119,6 +114,7 @@ def page_not_found(err):
     return Response(response=jsonans, status=404, mimetype="application/json")
 
 
+# Saved games endpoint
 @app.route('/api/saved-games', methods=['GET'])
 def fetch_saved_games():
     try:
@@ -134,6 +130,7 @@ def fetch_saved_games():
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
+# Get and check if the player exists
 @app.route('/api/check-user', methods=['GET'])
 def check_player():
     try:
@@ -148,6 +145,7 @@ def check_player():
     return Response(response=jsonans, status=status, mimetype="application/json")
 
 
+# Get player tickets
 @app.route('/api/player-tickets/<int:player_id>', methods=['GET'])
 def player_tickets(player_id):
     try:
@@ -157,6 +155,7 @@ def player_tickets(player_id):
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
+# Ge player round
 @app.route('/api/round/<int:game_id>', methods=['GET'])
 def get_round(game_id):
     try:
@@ -166,6 +165,7 @@ def get_round(game_id):
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
+# Get player screen names
 @app.route('/api/game-screen-names/<int:game_id>', methods=['GET'])
 def game_screen_names(game_id):
     try:
@@ -175,6 +175,7 @@ def game_screen_names(game_id):
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
+# Post play round
 @app.route('/api/play_round', methods=['POST'])
 def play_round():
     try:
@@ -199,10 +200,9 @@ def play_round():
         if is_computer == 1:
             coords = Airport().airports_coord(move)
             print()
-            ans = {'status': status, 'message': 'Move made successfully', 'icao': move, 'coords':coords}
+            ans = {'status': status, 'message': 'Move made successfully', 'icao': move, 'coords': coords}
         else:
             ans = {'status': status, 'message': 'Move made successfully'}
-
 
     except Exception as e:
         # Log detailed error
@@ -212,17 +212,15 @@ def play_round():
 
         # Response for failure
         status = 500
-        ans = {
-            'status': status,
-            'message': 'Failed to make a move',
-            'error': str(e),
-            'details': error_message.splitlines()
-        }
+        ans = {'status': status, 'message': 'Failed to make a move', 'error': str(e),
+               'details': error_message.splitlines()}
 
     # Return JSON response
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
 
+
+# Get player data
 @app.route('/api/getdata', methods=['GET'])
 def get_data():
     try:
@@ -242,6 +240,7 @@ def get_data():
     return Response(response=jsonans, status=status, mimetype="application/json")
 
 
+# Resume game
 @app.route('/api/resume_game', methods=['PUT'])
 def resume_game():
     try:
@@ -262,6 +261,8 @@ def resume_game():
     jsonans = json.dumps(ans)
     return Response(response=jsonans, status=status, mimetype="application/json")
 
+
+# Get current turn
 @app.route('/api/current-turn/<int:game_id>', methods=['GET'])
 def get_current_turn(game_id):
     try:
@@ -278,11 +279,12 @@ def get_current_turn(game_id):
         print("Error in /api/current-turn:", error_message)
         return jsonify({"status": "error", "message": str(e)}), 500
 
+
 # Get recommended airports based on the players location and ticket types
 @app.route('/api/get-recommended-airports/<name>/<int:round>', methods=['GET'])
-def get_recommended_airports(name,round):
+def get_recommended_airports(name, round):
     try:
-        recommended_airports = Airport().get_recommended_airports(name,round)
+        recommended_airports = Airport().get_recommended_airports(name, round)
         return jsonify({"status": "success", "recommended_airports": recommended_airports}), 200
     except Exception as e:
         import traceback
@@ -291,17 +293,20 @@ def get_recommended_airports(name,round):
         status = 500
         ans = {'status': status, 'message': 'Failed to retrieve data', 'error': str(e)}
 
-@app.route('/api/criminal/<int:id>',methods=['GET'])
+
+# Get criminal movements
+@app.route('/api/criminal/<int:id>', methods=['GET'])
 def criminal_moves(id):
     try:
         past_location = Player.get_criminal_movements(id)
-        return jsonify({"status": "success", "past_location":past_location}), 200
+        return jsonify({"status": "success", "past_location": past_location}), 200
     except Exception as e:
         import traceback
         error_message = traceback.format_exc()
         print("Error in /api/getdata:", error_message)
         status = 500
         ans = {'status': status, 'message': 'Failed to retrieve data', 'error': str(e)}
+
 
 if __name__ == '__main__':
     app.run(use_reloader=True, host='127.0.0.1', port=3000)

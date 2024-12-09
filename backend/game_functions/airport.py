@@ -2,6 +2,7 @@ from oldfiles.assisting_functions import haversine
 from geopy.distance import geodesic as GD
 from backend.game_functions.database import Database
 
+
 # Define airport class
 class Airport:
 
@@ -35,9 +36,8 @@ class Airport:
         all_coord = self.airports_location()
         return all_coord[icao]
 
-
     # Get recommended airports based on the players location and ticket types
-    def get_recommended_airports(self, name,round):
+    def get_recommended_airports(self, name, round):
         from backend.game_functions.tickets import Tickets
         from backend.game_functions.player import Player
         all_airports = self.get_airports()
@@ -62,12 +62,12 @@ class Airport:
             for key, value in sorted_distances[:2]:  # Limit to first 2
                 recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
                                     "distance": value, "ticket_type": 'potkurikone', "latitude": all_airports[key][
-                        'latitude'], "longitude": all_airports[key]['longitude'], "icao":key}
+                        'latitude'], "longitude": all_airports[key]['longitude'], "icao": key}
         if 'matkustajakone' in tickets:
             for key, value in sorted_distances[2:4]:  # Next 2
                 recommended[key] = {"name": all_airports[key]['name'], "country": all_airports[key]['country'],
                                     "distance": value, "ticket_type": 'matkustajakone', "latitude": all_airports[key][
-                        'latitude'], "longitude": all_airports[key]['longitude'], "icao":key}
+                        'latitude'], "longitude": all_airports[key]['longitude'], "icao": key}
         if player_type == 0:
             if 'yksityiskone' in tickets:
                 for key, value in sorted_distances[-2:]:  # Last 2 airports
@@ -93,7 +93,7 @@ class Airport:
             distance = haversine(player_location['latitude'], player_location['longitude'],
                                  location['latitude'], location['longitude'])
 
-            # Update the farthest and second farthest airports
+            # Update the farthest and second-farthest airports
             if distance > max_distance:
                 second_max_distance = max_distance
                 max_distance = distance
@@ -104,4 +104,3 @@ class Airport:
                 farthest_airports[1] = (icao, location['name'], location['country'], location['latitude'], location['longitude'], f"{distance:.2f} km")
 
         return farthest_airports
-

@@ -1,7 +1,5 @@
-
 // When a checkbox is clicked, uncheck all other checkboxes in the same row
 function checkboxes(){
-
   const checkboxes = document.querySelectorAll('.choice-checkbox');
 
   checkboxes.forEach(checkbox => {
@@ -20,6 +18,7 @@ function checkboxes(){
   });
 }
 
+// Check if a checkbox is checked for each player
 function checked(){
   const form = document.querySelector('form');
   form.addEventListener('submit', function(event) {
@@ -60,6 +59,7 @@ function checked(){
   });
 }
 
+// Start the game
 function start_game(){
   const form = document.querySelector('form')
   const trs = form.querySelectorAll('tr')
@@ -80,19 +80,17 @@ function start_game(){
         let player = {name:input.value, type:type,is_computer:0}
         players.push(player)
       }
-
   });
   // console.log(players)
   return players
-
 }
 
-
+// Store the form data
 function storeFormData(players){
   localStorage.setItem('players',JSON.stringify(players))
 }
 
-
+// Event listener for the form
 const formlistener =()=>{
   checkboxes()
   const form = document.querySelector('form')
@@ -102,8 +100,6 @@ const formlistener =()=>{
     evt.preventDefault()
     let players = start_game()
     storeFormData(players)
-
-
   })
 }
 

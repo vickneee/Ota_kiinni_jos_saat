@@ -1,3 +1,4 @@
+// Initiate dropdowns for the play and start menus
 document.addEventListener("DOMContentLoaded", function () {
   const playMenuDropdown = document.getElementById("play-menu");
   const startMenuDropdown = document.getElementById("start-menu");
@@ -7,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const confirmYes = document.getElementById("confirmYes");
   const confirmNo = document.getElementById("confirmNo");
 
+  // Event listeners for the dropdowns
   playMenuDropdown.addEventListener("change", function () {
     const selectedValue = playMenuDropdown.value;
     if (selectedValue === "#instructions") {
@@ -17,6 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
     playMenuDropdown.value = "#";
   });
 
+  // Event listeners for the dropdowns
   startMenuDropdown.addEventListener("change", function () {
     const selectedValue = startMenuDropdown.value;
     if (selectedValue === "#instructions") {

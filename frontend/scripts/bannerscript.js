@@ -1,3 +1,4 @@
+// Banner script for displaying the start banner and play banner
 function bannerFunc() {
     const startBanner = document.getElementById('start-banner');
     const playBanner = document.getElementById('play-banner');
@@ -15,15 +16,15 @@ function bannerFunc() {
     } else {
         console.error('No player data available. Ensure localStorage is populated.');
         startBanner.style.display = 'none'
-
     }
 }
 
+// Run the banner script when the DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     bannerFunc();
 });
 
-
+// Fetch player data from localStorage
 function playerData() {
     const players = JSON.parse(localStorage.getItem('players'));
     return players;
@@ -36,12 +37,13 @@ export function playbanner() {
     startBanner.style.display = 'none'
 }
 
+// Fetch resume data from localStorage
 function Resume() {
   const resume = JSON.parse(localStorage.getItem('continue'));
   return resume;
 }
 
-
+// Display the start banner
 export function displayBanner(firstPlayer) {
     const startBanner = document.getElementById('start-banner');
     const playBanner = document.getElementById('play-banner');
@@ -49,7 +51,6 @@ export function displayBanner(firstPlayer) {
     startGame.textContent = `${firstPlayer.name}`;
     startBanner.style.display = 'table';
     playBanner.style.display = 'none'
-//h
 }
 
 // Fetch player tickets
@@ -74,6 +75,7 @@ export function fetchPlayerTickets(playerId) {
         });
 }
 
+// Fetch continue round
 export async function fetchContinueRound(gameId) {
     const response = await fetch(`http://127.0.0.1:3000/api/round/${gameId}`);
     const data = await response.json()
@@ -128,32 +130,9 @@ export function fetchGameScreenNames(index,screen_name) {
     playerNameElement.textContent = screen_name
 }
 
+// Show player info
 export async function showPlayerInfo(playerId, gameId,screen_name,index,ticket_type){
       await fetchPlayerTickets(playerId);
       await fetchRound(gameId,ticket_type);
       await fetchGameScreenNames(index,screen_name);
 }
-
-    /*
-    fetch(`http://127.0.0.1:3000/api/game-screen-names/${gameId}`)
-        .then(response => response.json())
-        .then(data => {
-            if (data.status === 'success') {
-                const screenNames = data.screen_names.map(name => {
-                    const player = data.players.find(p => p.name === name);
-                    if (!player) {
-                        console.error(`Player with name ${name} not found`);
-                        return `Unknown player ${name}`;
-                    }
-                    return player.type === 0 ? `Rikollisen ${name} vuoro` : `Etsivän ${name} vuoro`;
-                });
-            } else {
-                console.error('Error fetching game screen names:', data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-        */
-
-

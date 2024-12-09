@@ -1,3 +1,6 @@
+// This file contains functions to create and add markers to the map.
+// The functions are used in the frontend/scripts/map.js file.
+// The functions are used to create markers for criminals and investigators.
 export async function createCriminalMarker(map, lat, lng) {
   try {
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
@@ -34,7 +37,7 @@ export async function createCriminalMarker(map, lat, lng) {
   }
 }
 
-
+// Create and add the etsiva 1 marker
 export async function createEtsijaMarker(map, lat, lng) {
   try {
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
@@ -97,15 +100,14 @@ export async function createEtsija2Marker(map, lat, lng) {
   }
 }
 
+// Create and add the marker to the map
 export function addMarkersToMap(map,recommendedAirports) {
   return new Promise(async (resolve, reject) => {
     try {
       let markers = [];
       let markersdata = [];
-      // fetch the player tickets
-      //const players = playerData();
-      //console.log(players);
-
+      // const players = playerData();
+      // console.log(players);
 
       for (const airport of Object.values(recommendedAirports)) {
         const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
@@ -138,7 +140,7 @@ export function addMarkersToMap(map,recommendedAirports) {
   });
 }
 
-
+// Determine the pin type based on the ticket type
 export function determinePinType(ticketType) {
   // Define your criteria to determine the pin type based on the ticket type
   if (ticketType === 'potkurikone') {
@@ -152,6 +154,7 @@ export function determinePinType(ticketType) {
   }
 }
 
+// Get the pin element based on the pin type
 export function getPinElement(PinElement, type) {
   switch (type) {
     case 'green':

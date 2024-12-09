@@ -1,3 +1,4 @@
+// Continue game functionality
 document.addEventListener("DOMContentLoaded", async () => {
     const container = document.getElementById("saved-games-container");
     container.classList.add("saved-game-container");
@@ -52,13 +53,10 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const data = await resumeGame(game);
                     console.log(data)
 
-
                   localStorage.setItem('resume', 'true');
 
                   window.location.href = '../pages/map.html';
                   console.log(game);
-
-
                 });
 
                 actionCell.appendChild(resumeButton);
@@ -98,6 +96,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
       console.error('Error resuming game', error);
     }
-
-
 }
