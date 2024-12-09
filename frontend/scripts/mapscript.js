@@ -1,6 +1,7 @@
 'use strict';
 
 import {
+  fetchContinueRound,
   fetchRound,
   playbanner,
   showPlayerInfo,
@@ -608,7 +609,7 @@ function resumeGame() {
       const gameData = await gamedata(); // Fetch game data
       const gameid = gameData.game_id;
       const players = gameData.players;
-      let round = await fetchRound(gameid);
+      let round = await fetchContinueRound(gameid);
 
       // Fetch the current player ID whose turn it is
       let currentPlayerId = await fetchCurrentTurn(gameid);

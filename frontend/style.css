@@ -109,6 +109,7 @@ body {
     padding: 0;
     height: 100vh;
     font-family: 'Rubik', sans-serif;
+
     background-color: var(--seasalt);
     text-align: center;
     display: flex;
@@ -147,7 +148,7 @@ body {
 /***** Typography *****/
 
 h1 {
-    font-family: 'Rubik', sans-serif;
+    font-family: "Rubik", sans-serif;
     font-size: 3rem;
     color: var(--raisin-black);
 }
@@ -212,7 +213,7 @@ button {
     padding: 0.6rem 1.6rem;
     width: 10rem;
     font-size: 1.1rem;
-    font-family: 'Rubik', sans-serif;
+    font-family: "Rubik", sans-serif;
     color: var(--raisin-black);
     background-color: var(--main-blue);
     border: 2px solid var(--gold);

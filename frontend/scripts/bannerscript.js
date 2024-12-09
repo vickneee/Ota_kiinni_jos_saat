@@ -74,6 +74,12 @@ export function fetchPlayerTickets(playerId) {
         });
 }
 
+export async function fetchContinueRound(gameId) {
+    const response = await fetch(`http://127.0.0.1:3000/api/round/${gameId}`);
+    const data = await response.json()
+    return data.round
+}
+
 // Fetch round
 export function fetchRound(gameId, ticket_type) {
     const roundElement = document.getElementById('kierrokset');

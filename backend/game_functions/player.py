@@ -187,7 +187,7 @@ class Player:
 
     @staticmethod
     def get_players_by_ids(player_ids):
-        player_ids_str = ','.join(map(str, player_ids))
+
         sql = f"""
             SELECT id, screen_name, type, location, is_computer
             FROM player
