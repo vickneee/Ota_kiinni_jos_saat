@@ -72,12 +72,25 @@ class Game:
         self.round = 1
         self.insert_round()
 
-    def resume_game(self,data):
+
+
+    def resume_game(self, data):
         gamedata = data
         self.set_game_id(gamedata['game_id'])
-        player_ids = gamedata['playerids']
-        self.players = Player.get_players_by_ids(player_ids)
-        self.screen_names = [player['screen_name'] for player in self.players]
+        player_ids = gamedata['playerids'].split(',')
+        player_ids_str = ','.join(player_ids)
+        players = Player.get_players_by_ids(player_ids_str)
+        print(players)
+        for p in players:
+            if p['is_computer'] == 1:
+                player = AIPlayer(p['screen_name'], p['type'], p['location'])
+            else:
+                player = HumanPlayer(p['screen_name'], p['type'], p['location'])
+
+            player.id = p['id']
+            self.players.append(player)
+            self.screen_names.append(p['screen_name'])
+
         self.round = gamedata['round']
 
     def play_round(self, player_name, new_location, ticket_id):
