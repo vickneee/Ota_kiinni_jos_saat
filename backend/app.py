@@ -290,7 +290,7 @@ def get_recommended_airports(name,round):
         status = 500
         ans = {'status': status, 'message': 'Failed to retrieve data', 'error': str(e)}
 
-@app.route('api/criminal/<int:id>',methods=['GET'])
+@app.route('/api/criminal/<int:id>',methods=['GET'])
 def criminal_moves(id):
     try:
         past_location = Player.get_criminal_movements(id)
