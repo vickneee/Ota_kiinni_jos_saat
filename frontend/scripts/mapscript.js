@@ -15,6 +15,8 @@ import {
   getPinElement,
 } from './markers.js';
 
+import { gameover } from './gameover.js';
+
 let criminalMarker, etsijaMarker1, etsijaMarker2;
 let map;
 
@@ -147,7 +149,7 @@ async function fetchRecommendedAirports(name, round) {
   }
 }
 
-async function gamedata() {
+export async function gamedata() {
   const response = await fetch('http://127.0.0.1:3000/api/getdata');
   const data = await response.json();
   return data;
@@ -350,7 +352,7 @@ async function send_move(player, new_location, ticket_id,is_computer) {
   });
 }
 
-function criminal(players){
+export function criminal(players){
   for (let player of players){
     if (player.type === 0){
       return player
@@ -418,83 +420,6 @@ function removeMarker(marker) {
   }
   return marker; // Return the cleared marker reference
 }
-
-async function gameover(round) {
-  // Fetch game data
-  const gameData = await gamedata();
-  console.log('Line 395 Game data:', gameData);
-
-  // Ensure gamedata() returns the required structure
-  if (!gameData || !gameData.players) {
-    console.error('Invalid game data:', gameData);
-    return;
-  }
-
-  const players = gameData.players;
-
-  // Get the criminal player
-  const criminalPlayer = criminal(players);
-  if (!criminalPlayer) {
-    console.error('No criminal player found.');
-    return;
-  }
-
-  console.log('Criminal player:', criminalPlayer);
-
-  // Flag to determine if the game is over
-  let gameEnded = false;
-
-  // Check for detectives at the same airport as the criminal
-  for (const player of players) {
-    if (player.type === 1) { // Detectives only
-      console.log(`Checking detective ${player.screen_name} at airport: ${player.latitude} ${player.longitude}`);
-      console.log(`Comparing Detective with Criminal ${criminalPlayer.screen_name} at airport: ${criminalPlayer.latitude} ${criminalPlayer.longitude} and player ${player.latitude} ${player.longitude}`);
-
-      // Compare airport IDs
-      if (player.latitude && criminalPlayer.latitude &&
-          player.longitude === criminalPlayer.longitude) {
-        console.log(
-          `Criminal ${criminalPlayer.screen_name} and Detective ${player.screen_name} are at the same airport!`
-        );
-
-        // Update winner message
-        const winnerMessage = `Pelaaja ${criminalPlayer.screen_name} sai kinnii pelaaja ${player.screen_name}!`;
-
-        // Store the message in localStorage
-        localStorage.setItem('winnerMessage', winnerMessage);
-
-        // Set game-ended flag
-        gameEnded = true;
-
-        // Exit loop as the game is over
-        break;
-      }
-    }
-  }
-
-  if (gameEnded) {
-    console.log('Game over!');
-    // Redirect to gameover.html after a short delay
-    setTimeout(() => {
-      console.log('Redirecting to gameover.html...');
-      window.location.href = '../pages/gameover.html';
-    }, 2000);
-  } else if (round === 10) {
-    console.log('Round 10 reached. Game over due to time limit!');
-    // Update the winner message for round 10
-    const winnerMessage = `Rikollinen ${criminalPlayer.screen_name} pääsi karkuun.`;
-    localStorage.setItem('winnerMessage', winnerMessage);
-
-    // Redirect to gameover.html
-    setTimeout(() => {
-      console.log('Redirecting to gameover.html...');
-      window.location.href = '../pages/gameover.html';
-    }, 2000);
-  } else {
-    console.log('Game continues...');
-  }
-}
-
 
 async function gameRounds() {
   console.log('moi');
@@ -567,38 +492,6 @@ async function gameRounds() {
 
       // Check if the game is over after every move
       await gameover(i);
-
-      // // Check if the game is over after every move
-      // for (let k = 0; k < j; k++) {
-      //   if (
-      //       (players[k].type === 0 && players[j].type === 1) ||
-      //       (players[k].type === 1 && players[j].type === 0)
-      //   ) {
-      //     if (
-      //         players[k].location.lat === players[j].location.lat &&
-      //         players[k].location.lng === players[j].location.lng
-      //     ) {
-      //       console.log(
-      //           `Criminal ${players[k].screen_name} and Detective ${players[j].screen_name} are at the same location!`);
-      //       console.log('Game over!');
-      //
-      //       // Update winner and redirect
-      //       const winnerMessage = `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`;
-      //
-      //       localStorage.getItem('winnerMessage');
-      //
-      //       // Redirect immediately
-      //       localStorage.setItem('winnerMessage',
-      //           `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`);
-      //       setTimeout(() => {
-      //         console.log('Redirecting to gameover.html...');
-      //         window.location.href = '../pages/gameover.html';
-      //       }, 2000);
-      //
-      //       return; // Stop further execution as the game is over
-      //     }
-      //   }
-      // }
     }
   }
 }
