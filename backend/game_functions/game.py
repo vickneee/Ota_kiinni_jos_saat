@@ -73,7 +73,7 @@ class Game:
         self.insert_round()
 
     def resume_game(self,data):
-        gamedata = data['gamedata'][0]
+        gamedata = data
         self.set_game_id(gamedata['game_id'])
         player_ids = gamedata['playerids']
         self.players = Player.get_players_by_ids(player_ids)

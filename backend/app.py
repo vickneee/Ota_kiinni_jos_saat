@@ -247,8 +247,9 @@ def resume_game():
     try:
         data = request.json
         gamedata = data.get('gamedata')
+
         g.reset_game()
-        g.resume_game(data)
+        g.resume_game(gamedata)
         status = 200
         ans = {'status': status, 'gamedata': gamedata, 'id': g.game_id}
     except Exception as e:
