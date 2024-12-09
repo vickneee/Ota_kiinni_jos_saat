@@ -419,7 +419,7 @@ function removeMarker(marker) {
   return marker; // Return the cleared marker reference
 }
 
-async function gameover() {
+async function gameover(round) {
   // Fetch game data
   const gameData = await gamedata();
   console.log('Line 395 Game data:', gameData);
@@ -475,6 +475,17 @@ async function gameover() {
   if (gameEnded) {
     console.log('Game over!');
     // Redirect to gameover.html after a short delay
+    setTimeout(() => {
+      console.log('Redirecting to gameover.html...');
+      window.location.href = '../pages/gameover.html';
+    }, 2000);
+  } else if (round === 10) {
+    console.log('Round 10 reached. Game over due to time limit!');
+    // Update the winner message for round 10
+    const winnerMessage = `Rikollinen ${criminalPlayer.screen_name} pääsi karkuun.`;
+    localStorage.setItem('winnerMessage', winnerMessage);
+
+    // Redirect to gameover.html
     setTimeout(() => {
       console.log('Redirecting to gameover.html...');
       window.location.href = '../pages/gameover.html';
@@ -555,7 +566,7 @@ async function gameRounds() {
       }
 
       // Check if the game is over after every move
-      await gameover();
+      await gameover(i);
 
       // // Check if the game is over after every move
       // for (let k = 0; k < j; k++) {
