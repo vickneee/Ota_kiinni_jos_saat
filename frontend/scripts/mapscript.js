@@ -766,6 +766,7 @@ function resumeGame() {
       console.error("Error during game resumption:", error);
     }
   }
+  );
 
 // Helper function to update markers and locations
   async function updatePlayerMarker(index, move, map) {
@@ -795,6 +796,6 @@ function resumeGame() {
     }
     setTimeout(() => {
       window.location.href = "../pages/gameover.html";
-    }, 2000);}
+    }, 2000);}}
 
 
