@@ -76,7 +76,7 @@ body::before {
 
 .hl-0 {
     border: 2px solid var(--green);
-    box-shadow: 0 0 10px 5px var(--darker-green);
+    box-shadow: 0 0 10px 11px var(--darker-green);
 }
 
 .hl-1 {
@@ -86,7 +86,7 @@ body::before {
 
 .hl-2 {
     border: 2px solid var(--red);
-    box-shadow: 0 0 10px 5px var(--red);
+    box-shadow: 0 0 10px 8px var(--red);
 }
 
 /***** Video Animation *****/
