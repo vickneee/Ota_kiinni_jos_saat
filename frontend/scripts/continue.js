@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 resumeButton.textContent = "Jatka peliä";
                 resumeButton.addEventListener("click", async () => {
                   await resumeGame(game);
-                  localStorage.setItem('continue', 'true');
+                  localStorage.setItem('resume', 'true');
 
                   window.location.href = '../pages/map.html';
                   console.log(game);
