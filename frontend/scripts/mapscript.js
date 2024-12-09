@@ -103,25 +103,26 @@ async function initMap() {
 
   }
   console.log(markersdata[0].position.lat);
-  await resumeGame();
-  /*
+  const start = await resumeGame();
+  await gameRounds(start)
+
   let resumegame = Resume();
   if (resumegame === true) {
-    console.log('pöö')
-    await resumeGame();
+    const start = await resumeGame();
+    await gameRounds(start)
     playersSent = true;
   } else {
     let players = playerData();
     if (players[0].is_computer === 1 && !playersSent) {
       await aistart(players);
-      await gameRounds();
+      await gameRounds(1);
       playersSent = true;
 
     } else {
       await startingPoint(markersdata, markers);
-      await gameRounds();
+      await gameRounds(1);
     }
-  */
+  }
     return map;
 
 }
@@ -474,7 +475,7 @@ async function initMap() {
   }
 
 
-async function gameRounds() {
+async function gameRounds(rounds) {
   console.log('moi');
   const gameData = await gamedata();
   const gameid = gameData.game_id;
@@ -484,7 +485,7 @@ async function gameRounds() {
   let move;
   let tickettype;
 
-  for (let i = 1; i < 11; i++) {
+  for (let i = rounds; i < 11; i++) {
 
     for (let j = 0; j < players.length; j++) {
       if (players[j].is_computer === 0) {
@@ -710,49 +711,10 @@ function resumeGame() {
         currentPlayerIndex++;
       }
       round = round + 1
-      let startround = round
-      console.log("End of round reached. Proceeding to normal game loop.");
-
-      // Resume normal game loop for remaining rounds
-      for (let i = round; i < 11; i++) {
-        console.log(`Starting round ${i}`);
-        for (let j = 0; j < players.length; j++) {
-          const player = players[j];
-          console.log(j)
-          console.log(player)
-
-          if (player.is_computer === 0) {
-            console.log(players[j].screen_name);
-            if(j>=1){
-              const criminalinfo = await showCriminalOldLoc(criminalp.id)
-              tickettype = criminalinfo.ticket_type
-              console.log(tickettype )
-            }else {
-              tickettype = null
-            }if (player === criminalp ){
-              criminalMarker = removeMarker(criminalMarker);
-              criminalMarker = await createCriminalMarker(map, player.latitude, player.longitude);
-            }
-            console.log(`Processing turn for ${player.screen_name} (Human).`);
-            await showPlayerInfo(player.id, gameid, player.screen_name, j, tickettype);
-            const move = await moveListener(player.screen_name,
-                player.is_computer, round);
-            console.log(
-                `Player ${player.screen_name} moved to ${move.position.lat}, ${move.position.lng}.`);
-            await updatePlayerMarker(player, move, map);
-          } else {
-            console.log(`Processing turn for ${player.screen_name} (AI).`);
-            const aiMove = await send_move(player.screen_name, 1, 1,
-                player.is_computer);
-            await updatePlayerMarker(player,
-                {position: {lat: aiMove.coords[0], lng: aiMove.coords[1]}},
-                map);
-          }
-
-        }
-      }
+      resolve(round)
     } catch (error) {
       console.error("Error during game resumption:", error);
+      reject(error)
     }
   }
   );
