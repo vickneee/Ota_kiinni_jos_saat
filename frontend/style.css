@@ -108,7 +108,8 @@ body {
     margin: 0 auto;
     padding: 0;
     height: 100vh;
-    font-family: "Rubik", sans-serif;
+    font-family: 'Rubik', sans-serif;
+
     background-color: var(--seasalt);
     text-align: center;
     display: flex;
@@ -195,7 +196,7 @@ input {
 
 .main-buttons {
     width: 16rem;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     margin: 0 1rem 1rem;
     padding: 1.2rem 2.8rem;
 }
