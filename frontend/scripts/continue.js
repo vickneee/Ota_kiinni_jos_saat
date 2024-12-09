@@ -48,11 +48,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                 resumeButton.classList.add("continue-button");
                 resumeButton.textContent = "Jatka peliä";
                 resumeButton.addEventListener("click", async () => {
-                  await resumeGame(game);
-                  localStorage.setItem('continue', 'true');
+                    console.log(game);
+                    const data = await resumeGame(game);
+                    console.log(data)
+
+
+                  localStorage.setItem('resume', 'true');
 
                   window.location.href = '../pages/map.html';
                   console.log(game);
+
+
                 });
 
                 actionCell.appendChild(resumeButton);
@@ -73,9 +79,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   async function resumeGame(gamedata) {
     try {
       const response = await fetch('http://127.0.0.1:3000/api/resume_game', {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify({
-          'gamedata': gamedata,
+          'gamedata': gamedata
         }),
         headers: {
           'Content-type': 'application/json',

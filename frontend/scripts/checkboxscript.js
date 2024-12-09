@@ -102,13 +102,7 @@ const formlistener =()=>{
     evt.preventDefault()
     let players = start_game()
     storeFormData(players)
-    if (players[0].type === 0) {
-      // Store a flag in localStorage to indicate that gameRounds should be called
-      localStorage.setItem('startGameRounds', 'true');
-    } else {
-      // Store a flag in localStorage to indicate that startingPoint should be called
-      localStorage.setItem('startGameRounds', 'false');
-    }
+
 
   })
 }
