@@ -354,7 +354,7 @@ async function moveListener(name,iscomp,round) {
         });
 
         // Play animation after move
-        await playVideoWithAnimation(); // Ensure animation finishes before proceeding
+        // await playVideoWithAnimation(); // Ensure animation finishes before proceeding
 
         // markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
         resolve(markerData); // Resolve with the clicked marker data
