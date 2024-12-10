@@ -307,10 +307,10 @@ def criminal_moves(id):
         status = 500
         ans = {'status': status, 'message': 'Failed to retrieve data', 'error': str(e)}
 
-@app.route('/api/delete_game/<int:id>', methods=['DELETE'])
-def delete_game(id):
+@app.route('/api/delete_game/<int:id>/<player_ids>', methods=['DELETE'])
+def delete_game(id, player_ids):
     try:
-        g.delete_game(id)
+        g.delete_game(id, player_ids)
         return jsonify({"status": "success", "message": f"Game with id {id} deleted successfully"}), 200
     except Exception as e:
         import traceback
