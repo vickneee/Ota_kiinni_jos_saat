@@ -99,7 +99,10 @@ const formlistener =()=>{
   form.addEventListener('submit',function(evt){
     evt.preventDefault()
     let players = start_game()
+    localStorage.setItem('resume', 'false');
+
     storeFormData(players)
+
   })
 }
 

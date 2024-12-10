@@ -107,9 +107,9 @@ async function initMap() {
     // await game(markers[0],markers)
   }
   console.log(markersdata[0].position.lat);
-  const start = await resumeGame();
-  await gameRounds(start);
-
+  //const start = await resumeGame();
+  //await gameRounds(start);
+  /*
   let resumegame = Resume();
   if (resumegame === true) {
     const start = await resumeGame();
@@ -125,8 +125,26 @@ async function initMap() {
     } else {
       await startingPoint(markersdata, markers);
       await gameRounds(1);
-    }
+    }*/
+
+    let resumegame = Resume();
+    console.log(resumegame)
+    if (resumegame === 'true') {
+      const start = await resumeGame();
+      await gameRounds(start);
+      playersSent = true;
+    } else {
+      let players = playerData();
+      if (players[0].is_computer === 1 && !playersSent) {
+        await aistart(players);
+        await gameRounds(1);
+        playersSent = true;
+      } else {
+        await startingPoint(markersdata, markers);
+        await gameRounds(1);
+      }
   }
+
   return map;
 
 }
@@ -276,7 +294,7 @@ async function sendPlayers(players, coord, icao) {
 
 // Resume the game
 function Resume() {
-  const resume = JSON.parse(localStorage.getItem('continue'));
+  const resume = localStorage.getItem('resume');
   return resume;
 }
 
