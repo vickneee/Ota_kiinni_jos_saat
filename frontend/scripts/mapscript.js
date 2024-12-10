@@ -436,59 +436,6 @@ function removeMarker(marker) {
   return marker; // Return the cleared marker reference
 }
 
-// // Game over function
-// async function gameover() {
-//   // Fetch game data
-//   const gameData = await gamedata();
-//   // Ensure gamedata() returns the required structure
-//   console.log('Line 395 Game data:', gameData);
-//   if (!gameData || !gameData.players) {
-//     console.error('Invalid game data:', gameData);
-//     return;
-//   }
-//
-//   // const gameid = gameData.game_id;
-//   const players = gameData.players;
-//
-//   // Check if the game is over after every move
-//   for (let j = 0; j < players.length; j++) {
-//     for (let k = 0; k < j; k++) {
-//       if (
-//           (players[k].type === 0 && players[j].type === 1) ||
-//           (players[k].type === 1 && players[j].type === 0)
-//       ) {
-//         if (
-//             players[k].location.lat === players[j].location.lat &&
-//             players[k].location.lng === players[j].location.lng
-//         ) {
-//           if (players[k].location.lat && players[k].location.lng ===
-//               players[j].location.lat && players[j].location.lng) {
-//             console.log(
-//                 `Criminal ${players[k].screen_name} and Detective ${players[j].screen_name} are at the same location!`,
-//             );
-//             console.log('Game over!');
-//
-//             // Update winner message
-//             const winnerMessage = `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`;
-//
-//             // Store the message in localStorage
-//             localStorage.setItem('winnerMessage', winnerMessage);
-//
-//             // Redirect to gameover.html after a short delay
-//             setTimeout(() => {
-//               console.log('Redirecting to gameover.html...');
-//               window.location.href = '../pages/gameover.html';
-//             }, 2000);
-//
-//             // Exit the loops
-//             return;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
-
 // Game rounds function to loop through the rounds
 async function gameRounds(rounds) {
   console.log('moi');
