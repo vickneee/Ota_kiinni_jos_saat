@@ -40,7 +40,7 @@ export async function gameover(round) {
         );
 
         // Update winner message
-        const winnerMessage = `Pelaaja ${player.screen_name} sai kinnii pelaaja ${criminalPlayer.screen_name}!`;
+        const winnerMessage = `Etsivä ${player.screen_name} sai kinnii karkuri ${criminalPlayer.screen_name}!`;
 
         // Store the message in localStorage
         localStorage.setItem('winnerMessage', winnerMessage);
