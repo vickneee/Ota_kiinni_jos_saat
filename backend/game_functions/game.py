@@ -104,6 +104,7 @@ class Game:
         print('pelaaja ', player)
         print('pelaaja id', player.id)
         criminal = ""
+        other_ai_loc = ""
 
         # Gather criminal location and other player locations
         for p in self.players:
@@ -111,6 +112,10 @@ class Game:
                 criminal = p.id
             if p != player:
                 other_loc.append(p.location)
+                if p.is_computer == 1:
+                    other_ai_loc = p.location
+                else:
+                    other_ai_loc = ""
 
         # Handle round insertion if necessary
         if name_index == 2 and self.round < 11:
@@ -127,7 +132,7 @@ class Game:
                 print('aicriminal', aicriminal)
                 return aicriminal
             else:
-                aidetective = player.detective_move(player.location, criminal, self.round)
+                aidetective = player.detective_move(player.location, criminal, self.round, other_ai_loc)
                 self.update_round_player(player.id)
                 return aidetective
 
