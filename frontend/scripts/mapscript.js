@@ -6,7 +6,7 @@ import {
   playbanner,
   showPlayerInfo,
 } from './bannerscript.js';
-
+import {playVideoWithAnimation} from './animation.js'
 import {
   createCriminalMarker,
   createEtsijaMarker,
@@ -485,6 +485,7 @@ async function gameRounds(rounds) {
           console.log(c_coord);
           move = await moveListener(players[j].screen_name,
               players[j].is_computer, i);
+
           if (j === 1) {
             etsijaMarker1 = removeMarker(etsijaMarker1);
             etsijaMarker1 = await createEtsijaMarker(map, move.position.lat,
@@ -501,11 +502,13 @@ async function gameRounds(rounds) {
                 players[j].latitude, players[j].longitude);
             move = await moveListener(players[j].screen_name,
                 players[j].is_computer, i);
+            await playVideoWithAnimation()
             console.log(move);
             console.log('kierros on 2=>');
           } else {
             move = await moveListener(players[j].screen_name,
                 players[j].is_computer, i);
+            await playVideoWithAnimation()
             console.log('kierros1');
           }
         }
@@ -515,6 +518,9 @@ async function gameRounds(rounds) {
         console.log(players[j].screen_name);
         const aimove = await send_move(players[j].screen_name, 1, 1,
             players[j].is_computer);
+        if(players[j].type === 0){
+                await playVideoWithAnimation()
+              }
         if (j === 0) {
           criminalMarker = removeMarker(criminalMarker);
           criminalMarker = await createCriminalMarker(map, aimove.coords[0],
@@ -551,39 +557,10 @@ async function continueGameLoop() {
   playbanner();
 }
 
-/* Call the animation function
-        await playVideoWithAnimation();*/
-
-// Play the video with animation
-async function playVideoWithAnimation() {
-  const videoContainer = document.getElementById('video-container');
-  const video = document.getElementById('animation-video');
-
-  // Show and animate the video container (rising up)
-  videoContainer.style.display = 'block';
-  videoContainer.classList.add('active'); // Add rising animation
-  video.play();
-
-  // Wait for the video to finish
-  await new Promise((resolve) => {
-    video.onended = () => {
-      // Add the exit animation
-      videoContainer.classList.remove('active');
-      videoContainer.classList.add('exit'); // Start falling animation
-
-      // Wait for the animation to complete
-      setTimeout(() => {
-        videoContainer.classList.remove('exit'); // Clean up the exit class
-        videoContainer.style.display = 'none'; // Hide the video
-        resolve(); // Resolve the promise after animation
-      }, 1500); // Match this duration to the CSS transition time (1.5s)
-    };
-  });
-}
 
 // Resume the game
 function resumeGame() {
-  console.log('paska');
+
   return new Promise(async (resolve, reject) => {
         try {
           playbanner();
@@ -597,8 +574,8 @@ function resumeGame() {
           console.log(players);
 
           // Fetch the current player ID whose turn it is
-          let currentPlayerId = await fetchCurrentTurn(gameid);
-
+          let currentTurn = await fetchCurrentTurn(gameid);
+          let currentPlayerId  = currentTurn + 1
           // Determine the current player's type (criminal or detective)
           const currentPlayer = players.find(
               player => player.id === currentPlayerId);
@@ -669,6 +646,13 @@ function resumeGame() {
           // Complete the current round
           while (currentPlayerIndex < players.length) {
             const currentPlayer = players[currentPlayerIndex];
+            if(currentPlayer.type === 1){
+              const criminalinfo = await showCriminalOldLoc(criminalp.id);
+              tickettype = criminalinfo.ticket_type;
+            }else{
+              tickettype = null
+            }
+
 
             if (currentPlayer.is_computer === 0) {
               console.log(
@@ -676,6 +660,10 @@ function resumeGame() {
               await showPlayerInfo(currentPlayer.id, gameid,currentPlayer.screen_name,currentPlayerIndex,tickettype);
               const move = await moveListener(currentPlayer.screen_name,
                   currentPlayer.is_computer, round);
+              if(currentPlayer.type === 0){
+                await playVideoWithAnimation()
+              }
+
               console.log(
                   `Player ${currentPlayer.screen_name} moved to ${move.position.lat}, ${move.position.lng}.`);
 
@@ -685,6 +673,9 @@ function resumeGame() {
               console.log(`Processing turn for ${currentPlayer.screen_name} (AI).`);
               const aiMove = await send_move(currentPlayer.screen_name, 1, 1,
                   currentPlayer.is_computer);
+              if(currentPlayer.type === 1){
+                await playVideoWithAnimation()
+              }
               await updatePlayerMarker(currentPlayer,
                   {position: {lat: aiMove.coords[0], lng: aiMove.coords[1]}}, map);
             }
@@ -703,7 +694,7 @@ function resumeGame() {
 
   // Helper function to update markers and locations
   async function updatePlayerMarker(index, move, map) {
-    let marker;
+
     if (index === 0) {
       criminalMarker = removeMarker(criminalMarker);
       criminalMarker = await createCriminalMarker(map, move.position.lat,
@@ -719,16 +710,5 @@ function resumeGame() {
     }
   }
 
-  // // Helper function to handle the game-over logic
-  // async function endGame(player1, player2) {
-  //   console.log(
-  //       `Game Over! ${player1.screen_name} and ${player2.screen_name} collided.`);
-  //   const winner = document.querySelector('#winner');
-  //   if (winner) {
-  //     winner.innerHTML = `Pelaaja ${player1.screen_name} sai kiinni ${player2.screen_name}!`;
-  //   }
-  //   setTimeout(() => {
-  //     window.location.href = '../pages/gameover.html';
-  //   }, 2000);
-  // }
+
 }
