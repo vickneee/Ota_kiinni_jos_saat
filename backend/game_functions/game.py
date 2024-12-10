@@ -184,7 +184,9 @@ class Game:
         except Exception as e:
             raise Exception(f"Error fetching saved games: {str(e)}")
 
-    def delete_game(self, game_id):
+
+    def delete_game(self, game_id, player_ids):
+        player_ids_str = ','.join(str(e) for e in player_ids)
         try:
             self.database.db_begin_transaction()
             sql1 = f"DELETE FROM player_tickets WHERE player_id IN (SELECT player_id FROM game_player WHERE game_id = {game_id});"
@@ -199,7 +201,7 @@ class Game:
             sql4 = f"DELETE FROM game_player WHERE game_id = {game_id};"
             self.database.db_update(sql4)
 
-            sql5 = f"DELETE FROM player WHERE id IN (SELECT player_id FROM game_player WHERE game_id = {game_id});"
+            sql5 = f"DELETE FROM player WHERE id IN ({player_ids_str});"
             self.database.db_update(sql5)
 
             self.database.db_commit_transaction()
