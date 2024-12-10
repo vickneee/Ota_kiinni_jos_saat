@@ -16,6 +16,8 @@ import {
   getPinElement,
 } from './markers.js';
 
+import {gameover} from './gameoverscript.js';
+
 let criminalMarker, etsijaMarker1, etsijaMarker2;
 let map;
 
@@ -164,7 +166,7 @@ async function fetchRecommendedAirports(name, round) {
 }
 
 // Fetch the game data from the server
-async function gamedata() {
+export async function gamedata() {
   const response = await fetch('http://127.0.0.1:3000/api/getdata');
   const data = await response.json();
   return data;
@@ -365,7 +367,7 @@ async function send_move(player, new_location, ticket_id, is_computer) {
 }
 
 // Function criminal
-function criminal(players) {
+export function criminal(players) {
   for (let player of players) {
     if (player.type === 0) {
       return player;
@@ -390,7 +392,7 @@ async function moveListener(name, iscomp, round) {
       return;
     }
 
-    // console.log(markersdata[0]);
+    console.log(markersdata[0]);
 
     markers.forEach((marker, index) => {
       const markerData = markersdata[index];
@@ -432,59 +434,6 @@ function removeMarker(marker) {
     marker = null; // Clear the reference
   }
   return marker; // Return the cleared marker reference
-}
-
-// Game over function
-async function gameover() {
-  // Fetch game data
-  const gameData = await gamedata();
-  // Ensure gamedata() returns the required structure
-  console.log('Line 395 Game data:', gameData);
-  if (!gameData || !gameData.players) {
-    console.error('Invalid game data:', gameData);
-    return;
-  }
-
-  // const gameid = gameData.game_id;
-  const players = gameData.players;
-
-  // Check if the game is over after every move
-  for (let j = 0; j < players.length; j++) {
-    for (let k = 0; k < j; k++) {
-      if (
-          (players[k].type === 0 && players[j].type === 1) ||
-          (players[k].type === 1 && players[j].type === 0)
-      ) {
-        if (
-            players[k].location.lat === players[j].location.lat &&
-            players[k].location.lng === players[j].location.lng
-        ) {
-          if (players[k].location.lat && players[k].location.lng ===
-              players[j].location.lat && players[j].location.lng) {
-            console.log(
-                `Criminal ${players[k].screen_name} and Detective ${players[j].screen_name} are at the same location!`,
-            );
-            console.log('Game over!');
-
-            // Update winner message
-            const winnerMessage = `Pelaaja ${players[k].screen_name} sai kinnii pelaaja ${players[j].screen_name}!`;
-
-            // Store the message in localStorage
-            localStorage.setItem('winnerMessage', winnerMessage);
-
-            // Redirect to gameover.html after a short delay
-            setTimeout(() => {
-              console.log('Redirecting to gameover.html...');
-              window.location.href = '../pages/gameover.html';
-            }, 2000);
-
-            // Exit the loops
-            return;
-          }
-        }
-      }
-    }
-  }
 }
 
 // Game rounds function to loop through the rounds
@@ -564,7 +513,7 @@ async function gameRounds(rounds) {
         players[j].longitude = aimove.coords[1];
       }
       // Check if the game is over after every move
-      await gameover();
+      await gameover(i);
     }
   }
 }
@@ -749,16 +698,16 @@ function resumeGame() {
     }
   }
 
-  // Helper function to handle the game-over logic
-  async function endGame(player1, player2) {
-    console.log(
-        `Game Over! ${player1.screen_name} and ${player2.screen_name} collided.`);
-    const winner = document.querySelector('#winner');
-    if (winner) {
-      winner.innerHTML = `Pelaaja ${player1.screen_name} sai kiinni ${player2.screen_name}!`;
-    }
-    setTimeout(() => {
-      window.location.href = '../pages/gameover.html';
-    }, 2000);
-  }
+  // // Helper function to handle the game-over logic
+  // async function endGame(player1, player2) {
+  //   console.log(
+  //       `Game Over! ${player1.screen_name} and ${player2.screen_name} collided.`);
+  //   const winner = document.querySelector('#winner');
+  //   if (winner) {
+  //     winner.innerHTML = `Pelaaja ${player1.screen_name} sai kiinni ${player2.screen_name}!`;
+  //   }
+  //   setTimeout(() => {
+  //     window.location.href = '../pages/gameover.html';
+  //   }, 2000);
+  // }
 }

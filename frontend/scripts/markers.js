@@ -1,6 +1,4 @@
 // This file contains functions to create and add markers to the map.
-// The functions are used in the frontend/scripts/map.js file.
-// The functions are used to create markers for criminals and investigators.
 export async function createCriminalMarker(map, lat, lng) {
   try {
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
@@ -33,7 +31,7 @@ export async function createCriminalMarker(map, lat, lng) {
 
     return glyphMarkerView1;
   } catch (error) {
-    // console.error('Error creating criminal marker:', error);
+    console.error('Error creating criminal marker:', error);
   }
 }
 
@@ -64,14 +62,13 @@ export async function createEtsijaMarker(map, lat, lng) {
     });
     return glyphMarkerView2;
   } catch (error) {
-    // console.error('Error creating etsiva 2 marker:', error);
+    console.error('Error creating etsiva 1 marker:', error);
   }
 }
 
 // Create and add the etsiva 2 marker
 export async function createEtsija2Marker(map, lat, lng) {
   try {
-
     const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
     const {PinElement} = await google.maps.importLibrary('marker');
     const glyphImg2 = document.createElement('img');
@@ -96,18 +93,16 @@ export async function createEtsija2Marker(map, lat, lng) {
     });
     return glyphMarkerView3;
   } catch (error) {
-    // console.error('Error creating etsiva 2 marker:', error);
+    console.error('Error creating etsiva 2 marker:', error);
   }
 }
 
 // Create and add the marker to the map
-export function addMarkersToMap(map,recommendedAirports) {
+export function addMarkersToMap(map, recommendedAirports) {
   return new Promise(async (resolve, reject) => {
     try {
       let markers = [];
       let markersdata = [];
-      // const players = playerData();
-      // console.log(players);
 
       for (const airport of Object.values(recommendedAirports)) {
         const {AdvancedMarkerElement} = await google.maps.importLibrary('marker');
