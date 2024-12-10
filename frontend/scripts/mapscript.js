@@ -614,7 +614,7 @@ function resumeGame() {
             } else {
               const aiMove = await send_move(currentPlayer.screen_name, 1, 1,
                   currentPlayer.is_computer);
-              if(currentPlayer.type === 1){
+              if(currentPlayer.type === 0){
                 await playVideoWithAnimation()
               }
               await updatePlayerMarker(currentPlayer,
