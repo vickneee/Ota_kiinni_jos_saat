@@ -406,10 +406,6 @@ async function moveListener(name, iscomp, round) {
   let ticketid;
 
   return new Promise((resolve, reject) => {
-    if (markersdata.length === 0) {
-      reject(new Error('No markers data available'));
-      return;
-    }
 
     console.log(markersdata[0]);
 
