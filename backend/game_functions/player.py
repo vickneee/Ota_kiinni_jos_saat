@@ -86,7 +86,7 @@ class Player:
         FROM past_movement
         LEFT JOIN player ON past_movement.player_id = player.id
         LEFT JOIN player_tickets on player.id = player_tickets.player_id
-        LEFT JOIN ticket on player_tickets.ticket_id = ticket.id
+        LEFT JOIN ticket on past_movement.ticket_type = ticket.id
         LEFT JOIN airport ON past_movement.location = airport.ident
         LEFT JOIN country ON airport.iso_country = country.iso_country
         WHERE past_movement.player_id = '{id}'
