@@ -93,40 +93,12 @@ async function initMap() {
     });
     markers.push(marker);
     markersdata.push({'position': marker.position, 'title': marker.title});
-    /*
-    let players = playerData();
-    let playersSent = false;
-    if (players[0].is_computer === 1 && !playersSent) {
-      await sendIfComp(players);
-      playersSent = true
-    } else {
-      await startingPoint(marker, markers);
-    }*/
+
     await Promise.all(markers.map(marker => marker));
-
-    // await game(markers[0],markers)
   }
-  console.log(markersdata[0].position.lat);
-  //const start = await resumeGame();
-  //await gameRounds(start);
-  /*
-  let resumegame = Resume();
-  if (resumegame === true) {
-    const start = await resumeGame();
-    await gameRounds(start);
-    playersSent = true;
-  } else {
-    let players = playerData();
-    if (players[0].is_computer === 1 && !playersSent) {
-      await aistart(players);
-      await gameRounds(1);
-      playersSent = true;
+  // console.log(markersdata[0].position.lat);
 
-    } else {
-      await startingPoint(markersdata, markers);
-      await gameRounds(1);
-    }*/
-
+    // Check if the game is being resumed
     let resumegame = Resume();
     console.log(resumegame)
     if (resumegame === 'true') {
@@ -144,9 +116,7 @@ async function initMap() {
         await gameRounds(1);
       }
   }
-
   return map;
-
 }
 
 // Fetch recommended airports from the server
@@ -156,7 +126,6 @@ async function fetchRecommendedAirports(name, round) {
     const response = await fetch(
         `http://127.0.0.1:3000/api/get-recommended-airports/${name}/${round}?cb=${cacheBuster}`,
     );
-    console.log(`Fetching recommended airports for: ${name}`);
 
     console.log(
         `Request URL: http://127.0.0.1:3000/api/get-recommended-airports/${name}/${round}?cb=${cacheBuster}`);
@@ -190,12 +159,11 @@ export async function gamedata() {
   return data;
 }
 
-// Fetch the ai game data from the server
+// Fetch the AI game data from the server
 async function aistart(players) {
   return new Promise(async (resolve, reject) => {
     try {
       const res = await sendIfComp(players);
-      console.log(res);
       criminalMarker = await createCriminalMarker(map,
           res.criminal_coord.latitude, res.criminal_coord.longitude);
       etsijaMarker1 = await createEtsijaMarker(map,
@@ -226,9 +194,7 @@ async function startingPoint(markersdata, markers) {
           };
           let selected = markerData.title;
           let players = playerData();
-          console.log('Sending data:', {players, coordinates, selected});
           const res = await sendPlayers(players, coordinates, selected);
-          console.log(res.detective1_location[0].latitude);
 
           criminalMarker = await createCriminalMarker(map,
               markerData.position.lat, markerData.position.lng);
@@ -399,6 +365,7 @@ async function moveListener(name, iscomp, round) {
   console.log('move');
   const gameData = await gamedata();
   const players = gameData.players;
+  console.log(players);
   const recommended = await fetchRecommendedAirports(name, round);
   console.log(recommended);
   const {markers, markersdata} = await addMarkersToMap(map, recommended);
@@ -432,10 +399,7 @@ async function moveListener(name, iscomp, round) {
           marker.setMap(null);
         });
 
-        // Play animation after move
-        // await playVideoWithAnimation(); // Ensure animation finishes before proceeding
-
-        // markers.forEach((m) => google.maps.event.clearListeners(m, 'click'));
+        // Resolve with the clicked marker data
         resolve(markerData); // Resolve with the clicked marker data
       });
     });
@@ -584,29 +548,18 @@ function resumeGame() {
 
           // Initialize markers based on the current player's type
           if (currentPlayer.type === 0) {
-            console.log('Initializing markers for all players (Criminal\'s turn).');
             for (let i = 0; i < players.length; i++) {
               const player = players[i];
               if (player.type === 0) {
                 criminalMarker = await createCriminalMarker(map,
                     player.latitude, player.longitude);
-                console.log(
-                    `Criminal marker initialized at (${player.latitude}, ${player.longitude}).`);
               } else if (i === 1) {
-                etsijaMarker1 = await createEtsijaMarker(map, player.latitude,
-                    player.longitude);
-                console.log(
-                    `Detective 1 marker initialized at (${player.latitude}, ${player.longitude}).`);
+                etsijaMarker1 = await createEtsijaMarker(map, player.latitude, player.longitude);
               } else if (i === 2) {
-                etsijaMarker2 = await createEtsija2Marker(map, player.latitude,
-                    player.longitude);
-                console.log(
-                    `Detective 2 marker initialized at (${player.latitude}, ${player.longitude}).`);
+                etsijaMarker2 = await createEtsija2Marker(map, player.latitude, player.longitude);
               }
             }
           } else if (currentPlayer.type === 1) {
-            console.log(
-                'Initializing markers for detectives only (Detective\'s turn).');
             for (let i = 0; i < players.length; i++) {
               const player = players[i];
               if (player.type === 1) {
@@ -616,13 +569,9 @@ function resumeGame() {
                 if (i === 1) {
                   etsijaMarker1 = await createEtsijaMarker(map, player.latitude,
                       player.longitude);
-                  console.log(
-                      `Detective 1 marker initialized at (${player.latitude}, ${player.longitude}).`);
                 } else if (i === 2) {
                   etsijaMarker2 = await createEtsija2Marker(map,
                       player.latitude, player.longitude);
-                  console.log(
-                      `Detective 2 marker initialized at (${player.latitude}, ${player.longitude}).`);
                 }
               }
             }
@@ -636,8 +585,7 @@ function resumeGame() {
             return;
           }
 
-          console.log(
-              `Resuming round ${round} from player ${players[currentPlayerIndex].screen_name}.`);
+          console.log(`Resuming round ${round} from player ${players[currentPlayerIndex].screen_name}.`);
 
           // Complete the current round
           while (currentPlayerIndex < players.length) {
@@ -649,7 +597,6 @@ function resumeGame() {
               tickettype = null
             }
 
-
             if (currentPlayer.is_computer === 0) {
               console.log(
                   `Processing turn for ${currentPlayer.screen_name} (Human).`);
@@ -660,13 +607,11 @@ function resumeGame() {
                 await playVideoWithAnimation()
               }
 
-              console.log(
-                  `Player ${currentPlayer.screen_name} moved to ${move.position.lat}, ${move.position.lng}.`);
+              console.log(`Player ${currentPlayer.screen_name} moved to ${move.position.lat}, ${move.position.lng}.`);
 
               // Update marker and player location
               await updatePlayerMarker(currentPlayer, move, map);
             } else {
-              console.log(`Processing turn for ${currentPlayer.screen_name} (AI).`);
               const aiMove = await send_move(currentPlayer.screen_name, 1, 1,
                   currentPlayer.is_computer);
               if(currentPlayer.type === 1){
@@ -705,6 +650,4 @@ function resumeGame() {
           move.position.lng);
     }
   }
-
-
 }

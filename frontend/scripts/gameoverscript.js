@@ -79,7 +79,6 @@ export async function gameover(round) {
 
     // Redirect to gameover.html
     setTimeout(() => {
-      console.log('Redirecting to gameover.html...');
       window.location.href = '../pages/gameover.html';
     }, 2000);
     await deleteGame(gameid,playerIdsStr)

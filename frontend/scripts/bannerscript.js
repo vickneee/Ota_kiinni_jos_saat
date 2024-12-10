@@ -7,8 +7,6 @@ function bannerFunc() {
     const players = playerData();
     const firstPlayer = players ? players[0] : null;
 
-    console.log('Players fetched:', players); // Debugging
-    console.log('First player:', firstPlayer); // Debugging
     const continueG = Resume()
 
     if (firstPlayer && firstPlayer.type === 0 && firstPlayer.is_computer === 0 && continueG === 'false') {
@@ -101,7 +99,6 @@ export function fetchRound(gameId, ticket_type) {
             console.error('Error:', error);
         });
     if(ticket_type){
-        console.log(ticket_type)
         if(ticket_type === 'potkurikone'){
             ticket.className = 'color-red'
         }

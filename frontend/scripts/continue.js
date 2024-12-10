@@ -49,14 +49,12 @@ document.addEventListener("DOMContentLoaded", async () => {
                 resumeButton.classList.add("continue-button");
                 resumeButton.textContent = "Jatka peliä";
                 resumeButton.addEventListener("click", async () => {
-                    console.log(game);
                     const data = await resumeGame(game);
                     console.log(data)
 
                   localStorage.setItem('resume', 'true');
 
                   window.location.href = '../pages/map.html';
-                  console.log(game);
                 });
 
                 actionCell.appendChild(resumeButton);

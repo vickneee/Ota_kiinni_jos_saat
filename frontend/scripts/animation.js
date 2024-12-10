@@ -1,3 +1,4 @@
+// Play the video with the animation
 export async function playVideoWithAnimation() {
   const videoContainer = document.getElementById('video-container');
   const video = document.getElementById('animation-video');

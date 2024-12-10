@@ -81,7 +81,6 @@ function start_game(){
         players.push(player)
       }
   });
-  // console.log(players)
   return players
 }
 
