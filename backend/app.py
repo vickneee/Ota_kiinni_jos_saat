@@ -310,6 +310,7 @@ def criminal_moves(id):
 @app.route('/api/delete_game/<int:id>/<player_ids>', methods=['DELETE'])
 def delete_game(id, player_ids):
     try:
+        print(player_ids)
         g.delete_game(id, player_ids)
         return jsonify({"status": "success", "message": f"Game with id {id} deleted successfully"}), 200
     except Exception as e:
