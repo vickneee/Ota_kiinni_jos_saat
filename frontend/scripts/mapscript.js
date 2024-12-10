@@ -333,6 +333,7 @@ function playerData() {
 async function criminalMoves(id) {
   const response = await fetch(`http://127.0.0.1:3000/api/criminal/${id}`);
   const data = await response.json();
+  console.log('Fetched criminal movements:', data);
   return data.past_location;
 }
 
@@ -636,6 +637,9 @@ function resumeGame() {
             for (let i = 0; i < players.length; i++) {
               const player = players[i];
               if (player.type === 1) {
+                const criminalinfo = await showCriminalOldLoc(criminalp.id);
+                tickettype = criminalinfo.ticket_type;
+                console.log(tickettype)
                 if (i === 1) {
                   etsijaMarker1 = await createEtsijaMarker(map, player.latitude,
                       player.longitude);
@@ -669,8 +673,7 @@ function resumeGame() {
             if (currentPlayer.is_computer === 0) {
               console.log(
                   `Processing turn for ${currentPlayer.screen_name} (Human).`);
-              await showPlayerInfo(currentPlayer.id, gameid,
-                  currentPlayer.screen_name);
+              await showPlayerInfo(currentPlayer.id, gameid,currentPlayer.screen_name,currentPlayerIndex,tickettype);
               const move = await moveListener(currentPlayer.screen_name,
                   currentPlayer.is_computer, round);
               console.log(

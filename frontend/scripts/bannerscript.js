@@ -101,6 +101,7 @@ export function fetchRound(gameId, ticket_type) {
             console.error('Error:', error);
         });
     if(ticket_type){
+        console.log(ticket_type)
         if(ticket_type === 'potkurikone'){
             ticket.className = 'color-red'
         }
