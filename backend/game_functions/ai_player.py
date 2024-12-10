@@ -73,7 +73,7 @@ class AIPlayer(Player):
         raise ValueError("Failed to get a valid response after multiple attempts")
 
     # Method to handle detective movement
-    def detective_move(self, own_loc, criminal_id, round):
+    def detective_move(self, own_loc, criminal_id, round, other_ai_loc):
         tickets = self.remaining_tickets()
         criminal_loc = self.get_criminal_movements(criminal_id)
         client = AzureOpenAI(api_key=self.api_key, api_version=self.api_version, azure_endpoint=self.endpoint)
@@ -90,14 +90,21 @@ class AIPlayer(Player):
 
         ticket_info_str = ', '.join(ticket_info)
 
+        if len(other_ai_loc) == 0:
+            important_text = f"""You must choose only one ICAO code from the possible airports listed above and the 
+                    ticket used (C, N, F). For example: EPWA,C"""
+        else:
+            important_text = f"""Do not go to {other_ai_loc} You must choose only one ICAO code from the possible airports listed above and the 
+                    ticket used (C, N, F). For example: EPWA,C"""
+
+
         message = f""" Possible airports: BIKF, EBBR, EDDB, EFHK, EGLL, EIDW, ENGM, EPWA, ESSA, LBSF, LEMD, LFPG, 
         LGAV, LHBP, LIRF, LKPR, LOWW, LPPT, LROP, LYBE, UKBB You: {own_loc}
                     Criminals last known location: {criminal_loc}
                     Tickets: {ticket_info_str}
                     Goal: To catch the criminal by flying to the same airport 
                     
-                    Important: You must choose only one ICAO code from the possible airports listed above and the 
-                    ticket used (C, N, F). For example: EPWA,C
+                    Important: {important_text}
 
                     Do not list multiple answers.
                 """
