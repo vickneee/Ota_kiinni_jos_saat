@@ -581,6 +581,7 @@ table {
     flex-wrap: wrap;
     justify-content: center;
     gap: 1rem;
+    margin-top: 2rem;
     margin-bottom: 2rem;
 }
 
@@ -648,6 +649,14 @@ audio {
     .th-padding {
         padding: 1rem;
     }
+
+    .card-container {
+        margin-bottom: 2rem;
+    }
+
+    .card {
+        margin-bottom: 0;
+    }
 }
 
 /* For screens smaller than 900px */
@@ -706,7 +715,11 @@ audio {
     }
 
     .card-container {
-        padding: 2rem;
+        padding: 0 2rem;
+    }
+
+    .card {
+        margin-bottom: 0;
     }
 
     .instructions-modal-content {
