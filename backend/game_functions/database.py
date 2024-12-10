@@ -31,19 +31,16 @@ class Database:
     def db_begin_transaction(self):
         conn = self.get_db_connection()
         conn.start_transaction()
-        print("Transaction started.")
 
     # Commit a transaction
     def db_commit_transaction(self):
         conn = self.get_db_connection()
         conn.commit()
-        print("Transaction committed.")
 
     # Rollback a transaction
     def db_rollback_transaction(self):
         conn = self.get_db_connection()
         conn.rollback()
-        print("Transaction rolled back.")
 
     # Query the database
     def db_query(self, sql):

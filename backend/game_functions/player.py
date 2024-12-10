@@ -107,8 +107,6 @@ class Player:
 
     # Update player location in the database
     def update_location(self, location):
-        # Log the new location
-        print(f"Updating location to: {location}")
 
         # Check if the new location exists in the airport table
         sql_check = f"SELECT COUNT(*) FROM airport WHERE ident = '{location}'"

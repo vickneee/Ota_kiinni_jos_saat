@@ -98,11 +98,8 @@ class Game:
         if player_name not in self.screen_names:
             raise ValueError(f"Player name '{player_name}' not found in screen names: {self.screen_names}")
         name_index = self.screen_names.index(player_name)
-        print('indeksi ', name_index)
         other_loc = []
         player = self.players[name_index]
-        print('pelaaja ', player)
-        print('pelaaja id', player.id)
         criminal = ""
         other_ai_loc = ""
 
@@ -129,7 +126,6 @@ class Game:
             if player.type == 0:
                 aicriminal = player.criminal_move(player.location, other_loc)
                 self.update_round_player(player.id)
-                print('aicriminal', aicriminal)
                 return aicriminal
             else:
                 aidetective = player.detective_move(player.location, criminal, self.round, other_ai_loc)
@@ -188,7 +184,6 @@ class Game:
 
         except Exception as e:
             raise Exception(f"Error fetching saved games: {str(e)}")
-
 
     def delete_game(self, game_id, player_ids):
         try:
