@@ -13,12 +13,14 @@ export async function gameover(round) {
   }
 
   const players = gameData.players;
+  console.log(players[0].id)
   const gameid =gameData.game_id
-  let ids= ""
-  for(let p in players){
-    ids += `${p.id},`
+  let ids= []
+  for(let i = 0; i < players.length; i++){
+    ids.push(players[i].id)
   }
-  let playerids = ids.slice(0, -1);
+  let playerIdsStr = ids.join(',');
+  console.log(playerIdsStr)
 
   // Get the criminal player
   const criminalPlayer = criminal(players);
@@ -68,7 +70,7 @@ export async function gameover(round) {
       window.location.href = '../pages/gameover.html';
 
     }, 2000);
-    await deleteGame(gameid,playerids)
+    await deleteGame(gameid,playerIdsStr)
   } else if (round === 10) {
     console.log('Round 10 reached. Game over due to time limit!');
     // Update the winner message for round 10
@@ -80,7 +82,7 @@ export async function gameover(round) {
       console.log('Redirecting to gameover.html...');
       window.location.href = '../pages/gameover.html';
     }, 2000);
-    await deleteGame(gameid,playerids)
+    await deleteGame(gameid,playerIdsStr)
   } else {
     console.log('Game continues...');
   }
