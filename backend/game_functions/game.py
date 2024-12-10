@@ -183,3 +183,26 @@ class Game:
 
         except Exception as e:
             raise Exception(f"Error fetching saved games: {str(e)}")
+
+    def delete_game(self, game_id):
+        try:
+            self.database.db_begin_transaction()
+            sql1 = f"DELETE FROM player_tickets WHERE player_id IN (SELECT player_id FROM game_player WHERE game_id = {game_id});"
+            self.database.db_update(sql1)
+
+            sql2 = f"DELETE FROM past_movement WHERE player_id IN (SELECT player_id FROM game_player WHERE game_id = {game_id});"
+            self.database.db_update(sql2)
+
+            sql3 = f"DELETE FROM game WHERE id = {game_id};"
+            self.database.db_update(sql3)
+
+            sql4 = f"DELETE FROM game_player WHERE game_id = {game_id};"
+            self.database.db_update(sql4)
+
+            sql5 = f"DELETE FROM player WHERE id IN (SELECT player_id FROM game_player WHERE game_id = {game_id});"
+            self.database.db_update(sql5)
+
+            self.database.db_commit_transaction()
+        except Exception as e:
+            self.database.db_rollback_transaction()
+            print(f"Error deleting game!!!! gameid: {game_id}: {e}")
