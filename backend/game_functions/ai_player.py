@@ -50,7 +50,7 @@ class AIPlayer(Player):
             Do not list multiple answers. Prioritize staying far from the detectives.
         """
 
-        max_retries = 3
+        max_retries = 5
         for _ in range(max_retries):
             chat_completion = client.chat.completions.create(model=self.model_name, messages=[
                 {"role": "system", "content": "You are an AI assistant."}, {"role": "user", "content": message}])
@@ -63,7 +63,8 @@ class AIPlayer(Player):
             if len(split_response) == 2 and split_response[0] in ["BIKF", "EBBR", "EDDB", "EFHK", "EGLL", "EIDW",
                                                                   "ENGM", "EPWA", "ESSA", "LBSF", "LEMD", "LFPG",
                                                                   "LGAV", "LHBP", "LIRF", "LKPR", "LOWW", "LPPT",
-                                                                  "LROP", "LYBE", "UKBB"] and filtered_t in ["C", "N", "F"]:
+                                                                  "LROP", "LYBE", "UKBB"] and filtered_t in ["C", "N",
+                                                                                                             "F"]:
                 ticket_id = {"C": 1, "N": 2, "F": 3}[filtered_t]
                 self.add_player_past_movement(self.location, ticket_id, self.id)
                 self.update_location(split_response[0])
@@ -97,7 +98,6 @@ class AIPlayer(Player):
             important_text = f"""Do not go to {other_ai_loc} You must choose only one ICAO code from the possible airports listed above and the 
                     ticket used (C, N, F). For example: EPWA,C"""
 
-
         message = f""" Possible airports: BIKF, EBBR, EDDB, EFHK, EGLL, EIDW, ENGM, EPWA, ESSA, LBSF, LEMD, LFPG, 
         LGAV, LHBP, LIRF, LKPR, LOWW, LPPT, LROP, LYBE, UKBB You: {own_loc}
                     Criminals last known location: {criminal_loc}
@@ -109,7 +109,7 @@ class AIPlayer(Player):
                     Do not list multiple answers.
                 """
 
-        max_retries = 3
+        max_retries = 5
         for _ in range(max_retries):
             chat_completion = client.chat.completions.create(model=self.model_name, messages=[
                 {"role": "system", "content": "You are an AI assistant."}, {"role": "user", "content": message}])
