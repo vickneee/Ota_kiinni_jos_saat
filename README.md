@@ -99,11 +99,16 @@ Samu Kirjonen, Alessa Pentinmikko, Doni Trivedi, Victoria Vavulina
 
 #### Konsolipelin kuvia:
 
-<img width="1187" alt="Screenshot 2024-10-09 at 1 52 38" src="https://github.com/user-attachments/assets/cd1e155a-07fe-42b4-ad87-a130368565ba">
+<!-- <img width="1187" alt="Screenshot 2024-10-09 at 1 52 38" src="https://github.com/user-attachments/assets/cd1e155a-07fe-42b4-ad87-a130368565ba"> -->
+
 ![Konsolipeli1](./frontend/assets/konsolipeli1.png)
-<img width="1182" alt="Screenshot 2024-10-09 at 1 53 22" src="https://github.com/user-attachments/assets/2fdabdf1-9f78-414f-8525-0dd1a687f665">
+
+<!-- <img width="1182" alt="Screenshot 2024-10-09 at 1 53 22" src="https://github.com/user-attachments/assets/2fdabdf1-9f78-414f-8525-0dd1a687f665"> -->
+
 ![Konsolipeli2](./frontend/assets/konsolipeli2.png)
-<img width="1182" alt="Screenshot 2024-10-09 at 1 53 53" src="https://github.com/user-attachments/assets/d38b4128-a051-40f0-bf05-a6ee055b71aa">
+
+<!-- <img width="1182" alt="Screenshot 2024-10-09 at 1 53 53" src="https://github.com/user-attachments/assets/d38b4128-a051-40f0-bf05-a6ee055b71aa"> -->
+
 ![Konsolipeli3](./frontend/assets/konsolipeli3.png)
 
 #### Selaimen pelin responsiivisus:
