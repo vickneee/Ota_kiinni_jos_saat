@@ -8,7 +8,8 @@ Tämä projekti kehitettiin osana ryhmätyötä Ohjelmisto 1 ja 2 -kursseilla Me
   1. [Projektin yleiskuvaus](#projektin-yleiskuvaus)
   2. [Ominaisuudet](#Ominaisuudet)
   3. [Tekniset tiedot](#Tekniset-tiedot)
-  4. [Ryhmän jäsenet](#Ryhmän-jäsenet)
+  4. [Pelin kuvat ja demo video](#Pelin-kuvat-ja-demo-video)
+  5. [Ryhmän jäsenet](#Ryhmän-jäsenet)
 
 ------------
 
@@ -19,7 +20,8 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
 ------------
 
 ### Ominaisuudet
-#### Peli:
+
+#### Peli konsolissa:
 - Peli tukee 1-3 pelaajaa, jolloin pelaajat voivat toimia joko rikollisena tai etsivänä.
 - Yksinpelissä pelaaja voi valita roolin ja pelata tietokonetta vastaan.
 - Kahden pelaajan tilassa toinen pelaaja ohjaa molempia etsiviä.
@@ -39,6 +41,18 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
     - Käytössä oleva tai tyhjä nimimerkki.
     - Virheellinen lentokenttävalinta.
 
+#### Peli selaimessa:
+- Peliä voi pelata yksi, kaksi tai kolme pelaajaa.‬
+- Yhden pelaajan pelissä pelaaja saa päättää, että pelaako hän etsivän vai‬ rikollisen roolia ja pelaa tietokonetta vastaan.‬
+- Kahden pelaajan pelissä toinen pelaajista ohjaa molempia etsiviä.‬
+- Pelissä on 21 ennalta määritettyä lentokenttää.‬
+- Etsivät eivät voi käyttää ensimmäisellä vuorolla yksityiskoneen lentolippua.‬
+- Rikollisen edellinen olinpaikka näytetään jokaisella kierroksella.‬
+- Rikollinen näkee etsivien sijainnin joka vuorolla.‬
+- Peli alkaa rikollisen vuorolla.‬
+- Peli päättyy kymmenen kierroksen jälkeen tai kunnes toinen etsivistä saa‬ rikollisen kiinni menemällä samalle lentokentälle, jossa rikollinen on, tai‬ rikollinen lentää samalle lentokentälle, jossa etsivä sijaitsee.‬
+‭
+
 ------------
   
 ### Tekniset tiedot
@@ -54,18 +68,24 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
 - game_player
 - past_movement
 - player
-- tickets
-
+- ticket
+- player_tickets
 
 ![image](https://github.com/user-attachments/assets/3dd3e582-a5d8-4168-b76e-5bfc8c932a52)
 
 ![Image1](https://github.com/user-attachments/assets/58f9ab12-4660-4114-9e49-04d7c83c9810)
+
+### Pelin kuvat ja demo video
 
 #### Konsolipelin kuvia:
 
 <img width="1187" alt="Screenshot 2024-10-09 at 1 52 38" src="https://github.com/user-attachments/assets/cd1e155a-07fe-42b4-ad87-a130368565ba">
 <img width="1182" alt="Screenshot 2024-10-09 at 1 53 22" src="https://github.com/user-attachments/assets/2fdabdf1-9f78-414f-8525-0dd1a687f665">
 <img width="1182" alt="Screenshot 2024-10-09 at 1 53 53" src="https://github.com/user-attachments/assets/d38b4128-a051-40f0-bf05-a6ee055b71aa">
+
+#### Pelin demo video
+
+
 
 ------------
 
