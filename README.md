@@ -85,7 +85,9 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
 
 #### Selaimen pelin video linkki:
 
-![video](https://www.youtube.com/watch?v=2oeH_PIistw)
+[Watch the video](https://www.youtube.com/watch?v=2oeH_PIistw)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/2oeH_PIistw" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 ------------
 
