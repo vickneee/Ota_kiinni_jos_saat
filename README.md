@@ -91,9 +91,9 @@ Samu Kirjonen, Alessa Pentinmikko, Doni Trivedi, Victoria Vavulina
 - player
 - ticket
 
-![image](https://github.com/user-attachments/assets/3dd3e582-a5d8-4168-b76e-5bfc8c932a52)
+![Database1](./frontend/assets/database1.png)
 
-![Image1](https://github.com/user-attachments/assets/58f9ab12-4660-4114-9e49-04d7c83c9810)
+![Database2](./frontend/assets/database2.png)
 
 ### Pelin kuvat ja demo video
 
