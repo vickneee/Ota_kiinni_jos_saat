@@ -2,22 +2,33 @@
 
 Tämä projekti kehitettiin osana ryhmätyötä Ohjelmisto 1 ja 2 -kursseilla Metropolia Ammattikorkeakoulussa.
 
-------------
+---
 
 ### Sisällysluettelo
   1. [Projektin yleiskuvaus](#projektin-yleiskuvaus)
-  2. [Ominaisuudet](#Ominaisuudet)
-  3. [Tekniset tiedot](#Tekniset-tiedot)
-  4. [Pelin kuvat ja demo video](#Pelin-kuvat-ja-demo-video)
-  5. [Ryhmän jäsenet](#Ryhmän-jäsenet)
+  2. [Ryhmän jäsenet](#Ryhmän-jäsenet)
+  3. [Ominaisuudet](#Ominaisuudet)
+  4. [Tekniset tiedot](#Tekniset-tiedot)
+  5. [Pelin kuvat ja demo video](#Pelin-kuvat-ja-demo-video)
 
-------------
+---
 
 ### Projektin yleiskuvaus
 
 Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa ympäristörikollista ympäri Euroopan lentokenttiä tavoitteenaan saada hänet kiinni ennen ajan loppumista. Rikollisen liikkeet näkyvät etsiville vain satunnaisesti, mutta johtolankoja seuraamalla hänet voi jäljittää. Pelaajat liikkuvat eri lentokenttien välillä käyttämällä eri kokoisia lentokoneita ja lentolippuja.
 
-------------
+----
+
+### Ryhmän jäsenet
+
+| Nimet              |
+|--------------------|
+| Samu Kirjonen      |
+| Alessa Pentinmikko |
+| Doni Trivedi       |
+| Victoria Vavulina  |
+
+---
 
 ### Ominaisuudet
 
@@ -53,7 +64,7 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
 - Peli päättyy kymmenen kierroksen jälkeen tai kunnes toinen etsivistä saa‬ rikollisen kiinni menemällä samalle lentokentälle, jossa rikollinen on, tai‬ rikollinen lentää samalle lentokentälle, jossa etsivä sijaitsee.‬
 ‭
 
-------------
+---
   
 ### Tekniset tiedot
 - Peli on toteutettu Python kielellä.
@@ -90,13 +101,4 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
 
 [![Watch the video](frontend/assets/YT_video.png)](https://www.youtube.com/watch?v=2oeH_PIistw)
 
-------------
-
-### Ryhmän jäsenet
-
-| Nimet              |
-|--------------------|
-| Samu Kirjonen      |
-| Alessa Pentinmikko |
-| Doni Trivedi       |
-| Victoria Vavulina  |
+---
