@@ -21,10 +21,7 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
 
 ### Ryhmän jäsenet
 
-Samu Kirjonen
-Alessa Pentinmikko
-Doni Trivedi
-Victoria Vavulina
+Samu Kirjonen, Alessa Pentinmikko, Doni Trivedi, Victoria Vavulina
 
 ---
 
