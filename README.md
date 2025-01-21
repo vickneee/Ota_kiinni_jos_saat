@@ -69,7 +69,6 @@ Pelin idea pohjautuu Scotland Yard -lautapeliin. Pelissä kaksi etsivää jahtaa
 - past_movement
 - player
 - ticket
-- player_tickets
 
 ![image](https://github.com/user-attachments/assets/3dd3e582-a5d8-4168-b76e-5bfc8c932a52)
 
