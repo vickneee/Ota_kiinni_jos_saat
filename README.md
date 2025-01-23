@@ -1,6 +1,6 @@
 # Ota kiinni jos saat!
 
-Tämä projekti kehitettiin osana ryhmätyötä Ohjelmisto 1 ja 2 -kursseilla Metropolia Ammattikorkeakoulussa.
+Alun perin konsolipelinä toteutettu full-stack-sovellus, joka laajennettiin selainpohjaiseksi. Backend on toteutettu Pythonilla ja MariaDB-tietokannalla, ja frontend rakennettu HTML-, CSS- ja JavaScript-teknologioilla. Hyödyntää myös ulkoisia rajapintoja, kuten Google Maps API ja AzureOpenAI GPT-4. Tämä projekti kehitettiin ryhmätyönä Ohjelmisto 1 ja 2 -kursseilla Metropolia Ammattikorkeakoulussa.
 
 ---
 
